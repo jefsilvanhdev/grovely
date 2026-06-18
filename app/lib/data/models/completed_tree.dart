@@ -13,14 +13,14 @@ class CompletedTree {
   final DateTime completedAt;
 
   Map<String, dynamic> toJson() => {
-        'type': type.slug,
-        'duration': durationMinutes,
-        'at': completedAt.toIso8601String(),
-      };
+    'type': type.slug,
+    'duration': durationMinutes,
+    'at': completedAt.toIso8601String(),
+  };
 
   factory CompletedTree.fromJson(Map<String, dynamic> j) => CompletedTree(
-        type: TreeType.fromSlug(j['type'] as String),
-        durationMinutes: j['duration'] as int,
-        completedAt: DateTime.parse(j['at'] as String),
-      );
+    type: TreeType.fromSlug(j['type'] as String),
+    durationMinutes: j['duration'] as int,
+    completedAt: DateTime.parse(j['at'] as String),
+  );
 }

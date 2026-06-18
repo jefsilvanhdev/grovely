@@ -52,7 +52,8 @@ class SessionRepository {
           type: TreeType.fromSlug((m['tree_type'] as String?) ?? 'oak'),
           durationMinutes: (m['duration_minutes'] as int?) ?? 0,
           completedAt: DateTime.parse(
-              (m['ended_at'] ?? m['started_at']) as String),
+            (m['ended_at'] ?? m['started_at']) as String,
+          ),
         );
       }).toList();
     } catch (_) {
@@ -77,43 +78,10 @@ class SessionRepository {
             .toIso8601String(),
         'ended_at': tree.completedAt.toIso8601String(),
       });
-      await _bumpStreak(userId, tree.completedAt);
-    } catch (_) {/* offline — fica só local, sincroniza depois */}
-  }
-
-  Future<void> _bumpStreak(String userId, DateTime when) async {
-    final client = SupabaseService.instance.client;
-    final today = DateTime(when.year, when.month, when.day);
-    final existing = await client
-        .from('streaks')
-        .select()
-        .eq('user_id', userId)
-        .maybeSingle();
-
-    var current = 1;
-    var longest = 1;
-    if (existing != null) {
-      final cur = (existing['current_streak'] as int?) ?? 0;
-      final lng = (existing['longest_streak'] as int?) ?? 0;
-      final lastStr = existing['last_session_date'] as String?;
-      if (lastStr != null) {
-        final last = DateTime.parse(lastStr);
-        final diff =
-            today.difference(DateTime(last.year, last.month, last.day)).inDays;
-        current = switch (diff) {
-          0 => cur == 0 ? 1 : cur, // mesma data
-          1 => cur + 1, // dia seguinte
-          _ => 1, // quebrou
-        };
-      }
-      longest = current > lng ? current : lng;
+      // streaks são atualizados pelo trigger no servidor (migration 0002) —
+      // atômico, sem race do cliente.
+    } catch (_) {
+      /* offline — fica só local, sincroniza depois */
     }
-
-    await client.from('streaks').upsert({
-      'user_id': userId,
-      'current_streak': current,
-      'longest_streak': longest,
-      'last_session_date': today.toIso8601String().split('T').first,
-    }, onConflict: 'user_id');
   }
 }

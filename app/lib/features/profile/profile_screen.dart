@@ -10,6 +10,9 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return FeatureScaffold(title: l10n.profileTitle, message: l10n.profileTitle);
+    return FeatureScaffold(
+      title: l10n.profileTitle,
+      message: l10n.profileTitle,
+    );
   }
 }

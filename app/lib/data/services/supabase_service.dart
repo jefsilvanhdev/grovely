@@ -41,10 +41,10 @@ class SupabaseService {
     }
     final user = auth.currentUser;
     if (user != null) {
-      await client.from('profiles').upsert(
-        {'id': user.id, 'locale': locale},
-        onConflict: 'id',
-      );
+      await client.from('profiles').upsert({
+        'id': user.id,
+        'locale': locale,
+      }, onConflict: 'id');
     }
     return user?.id;
   }

@@ -48,8 +48,9 @@ class AppTheme {
     final base = ThemeData(
       colorScheme: scheme,
       useMaterial3: true,
-      scaffoldBackgroundColor:
-          isDark ? AppColors.backgroundDark : AppColors.background,
+      scaffoldBackgroundColor: isDark
+          ? AppColors.backgroundDark
+          : AppColors.background,
     );
 
     final body = GoogleFonts.hankenGroteskTextTheme(base.textTheme);
@@ -57,12 +58,24 @@ class AppTheme {
 
     return base.copyWith(
       textTheme: body.copyWith(
-        displayLarge: display.displayLarge?.copyWith(fontWeight: FontWeight.w700),
-        displayMedium: display.displayMedium?.copyWith(fontWeight: FontWeight.w700),
-        displaySmall: display.displaySmall?.copyWith(fontWeight: FontWeight.w700),
-        headlineLarge: display.headlineLarge?.copyWith(fontWeight: FontWeight.w600),
-        headlineMedium: display.headlineMedium?.copyWith(fontWeight: FontWeight.w600),
-        headlineSmall: display.headlineSmall?.copyWith(fontWeight: FontWeight.w600),
+        displayLarge: display.displayLarge?.copyWith(
+          fontWeight: FontWeight.w700,
+        ),
+        displayMedium: display.displayMedium?.copyWith(
+          fontWeight: FontWeight.w700,
+        ),
+        displaySmall: display.displaySmall?.copyWith(
+          fontWeight: FontWeight.w700,
+        ),
+        headlineLarge: display.headlineLarge?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
+        headlineMedium: display.headlineMedium?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
+        headlineSmall: display.headlineSmall?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: scheme.surface,

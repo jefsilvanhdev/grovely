@@ -40,24 +40,32 @@ class FocusState {
     int? durationMinutes,
     int? secondsRemaining,
     TreeType? treeType,
-  }) =>
-      FocusState(
-        phase: phase ?? this.phase,
-        durationMinutes: durationMinutes ?? this.durationMinutes,
-        secondsRemaining: secondsRemaining ?? this.secondsRemaining,
-        treeType: treeType ?? this.treeType,
-      );
+  }) => FocusState(
+    phase: phase ?? this.phase,
+    durationMinutes: durationMinutes ?? this.durationMinutes,
+    secondsRemaining: secondsRemaining ?? this.secondsRemaining,
+    treeType: treeType ?? this.treeType,
+  );
 }
 
 /// Máquina de estados do core loop: selecionar → focar → concluir/murchar.
 class FocusSessionController extends Notifier<FocusState> {
   Timer? _timer;
+  Timer? _graceTimer;
 
   static const durationOptions = [15, 25, 45, 60];
 
+  /// Carência p/ pausas transitórias (ligação, notificação, troca rápida de
+  /// app). Só murcha se o app ficar em background além disso. Tunável —
+  /// decisão de produto.
+  static const witherGraceSeconds = 5;
+
   @override
   FocusState build() {
-    ref.onDispose(() => _timer?.cancel());
+    ref.onDispose(() {
+      _timer?.cancel();
+      _graceTimer?.cancel();
+    });
     return FocusState(
       phase: FocusPhase.selecting,
       durationMinutes: 25,
@@ -98,8 +106,11 @@ class FocusSessionController extends Notifier<FocusState> {
 
   Future<void> _complete() async {
     _timer?.cancel();
+    _graceTimer?.cancel();
     state = state.copyWith(phase: FocusPhase.completed, secondsRemaining: 0);
-    await ref.read(gardenProvider.notifier).plant(
+    await ref
+        .read(gardenProvider.notifier)
+        .plant(
           CompletedTree(
             type: state.treeType,
             durationMinutes: state.durationMinutes,
@@ -108,20 +119,34 @@ class FocusSessionController extends Notifier<FocusState> {
         );
   }
 
-  /// Saiu do app antes do fim → árvore murcha (chamado pelo lifecycle).
+  /// Ficou fora do app além da carência → árvore murcha.
   void wither() {
     if (state.phase != FocusPhase.running) return;
     _timer?.cancel();
+    _graceTimer?.cancel();
     state = state.copyWith(phase: FocusPhase.withered);
   }
+
+  /// App foi pro background durante a sessão → inicia carência; só murcha se
+  /// não voltar a tempo (perdoa interrupções involuntárias).
+  void onAppPaused() {
+    if (state.phase != FocusPhase.running) return;
+    _graceTimer?.cancel();
+    _graceTimer = Timer(const Duration(seconds: witherGraceSeconds), wither);
+  }
+
+  /// Voltou ao app dentro da carência → cancela a murcha.
+  void onAppResumed() => _graceTimer?.cancel();
 
   /// Volta para a seleção (nova árvore aleatória).
   void reset() {
     _timer?.cancel();
+    _graceTimer?.cancel();
     state = build();
   }
 }
 
 final focusSessionProvider =
     NotifierProvider<FocusSessionController, FocusState>(
-        FocusSessionController.new);
+      FocusSessionController.new,
+    );

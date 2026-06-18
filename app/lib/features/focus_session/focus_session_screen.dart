@@ -31,9 +31,13 @@ class _FocusSessionScreenState extends ConsumerState<FocusSessionScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // Saiu do app (background) durante a sessão → murcha.
+    // Background → inicia carência; volta a tempo → cancela. Murcha só se ficar
+    // fora além da janela (perdoa ligação/notificação/troca rápida).
+    final controller = ref.read(focusSessionProvider.notifier);
     if (state == AppLifecycleState.paused) {
-      ref.read(focusSessionProvider.notifier).wither();
+      controller.onAppPaused();
+    } else if (state == AppLifecycleState.resumed) {
+      controller.onAppResumed();
     }
   }
 
@@ -55,22 +59,25 @@ class _FocusSessionScreenState extends ConsumerState<FocusSessionScreen>
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: switch (state.phase) {
-            FocusPhase.selecting => _Selecting(state: state, controller: controller),
+            FocusPhase.selecting => _Selecting(
+              state: state,
+              controller: controller,
+            ),
             FocusPhase.running => _Running(state: state, fmt: _fmt),
             FocusPhase.completed => _Result(
-                state: state,
-                title: l10n.focusCompletedTitle,
-                body: l10n.focusCompletedBody(state.durationMinutes),
-                onReset: controller.reset,
-                resetLabel: l10n.focusNewSession,
-              ),
+              state: state,
+              title: l10n.focusCompletedTitle,
+              body: l10n.focusCompletedBody(state.durationMinutes),
+              onReset: controller.reset,
+              resetLabel: l10n.focusNewSession,
+            ),
             FocusPhase.withered => _Result(
-                state: state,
-                title: l10n.focusWitheredTitle,
-                body: l10n.focusWitheredBody,
-                onReset: controller.reset,
-                resetLabel: l10n.focusNewSession,
-              ),
+              state: state,
+              title: l10n.focusWitheredTitle,
+              body: l10n.focusWitheredBody,
+              onReset: controller.reset,
+              resetLabel: l10n.focusNewSession,
+            ),
           },
         ),
       ),
@@ -88,11 +95,18 @@ class _Selecting extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     return Column(
       children: [
-        Text(l10n.focusSubtitle, style: Theme.of(context).textTheme.titleMedium),
+        Text(
+          l10n.focusSubtitle,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         const SizedBox(height: 24),
         Expanded(
           child: Center(
-            child: TreeView(type: state.treeType, stage: state.stage, size: 200),
+            child: TreeView(
+              type: state.treeType,
+              stage: state.stage,
+              size: 200,
+            ),
           ),
         ),
         Wrap(
@@ -133,7 +147,11 @@ class _Running extends ConsumerWidget {
       children: [
         Expanded(
           child: Center(
-            child: TreeView(type: state.treeType, stage: state.stage, size: 260),
+            child: TreeView(
+              type: state.treeType,
+              stage: state.stage,
+              size: 260,
+            ),
           ),
         ),
         Text(
@@ -146,8 +164,9 @@ class _Running extends ConsumerWidget {
         Text(
           l10n.focusKeepGrowing,
           textAlign: TextAlign.center,
-          style: theme.textTheme.bodyMedium
-              ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
         ),
         const SizedBox(height: 16),
         TextButton(
@@ -180,7 +199,11 @@ class _Result extends StatelessWidget {
       children: [
         Expanded(
           child: Center(
-            child: TreeView(type: state.treeType, stage: state.stage, size: 240),
+            child: TreeView(
+              type: state.treeType,
+              stage: state.stage,
+              size: 240,
+            ),
           ),
         ),
         Text(title, style: theme.textTheme.headlineSmall),
@@ -188,8 +211,9 @@ class _Result extends StatelessWidget {
         Text(
           body,
           textAlign: TextAlign.center,
-          style: theme.textTheme.bodyMedium
-              ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
         ),
         const SizedBox(height: 20),
         SizedBox(

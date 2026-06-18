@@ -1,0 +1,84 @@
+import 'package:fake_async/fake_async.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:plantio_coletivo/data/models/tree.dart';
+import 'package:plantio_coletivo/features/focus_session/focus_session_controller.dart';
+
+void main() {
+  ProviderContainer makeContainer() {
+    final c = ProviderContainer();
+    addTearDown(c.dispose);
+    return c;
+  }
+
+  test('estado inicial: selecting, 25 min, semente', () {
+    final s = makeContainer().read(focusSessionProvider);
+    expect(s.phase, FocusPhase.selecting);
+    expect(s.durationMinutes, 25);
+    expect(s.secondsRemaining, 25 * 60);
+    expect(s.stage, TreeStage.seed);
+  });
+
+  test('setDuration ajusta minutos e segundos', () {
+    final c = makeContainer();
+    c.read(focusSessionProvider.notifier).setDuration(45);
+    expect(c.read(focusSessionProvider).durationMinutes, 45);
+    expect(c.read(focusSessionProvider).secondsRemaining, 45 * 60);
+  });
+
+  test('start roda contagem; timer decrementa a cada segundo', () {
+    fakeAsync((async) {
+      final c = makeContainer();
+      c.read(focusSessionProvider.notifier).start();
+      expect(c.read(focusSessionProvider).phase, FocusPhase.running);
+      async.elapse(const Duration(seconds: 3));
+      expect(c.read(focusSessionProvider).secondsRemaining, 25 * 60 - 3);
+      expect(c.read(focusSessionProvider).stage, TreeStage.seed);
+    });
+  });
+
+  test('wither marca murcha', () {
+    final c = makeContainer();
+    c.read(focusSessionProvider.notifier)
+      ..start()
+      ..wither();
+    final s = c.read(focusSessionProvider);
+    expect(s.phase, FocusPhase.withered);
+    expect(s.stage, TreeStage.withered);
+  });
+
+  test('carência: murcha se ficar fora além da janela', () {
+    fakeAsync((async) {
+      final c = makeContainer();
+      final n = c.read(focusSessionProvider.notifier)..start();
+      n.onAppPaused();
+      async.elapse(
+        const Duration(seconds: FocusSessionController.witherGraceSeconds - 1),
+      );
+      expect(c.read(focusSessionProvider).phase, FocusPhase.running);
+      async.elapse(const Duration(seconds: 2));
+      expect(c.read(focusSessionProvider).phase, FocusPhase.withered);
+    });
+  });
+
+  test('carência: voltar a tempo cancela a murcha', () {
+    fakeAsync((async) {
+      final c = makeContainer();
+      final n = c.read(focusSessionProvider.notifier)..start();
+      n.onAppPaused();
+      async.elapse(const Duration(seconds: 2));
+      n.onAppResumed();
+      async.elapse(const Duration(seconds: 30));
+      expect(c.read(focusSessionProvider).phase, FocusPhase.running);
+    });
+  });
+
+  test('progress → stage: mapeamento de crescimento', () {
+    expect(TreeStage.fromProgress(0), TreeStage.seed);
+    expect(TreeStage.fromProgress(0.30), TreeStage.sprout);
+    expect(TreeStage.fromProgress(0.50), TreeStage.sapling);
+    expect(TreeStage.fromProgress(0.70), TreeStage.young);
+    expect(TreeStage.fromProgress(0.85), TreeStage.mature);
+    expect(TreeStage.fromProgress(1.0), TreeStage.elder);
+  });
+}

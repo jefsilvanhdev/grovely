@@ -10,6 +10,9 @@ class PaywallScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return FeatureScaffold(title: l10n.paywallTitle, message: l10n.paywallTitle);
+    return FeatureScaffold(
+      title: l10n.paywallTitle,
+      message: l10n.paywallTitle,
+    );
   }
 }

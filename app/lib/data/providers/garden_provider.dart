@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/completed_tree.dart';
 import '../repositories/session_repository.dart';
 
-final sessionRepositoryProvider =
-    Provider<SessionRepository>((ref) => SessionRepository());
+final sessionRepositoryProvider = Provider<SessionRepository>(
+  (ref) => SessionRepository(),
+);
 
 /// Jardim pessoal — lista de árvores conquistadas, carregada do repositório.
 class GardenNotifier extends AsyncNotifier<List<CompletedTree>> {
@@ -21,4 +22,5 @@ class GardenNotifier extends AsyncNotifier<List<CompletedTree>> {
 
 final gardenProvider =
     AsyncNotifierProvider<GardenNotifier, List<CompletedTree>>(
-        GardenNotifier.new);
+      GardenNotifier.new,
+    );

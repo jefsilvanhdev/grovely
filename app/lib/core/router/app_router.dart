@@ -22,60 +22,45 @@ final GoRouter appRouter = GoRouter(
   initialLocation: '/onboarding',
   debugLogDiagnostics: false,
   routes: [
-    GoRoute(
-      path: '/onboarding',
-      builder: (_, _) => const OnboardingScreen(),
-    ),
-    GoRoute(
-      path: '/auth',
-      builder: (_, _) => const AuthScreen(),
-    ),
-    GoRoute(
-      path: '/paywall',
-      builder: (_, _) => const PaywallScreen(),
-    ),
-    GoRoute(
-      path: '/recap',
-      builder: (_, _) => const RecapScreen(),
-    ),
+    GoRoute(path: '/onboarding', builder: (_, _) => const OnboardingScreen()),
+    GoRoute(path: '/auth', builder: (_, _) => const AuthScreen()),
+    GoRoute(path: '/paywall', builder: (_, _) => const PaywallScreen()),
+    GoRoute(path: '/recap', builder: (_, _) => const RecapScreen()),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
           MainShell(navigationShell: navigationShell),
       branches: [
-        StatefulShellBranch(routes: [
-          GoRoute(
-            path: '/focus',
-            builder: (_, _) => const FocusSessionScreen(),
-          ),
-        ]),
-        StatefulShellBranch(routes: [
-          GoRoute(
-            path: '/garden',
-            builder: (_, _) => const GardenScreen(),
-          ),
-        ]),
-        StatefulShellBranch(routes: [
-          GoRoute(
-            path: '/circle',
-            builder: (_, _) => const CircleScreen(),
-          ),
-        ]),
-        StatefulShellBranch(routes: [
-          GoRoute(
-            path: '/league',
-            builder: (_, _) => const LeagueScreen(),
-          ),
-        ]),
-        StatefulShellBranch(routes: [
-          GoRoute(
-            path: '/profile',
-            builder: (_, _) => const ProfileScreen(),
-          ),
-        ]),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/focus',
+              builder: (_, _) => const FocusSessionScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(path: '/garden', builder: (_, _) => const GardenScreen()),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(path: '/circle', builder: (_, _) => const CircleScreen()),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(path: '/league', builder: (_, _) => const LeagueScreen()),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(path: '/profile', builder: (_, _) => const ProfileScreen()),
+          ],
+        ),
       ],
     ),
   ],
-  errorBuilder: (_, state) => Scaffold(
-    body: Center(child: Text('Rota não encontrada: ${state.uri}')),
-  ),
+  errorBuilder: (_, state) =>
+      Scaffold(body: Center(child: Text('Rota não encontrada: ${state.uri}'))),
 );

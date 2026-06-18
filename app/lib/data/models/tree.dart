@@ -10,8 +10,10 @@ enum TreeType {
   const TreeType(this.slug);
   final String slug;
 
-  static TreeType fromSlug(String s) =>
-      TreeType.values.firstWhere((t) => t.slug == s, orElse: () => TreeType.oak);
+  static TreeType fromSlug(String s) => TreeType.values.firstWhere(
+    (t) => t.slug == s,
+    orElse: () => TreeType.oak,
+  );
 }
 
 /// Estágios de crescimento (arquivos `<tipo>-<estagio>.svg`).

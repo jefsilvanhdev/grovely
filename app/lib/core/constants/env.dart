@@ -12,18 +12,28 @@
 class Env {
   Env._();
 
-  static const String supabaseUrl =
-      String.fromEnvironment('SUPABASE_URL', defaultValue: '');
-  static const String supabasePublishableKey =
-      String.fromEnvironment('SUPABASE_PUBLISHABLE_KEY', defaultValue: '');
+  static const String supabaseUrl = String.fromEnvironment(
+    'SUPABASE_URL',
+    defaultValue: '',
+  );
+  static const String supabasePublishableKey = String.fromEnvironment(
+    'SUPABASE_PUBLISHABLE_KEY',
+    defaultValue: '',
+  );
 
-  static const String revenueCatAndroidKey =
-      String.fromEnvironment('REVENUECAT_ANDROID_KEY', defaultValue: '');
-  static const String revenueCatIosKey =
-      String.fromEnvironment('REVENUECAT_IOS_KEY', defaultValue: '');
+  static const String revenueCatAndroidKey = String.fromEnvironment(
+    'REVENUECAT_ANDROID_KEY',
+    defaultValue: '',
+  );
+  static const String revenueCatIosKey = String.fromEnvironment(
+    'REVENUECAT_IOS_KEY',
+    defaultValue: '',
+  );
 
-  static const String admobAppId =
-      String.fromEnvironment('ADMOB_APP_ID', defaultValue: '');
+  static const String admobAppId = String.fromEnvironment(
+    'ADMOB_APP_ID',
+    defaultValue: '',
+  );
 
   /// True quando as credenciais do Supabase foram fornecidas.
   static bool get hasSupabase =>

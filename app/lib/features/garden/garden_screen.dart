@@ -30,8 +30,9 @@ class GardenScreen extends ConsumerWidget {
                   child: Text(
                     l10n.gardenEmpty,
                     textAlign: TextAlign.center,
-                    style: theme.textTheme.bodyLarge
-                        ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ),
               );
@@ -51,10 +52,10 @@ class GardenScreen extends ConsumerWidget {
                     padding: const EdgeInsets.all(16),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 12,
-                      crossAxisSpacing: 12,
-                    ),
+                          crossAxisCount: 3,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                        ),
                     itemCount: trees.length,
                     itemBuilder: (_, i) => DecoratedBox(
                       decoration: BoxDecoration(
