@@ -223,6 +223,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong.'**
   String get commonError;
+
+  /// No description provided for @focusStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start focus'**
+  String get focusStart;
+
+  /// No description provided for @focusGiveUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Give up'**
+  String get focusGiveUp;
+
+  /// No description provided for @focusKeepGrowing.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay in the app to keep your tree growing.'**
+  String get focusKeepGrowing;
+
+  /// No description provided for @focusCompletedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tree planted!'**
+  String get focusCompletedTitle;
+
+  /// No description provided for @focusCompletedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You focused for {minutes} minutes.'**
+  String focusCompletedBody(int minutes);
+
+  /// No description provided for @focusWitheredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your tree withered'**
+  String get focusWitheredTitle;
+
+  /// No description provided for @focusWitheredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You left before the session ended. Try again.'**
+  String get focusWitheredBody;
+
+  /// No description provided for @focusNewSession.
+  ///
+  /// In en, this message translates to:
+  /// **'New session'**
+  String get focusNewSession;
+
+  /// No description provided for @minutesShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String minutesShort(int minutes);
+
+  /// No description provided for @gardenTreeCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No trees yet} =1{1 tree} other{{count} trees}}'**
+  String gardenTreeCount(int count);
 }
 
 class _AppLocalizationsDelegate

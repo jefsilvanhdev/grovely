@@ -25,5 +25,16 @@
   "commonCancel": "Cancelar",
   "commonRetry": "Tentar de novo",
   "commonLoading": "Carregando…",
-  "commonError": "Algo deu errado."
+  "commonError": "Algo deu errado.",
+
+  "focusStart": "Começar foco",
+  "focusGiveUp": "Desistir",
+  "focusKeepGrowing": "Fique no app para sua árvore continuar crescendo.",
+  "focusCompletedTitle": "Árvore plantada!",
+  "focusCompletedBody": "Você focou por {minutes} minutos.",
+  "focusWitheredTitle": "Sua árvore murchou",
+  "focusWitheredBody": "Você saiu antes do fim da sessão. Tente de novo.",
+  "focusNewSession": "Nova sessão",
+  "minutesShort": "{minutes} min",
+  "gardenTreeCount": "{count, plural, =0{Nenhuma árvore ainda} =1{1 árvore} other{{count} árvores}}"
 }

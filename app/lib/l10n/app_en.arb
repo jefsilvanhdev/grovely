@@ -31,5 +31,19 @@
   "commonCancel": "Cancel",
   "commonRetry": "Retry",
   "commonLoading": "Loading…",
-  "commonError": "Something went wrong."
+  "commonError": "Something went wrong.",
+
+  "focusStart": "Start focus",
+  "focusGiveUp": "Give up",
+  "focusKeepGrowing": "Stay in the app to keep your tree growing.",
+  "focusCompletedTitle": "Tree planted!",
+  "focusCompletedBody": "You focused for {minutes} minutes.",
+  "@focusCompletedBody": { "placeholders": { "minutes": { "type": "int" } } },
+  "focusWitheredTitle": "Your tree withered",
+  "focusWitheredBody": "You left before the session ended. Try again.",
+  "focusNewSession": "New session",
+  "minutesShort": "{minutes} min",
+  "@minutesShort": { "placeholders": { "minutes": { "type": "int" } } },
+  "gardenTreeCount": "{count, plural, =0{No trees yet} =1{1 tree} other{{count} trees}}",
+  "@gardenTreeCount": { "placeholders": { "count": { "type": "int" } } }
 }

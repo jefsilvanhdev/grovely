@@ -72,4 +72,49 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get commonError => 'Algo deu errado.';
+
+  @override
+  String get focusStart => 'Começar foco';
+
+  @override
+  String get focusGiveUp => 'Desistir';
+
+  @override
+  String get focusKeepGrowing =>
+      'Fique no app para sua árvore continuar crescendo.';
+
+  @override
+  String get focusCompletedTitle => 'Árvore plantada!';
+
+  @override
+  String focusCompletedBody(int minutes) {
+    return 'Você focou por $minutes minutos.';
+  }
+
+  @override
+  String get focusWitheredTitle => 'Sua árvore murchou';
+
+  @override
+  String get focusWitheredBody =>
+      'Você saiu antes do fim da sessão. Tente de novo.';
+
+  @override
+  String get focusNewSession => 'Nova sessão';
+
+  @override
+  String minutesShort(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String gardenTreeCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count árvores',
+      one: '1 árvore',
+      zero: 'Nenhuma árvore ainda',
+    );
+    return '$_temp0';
+  }
 }

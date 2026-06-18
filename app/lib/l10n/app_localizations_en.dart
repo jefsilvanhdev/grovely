@@ -71,4 +71,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonError => 'Something went wrong.';
+
+  @override
+  String get focusStart => 'Start focus';
+
+  @override
+  String get focusGiveUp => 'Give up';
+
+  @override
+  String get focusKeepGrowing => 'Stay in the app to keep your tree growing.';
+
+  @override
+  String get focusCompletedTitle => 'Tree planted!';
+
+  @override
+  String focusCompletedBody(int minutes) {
+    return 'You focused for $minutes minutes.';
+  }
+
+  @override
+  String get focusWitheredTitle => 'Your tree withered';
+
+  @override
+  String get focusWitheredBody =>
+      'You left before the session ended. Try again.';
+
+  @override
+  String get focusNewSession => 'New session';
+
+  @override
+  String minutesShort(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String gardenTreeCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count trees',
+      one: '1 tree',
+      zero: 'No trees yet',
+    );
+    return '$_temp0';
+  }
 }

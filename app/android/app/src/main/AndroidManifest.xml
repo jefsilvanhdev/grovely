@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- App de rede (Supabase, Firebase, Ads). Permissão mínima necessária. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="plantio_coletivo"
+        android:label="Grovely"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
@@ -25,6 +27,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!-- AdMob App ID — obrigatório pelo google_mobile_ads (senão crasha no boot).
+             TEST ID oficial por ora; Agente D troca pelo App ID real do AdMob. -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713" />
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
