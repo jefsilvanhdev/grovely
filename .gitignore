@@ -1,0 +1,11 @@
+.DS_Store
+*.log
+
+# Tooling de skills instaladas no projeto (não é código do app)
+.agents/
+skills-lock.json
+
+# Segredos (reforço — o canônico fica em app/.gitignore)
+env.json
+.env
+*.env

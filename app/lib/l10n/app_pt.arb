@@ -1,0 +1,29 @@
+{
+  "@@locale": "pt",
+
+  "appName": "Plantio Coletivo",
+
+  "navFocus": "Foco",
+  "navGarden": "Jardim",
+  "navCircle": "Círculo",
+  "navLeague": "Liga",
+  "navProfile": "Perfil",
+
+  "focusTitle": "Sessão de foco",
+  "focusSubtitle": "Plante uma árvore mantendo o foco.",
+  "gardenTitle": "Seu jardim",
+  "gardenEmpty": "Nenhuma árvore ainda. Conclua uma sessão de foco para plantar a primeira.",
+  "circleTitle": "Círculos",
+  "circleEmpty": "Entre em um círculo para cultivar um jardim em grupo.",
+  "leagueTitle": "Liga semanal",
+  "profileTitle": "Perfil",
+
+  "onboardingWelcome": "Cresça no foco, em conjunto.",
+  "paywallTitle": "Seja Premium",
+
+  "commonContinue": "Continuar",
+  "commonCancel": "Cancelar",
+  "commonRetry": "Tentar de novo",
+  "commonLoading": "Carregando…",
+  "commonError": "Algo deu errado."
+}

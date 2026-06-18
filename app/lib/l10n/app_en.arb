@@ -1,0 +1,35 @@
+{
+  "@@locale": "en",
+
+  "appName": "Plantio Coletivo",
+  "@appName": { "description": "Working title of the app (public name TBD by Agent A)." },
+
+  "navFocus": "Focus",
+  "@navFocus": { "description": "Bottom nav label — focus session tab." },
+  "navGarden": "Garden",
+  "@navGarden": { "description": "Bottom nav label — personal garden tab." },
+  "navCircle": "Circle",
+  "@navCircle": { "description": "Bottom nav label — circles / collective garden tab." },
+  "navLeague": "League",
+  "@navLeague": { "description": "Bottom nav label — weekly league tab." },
+  "navProfile": "Profile",
+  "@navProfile": { "description": "Bottom nav label — profile / settings tab." },
+
+  "focusTitle": "Focus session",
+  "focusSubtitle": "Plant a tree by staying focused.",
+  "gardenTitle": "Your garden",
+  "gardenEmpty": "No trees yet. Finish a focus session to plant your first.",
+  "circleTitle": "Circles",
+  "circleEmpty": "Join a circle to grow a garden together.",
+  "leagueTitle": "Weekly league",
+  "profileTitle": "Profile",
+
+  "onboardingWelcome": "Grow focus, together.",
+  "paywallTitle": "Go Premium",
+
+  "commonContinue": "Continue",
+  "commonCancel": "Cancel",
+  "commonRetry": "Retry",
+  "commonLoading": "Loading…",
+  "commonError": "Something went wrong."
+}
