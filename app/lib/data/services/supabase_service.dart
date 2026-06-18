@@ -26,4 +26,26 @@ class SupabaseService {
 
   /// Cliente ativo. Só use após [init] ter sucesso ([isInitialized] true).
   SupabaseClient get client => Supabase.instance.client;
+
+  /// ID do usuário autenticado (null se offline/sem sessão).
+  String? get currentUserId =>
+      _initialized ? client.auth.currentUser?.id : null;
+
+  /// Garante uma sessão (auth anônimo — pressão social é opt-in depois) e
+  /// um registro em `profiles`. Best-effort: não lança.
+  Future<String?> ensureSignedIn({String locale = 'pt'}) async {
+    if (!_initialized) return null;
+    final auth = client.auth;
+    if (auth.currentUser == null) {
+      await auth.signInAnonymously();
+    }
+    final user = auth.currentUser;
+    if (user != null) {
+      await client.from('profiles').upsert(
+        {'id': user.id, 'locale': locale},
+        onConflict: 'id',
+      );
+    }
+    return user?.id;
+  }
 }

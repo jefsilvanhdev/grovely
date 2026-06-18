@@ -20,6 +20,7 @@ Future<void> main() async {
   // Credenciais reais entram via --dart-define; Firebase via google-services.
   try {
     await SupabaseService.instance.init();
+    await SupabaseService.instance.ensureSignedIn();
   } catch (_) {}
 
   try {
