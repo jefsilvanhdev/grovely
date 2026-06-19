@@ -715,6 +715,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'price TBD'**
   String get pwPriceTbd;
+
+  /// No description provided for @profileGuest.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest'**
+  String get profileGuest;
+
+  /// No description provided for @profileSaveProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Save your progress'**
+  String get profileSaveProgress;
+
+  /// No description provided for @profileFreePlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Free plan'**
+  String get profileFreePlan;
+
+  /// No description provided for @profileLifetime.
+  ///
+  /// In en, this message translates to:
+  /// **'Lifetime'**
+  String get profileLifetime;
+
+  /// No description provided for @rowAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get rowAccount;
+
+  /// No description provided for @rowSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get rowSubscription;
+
+  /// No description provided for @rowNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get rowNotifications;
+
+  /// No description provided for @rowAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get rowAppearance;
+
+  /// No description provided for @rowPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get rowPrivacy;
+
+  /// No description provided for @rowTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms'**
+  String get rowTerms;
+
+  /// No description provided for @rowSignOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get rowSignOut;
+
+  /// No description provided for @rowAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get rowAbout;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
 }
 
 class _AppLocalizationsDelegate

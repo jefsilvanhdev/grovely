@@ -133,5 +133,21 @@
   "pwRowStats": "Advanced stats",
   "pwRowMultiCircle": "Multiple circles",
   "pwRowRecap": "Recap themes",
-  "pwPriceTbd": "price TBD"
+  "pwPriceTbd": "price TBD",
+
+  "profileGuest": "Guest",
+  "profileSaveProgress": "Save your progress",
+  "profileFreePlan": "Free plan",
+  "profileLifetime": "Lifetime",
+  "rowAccount": "Account",
+  "rowSubscription": "Subscription",
+  "rowNotifications": "Notifications",
+  "rowAppearance": "Appearance",
+  "rowPrivacy": "Privacy",
+  "rowTerms": "Terms",
+  "rowSignOut": "Sign out",
+  "rowAbout": "About",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark"
 }

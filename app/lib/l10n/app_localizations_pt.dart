@@ -358,4 +358,49 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pwPriceTbd => 'preço a definir';
+
+  @override
+  String get profileGuest => 'Convidado(a)';
+
+  @override
+  String get profileSaveProgress => 'Salvar seu progresso';
+
+  @override
+  String get profileFreePlan => 'Plano grátis';
+
+  @override
+  String get profileLifetime => 'Total';
+
+  @override
+  String get rowAccount => 'Conta';
+
+  @override
+  String get rowSubscription => 'Assinatura';
+
+  @override
+  String get rowNotifications => 'Notificações';
+
+  @override
+  String get rowAppearance => 'Aparência';
+
+  @override
+  String get rowPrivacy => 'Privacidade';
+
+  @override
+  String get rowTerms => 'Termos';
+
+  @override
+  String get rowSignOut => 'Sair';
+
+  @override
+  String get rowAbout => 'Sobre';
+
+  @override
+  String get themeSystem => 'Sistema';
+
+  @override
+  String get themeLight => 'Claro';
+
+  @override
+  String get themeDark => 'Escuro';
 }

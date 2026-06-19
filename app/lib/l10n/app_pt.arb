@@ -115,5 +115,21 @@
   "pwRowStats": "Estatísticas avançadas",
   "pwRowMultiCircle": "Vários círculos",
   "pwRowRecap": "Temas de recap",
-  "pwPriceTbd": "preço a definir"
+  "pwPriceTbd": "preço a definir",
+
+  "profileGuest": "Convidado(a)",
+  "profileSaveProgress": "Salvar seu progresso",
+  "profileFreePlan": "Plano grátis",
+  "profileLifetime": "Total",
+  "rowAccount": "Conta",
+  "rowSubscription": "Assinatura",
+  "rowNotifications": "Notificações",
+  "rowAppearance": "Aparência",
+  "rowPrivacy": "Privacidade",
+  "rowTerms": "Termos",
+  "rowSignOut": "Sair",
+  "rowAbout": "Sobre",
+  "themeSystem": "Sistema",
+  "themeLight": "Claro",
+  "themeDark": "Escuro"
 }

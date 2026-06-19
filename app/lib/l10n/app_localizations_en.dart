@@ -355,4 +355,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pwPriceTbd => 'price TBD';
+
+  @override
+  String get profileGuest => 'Guest';
+
+  @override
+  String get profileSaveProgress => 'Save your progress';
+
+  @override
+  String get profileFreePlan => 'Free plan';
+
+  @override
+  String get profileLifetime => 'Lifetime';
+
+  @override
+  String get rowAccount => 'Account';
+
+  @override
+  String get rowSubscription => 'Subscription';
+
+  @override
+  String get rowNotifications => 'Notifications';
+
+  @override
+  String get rowAppearance => 'Appearance';
+
+  @override
+  String get rowPrivacy => 'Privacy';
+
+  @override
+  String get rowTerms => 'Terms';
+
+  @override
+  String get rowSignOut => 'Sign out';
+
+  @override
+  String get rowAbout => 'About';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
 }
