@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../data/providers/garden_provider.dart';
 import '../../l10n/app_localizations.dart';
+import '../../shared/widgets/grovely_components.dart';
 import 'focus_session_controller.dart';
 import 'widgets/tree_view.dart';
 
-/// Core loop — timer de foco + árvore que cresce (Agente B).
-///
-/// Detecta saída do app (lifecycle): se sair durante a sessão, a árvore murcha.
+/// Core loop — timer de foco + árvore que cresce (Agente B, polido §2).
 class FocusSessionScreen extends ConsumerStatefulWidget {
   const FocusSessionScreen({super.key});
 
@@ -31,8 +32,6 @@ class _FocusSessionScreenState extends ConsumerState<FocusSessionScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // Background → inicia carência; volta a tempo → cancela. Murcha só se ficar
-    // fora além da janela (perdoa ligação/notificação/troca rápida).
     final controller = ref.read(focusSessionProvider.notifier);
     if (state == AppLifecycleState.paused) {
       controller.onAppPaused();
@@ -41,186 +40,339 @@ class _FocusSessionScreenState extends ConsumerState<FocusSessionScreen>
     }
   }
 
-  String _fmt(int seconds) {
-    final m = (seconds ~/ 60).toString().padLeft(2, '0');
-    final s = (seconds % 60).toString().padLeft(2, '0');
-    return '$m:$s';
-  }
+  String _fmt(int s) =>
+      '${(s ~/ 60).toString().padLeft(2, '0')}:${(s % 60).toString().padLeft(2, '0')}';
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
     final state = ref.watch(focusSessionProvider);
-    final controller = ref.read(focusSessionProvider.notifier);
-
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.focusTitle)),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: switch (state.phase) {
-            FocusPhase.selecting => _Selecting(
-              state: state,
-              controller: controller,
-            ),
-            FocusPhase.running => _Running(state: state, fmt: _fmt),
-            FocusPhase.completed => _Result(
-              state: state,
-              title: l10n.focusCompletedTitle,
-              body: l10n.focusCompletedBody(state.durationMinutes),
-              onReset: controller.reset,
-              resetLabel: l10n.focusNewSession,
-            ),
-            FocusPhase.withered => _Result(
-              state: state,
-              title: l10n.focusWitheredTitle,
-              body: l10n.focusWitheredBody,
-              onReset: controller.reset,
-              resetLabel: l10n.focusNewSession,
-            ),
-          },
-        ),
+        child: switch (state.phase) {
+          FocusPhase.selecting => _Selecting(fmt: _fmt),
+          FocusPhase.running => _Running(state: state, fmt: _fmt),
+          FocusPhase.completed => _Completed(state: state),
+          FocusPhase.withered => _Withered(state: state),
+        },
       ),
     );
   }
 }
 
-class _Selecting extends StatelessWidget {
-  const _Selecting({required this.state, required this.controller});
-  final FocusState state;
-  final FocusSessionController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return Column(
-      children: [
-        Text(
-          l10n.focusSubtitle,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        const SizedBox(height: 24),
-        Expanded(
-          child: Center(
-            child: TreeView(
-              type: state.treeType,
-              stage: state.stage,
-              size: 200,
-            ),
-          ),
-        ),
-        Wrap(
-          spacing: 10,
-          alignment: WrapAlignment.center,
-          children: [
-            for (final min in FocusSessionController.durationOptions)
-              ChoiceChip(
-                label: Text(l10n.minutesShort(min)),
-                selected: state.durationMinutes == min,
-                onSelected: (_) => controller.setDuration(min),
-              ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        SizedBox(
-          width: double.infinity,
-          child: FilledButton(
-            onPressed: controller.start,
-            child: Text(l10n.focusStart),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _Running extends ConsumerWidget {
-  const _Running({required this.state, required this.fmt});
-  final FocusState state;
+// ── Selecting ────────────────────────────────────────────────────────────────
+class _Selecting extends ConsumerWidget {
+  const _Selecting({required this.fmt});
   final String Function(int) fmt;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    return Column(
-      children: [
-        Expanded(
-          child: Center(
-            child: TreeView(
-              type: state.treeType,
-              stage: state.stage,
-              size: 260,
+    final state = ref.watch(focusSessionProvider);
+    final controller = ref.read(focusSessionProvider.notifier);
+    final stats = ref.watch(gardenStatsProvider);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: StreakBadge(count: stats.currentStreak),
+          ),
+          Expanded(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                const SymbolWatermark(size: 300),
+                TreeView(type: state.treeType, stage: state.stage, size: 200),
+              ],
             ),
           ),
-        ),
-        Text(
-          fmt(state.secondsRemaining),
-          style: theme.textTheme.displayLarge?.copyWith(
-            fontFeatures: const [FontFeature.tabularFigures()],
+          Text(
+            l10n.focusPreview(
+                speciesName(l10n, state.treeType), state.durationMinutes),
+            style: theme.textTheme.bodyMedium
+                ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
           ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          l10n.focusKeepGrowing,
-          textAlign: TextAlign.center,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
+          const SizedBox(height: 14),
+          DurationDial(
+            options: FocusSessionController.durationOptions,
+            selected: state.durationMinutes,
+            onSelected: controller.setDuration,
           ),
-        ),
-        const SizedBox(height: 16),
-        TextButton(
-          onPressed: () => ref.read(focusSessionProvider.notifier).wither(),
-          child: Text(l10n.focusGiveUp),
-        ),
-      ],
+          const SizedBox(height: 18),
+          SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: FilledButton(
+              onPressed: controller.start,
+              child: Text(l10n.focusPlant),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _Result extends StatelessWidget {
-  const _Result({
-    required this.state,
-    required this.title,
-    required this.body,
-    required this.onReset,
-    required this.resetLabel,
-  });
+// ── Running (imersivo) ───────────────────────────────────────────────────────
+class _Running extends ConsumerWidget {
+  const _Running({required this.state, required this.fmt});
   final FocusState state;
-  final String title;
-  final String body;
-  final VoidCallback onReset;
-  final String resetLabel;
+  final String Function(int) fmt;
+
+  Future<void> _confirmGiveUp(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    await showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheetCtx) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 4, 24, 28),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(l10n.focusGiveUpConfirmTitle,
+                textAlign: TextAlign.center,
+                style: Theme.of(sheetCtx).textTheme.titleMedium),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: FilledButton(
+                onPressed: () => Navigator.pop(sheetCtx),
+                child: Text(l10n.focusKeepFocusing),
+              ),
+            ),
+            const SizedBox(height: 8),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(sheetCtx);
+                ref.read(focusSessionProvider.notifier).wither();
+              },
+              child: Text(l10n.focusGiveUp),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    return Column(
-      children: [
-        Expanded(
-          child: Center(
-            child: TreeView(
-              type: state.treeType,
-              stage: state.stage,
-              size: 240,
+    final isDark = theme.brightness == Brightness.dark;
+    // Fundo esquenta levemente conforme se aproxima do fim (alvorada → dia).
+    final warm = Color.lerp(
+      theme.colorScheme.surface,
+      (isDark ? const Color(0xFF3A2F1C) : const Color(0xFFF6ECD9)),
+      state.progress * 0.6,
+    )!;
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [theme.colorScheme.surface, warm],
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+        child: Column(
+          children: [
+            Text(l10n.focusKeepGrowing,
+                style: theme.textTheme.bodyMedium
+                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+            Expanded(
+              child: Center(
+                child: TimerRing(
+                  progress: state.progress,
+                  size: 280,
+                  child: TreeView(
+                      type: state.treeType, stage: state.stage, size: 170),
+                ),
+              ),
+            ),
+            Text(
+              fmt(state.secondsRemaining),
+              style: theme.textTheme.displayLarge?.copyWith(
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: () => _confirmGiveUp(context, ref),
+              child: Text(l10n.focusGiveUp),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Completed ────────────────────────────────────────────────────────────────
+class _Completed extends ConsumerWidget {
+  const _Completed({required this.state});
+  final FocusState state;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final controller = ref.read(focusSessionProvider.notifier);
+    final stats = ref.watch(gardenStatsProvider);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+      child: Column(
+        children: [
+          Expanded(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                const SymbolWatermark(size: 300),
+                TreeView(type: state.treeType, stage: state.stage, size: 220),
+              ],
             ),
           ),
-        ),
-        Text(title, style: theme.textTheme.headlineSmall),
-        const SizedBox(height: 8),
-        Text(
-          body,
-          textAlign: TextAlign.center,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
+          Text(l10n.focusCompletedTitle, style: theme.textTheme.headlineSmall),
+          const SizedBox(height: 16),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            alignment: WrapAlignment.center,
+            children: [
+              StatPill(
+                  icon: Icons.timer_outlined,
+                  label: l10n.statMinFocused(state.durationMinutes)),
+              StatPill(
+                  icon: Icons.local_fire_department,
+                  label: l10n.streakDays(stats.currentStreak)),
+              StatPill(
+                  icon: Icons.park_outlined, label: l10n.statTrees(stats.trees)),
+            ],
           ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.check_circle,
+                  size: 16, color: theme.colorScheme.primary),
+              const SizedBox(width: 6),
+              Text(l10n.addedToGarden,
+                  style: theme.textTheme.bodySmall
+                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+            ],
+          ),
+          const SizedBox(height: 20),
+          SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: FilledButton(
+              onPressed: controller.reset,
+              child: Text(l10n.plantAnother),
+            ),
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            width: double.infinity,
+            height: 52,
+            child: FilledButton.tonal(
+              onPressed: () => context.go('/garden'),
+              child: Text(l10n.viewGarden),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Withered + Revive ────────────────────────────────────────────────────────
+class _Withered extends ConsumerWidget {
+  const _Withered({required this.state});
+  final FocusState state;
+
+  Future<void> _reviveSheet(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    await showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheetCtx) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 4, 24, 28),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(l10n.reviveSheetBody,
+                textAlign: TextAlign.center,
+                style: Theme.of(sheetCtx).textTheme.titleMedium),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: FilledButton(
+                onPressed: () {
+                  Navigator.pop(sheetCtx);
+                  // TODO(Agente D): rewarded ad real antes de reviver.
+                  ref.read(focusSessionProvider.notifier).revive();
+                },
+                child: Text(l10n.watchAndRevive),
+              ),
+            ),
+            const SizedBox(height: 8),
+            TextButton(
+              onPressed: () => Navigator.pop(sheetCtx),
+              child: Text(l10n.noThanks),
+            ),
+          ],
         ),
-        const SizedBox(height: 20),
-        SizedBox(
-          width: double.infinity,
-          child: FilledButton(onPressed: onReset, child: Text(resetLabel)),
-        ),
-      ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final controller = ref.read(focusSessionProvider.notifier);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+      child: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: TreeView(type: state.treeType, stage: state.stage, size: 200),
+            ),
+          ),
+          Text(l10n.focusWitheredTitle, style: theme.textTheme.headlineSmall),
+          const SizedBox(height: 8),
+          Text(
+            l10n.witheredBodyKind,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodyMedium
+                ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          ),
+          const SizedBox(height: 20),
+          SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: FilledButton.tonal(
+              onPressed: () => _reviveSheet(context, ref),
+              child: Text(l10n.reviveWithVideo),
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextButton(
+            onPressed: controller.reset,
+            child: Text(l10n.startFresh),
+          ),
+        ],
+      ),
     );
   }
 }

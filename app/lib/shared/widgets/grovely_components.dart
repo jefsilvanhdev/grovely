@@ -1,0 +1,230 @@
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../core/theme/app_colors.dart';
+import '../../data/models/tree.dart';
+import '../../l10n/app_localizations.dart';
+
+/// Nome localizado da espécie (preview de foco, detalhe da árvore).
+String speciesName(AppLocalizations l10n, TreeType type) => switch (type) {
+      TreeType.oak => l10n.speciesOak,
+      TreeType.pine => l10n.speciesPine,
+      TreeType.roundBush => l10n.speciesRoundBush,
+      TreeType.willow => l10n.speciesWillow,
+      TreeType.birch => l10n.speciesBirch,
+      TreeType.cherryBlossom => l10n.speciesCherryBlossom,
+    };
+
+/// Pill de sequência — chama o motivo do sol (chama/flame) em accent.
+class StreakBadge extends StatelessWidget {
+  const StreakBadge({super.key, required this.count});
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final accent = isDark ? AppColors.accentDark : AppColors.accent;
+    final label = count > 0 ? l10n.streakDays(count) : l10n.streakStart;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+      decoration: BoxDecoration(
+        color: accent.withValues(alpha: isDark ? 0.22 : 0.18),
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.local_fire_department, size: 16, color: accent),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 13,
+              color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Pill de estatística — glifo + valor já formatado.
+class StatPill extends StatelessWidget {
+  const StatPill({super.key, required this.icon, required this.label});
+  final IconData icon;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: scheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 15, color: scheme.onSurfaceVariant),
+          const SizedBox(width: 6),
+          Text(label,
+              style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12.5,
+                  color: scheme.onSurface)),
+        ],
+      ),
+    );
+  }
+}
+
+/// Seletor de duração — pill segmentado (substitui os ChoiceChips).
+class DurationDial extends StatelessWidget {
+  const DurationDial({
+    super.key,
+    required this.options,
+    required this.selected,
+    required this.onSelected,
+  });
+
+  final List<int> options;
+  final int selected;
+  final ValueChanged<int> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: scheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Row(
+        children: [
+          for (final min in options)
+            Expanded(
+              child: GestureDetector(
+                onTap: () => onSelected(min),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeOut,
+                  height: 44,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: selected == min ? scheme.primary : Colors.transparent,
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: Text(
+                    '$min',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15,
+                      color: selected == min
+                          ? scheme.onPrimary
+                          : scheme.onSurfaceVariant,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Anel de progresso ao redor da árvore.
+class TimerRing extends StatelessWidget {
+  const TimerRing({
+    super.key,
+    required this.progress,
+    required this.child,
+    this.size = 260,
+  });
+
+  final double progress;
+  final Widget child;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return SizedBox(
+      width: size,
+      height: size,
+      child: CustomPaint(
+        painter: _RingPainter(
+          progress: progress.clamp(0, 1),
+          track: scheme.outline,
+          arc: scheme.primary,
+        ),
+        child: Center(
+          child: SizedBox(width: size * 0.62, height: size * 0.62, child: child),
+        ),
+      ),
+    );
+  }
+}
+
+class _RingPainter extends CustomPainter {
+  _RingPainter({required this.progress, required this.track, required this.arc});
+  final double progress;
+  final Color track;
+  final Color arc;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = size.center(Offset.zero);
+    final radius = size.width / 2 - 4;
+    const stroke = 7.0;
+    final trackPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = stroke
+      ..color = track;
+    final arcPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = stroke
+      ..strokeCap = StrokeCap.round
+      ..color = arc;
+    canvas.drawCircle(center, radius, trackPaint);
+    canvas.drawArc(
+      Rect.fromCircle(center: center, radius: radius),
+      -math.pi / 2,
+      2 * math.pi * progress,
+      false,
+      arcPaint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_RingPainter old) =>
+      old.progress != progress || old.track != track || old.arc != arc;
+}
+
+/// Marca d'água do símbolo Grovely atrás de momentos-herói (faint).
+class SymbolWatermark extends StatelessWidget {
+  const SymbolWatermark({super.key, this.size = 280, this.opacity = 0.06});
+  final double size;
+  final double opacity;
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: Opacity(
+        opacity: opacity,
+        child: SvgPicture.asset(
+          'assets/brand/logo/grovely-symbol.svg',
+          width: size,
+          height: size,
+        ),
+      ),
+    );
+  }
+}

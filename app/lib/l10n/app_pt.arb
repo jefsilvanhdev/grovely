@@ -36,5 +36,41 @@
   "focusWitheredBody": "Você saiu antes do fim da sessão. Tente de novo.",
   "focusNewSession": "Nova sessão",
   "minutesShort": "{minutes} min",
-  "gardenTreeCount": "{count, plural, =0{Nenhuma árvore ainda} =1{1 árvore} other{{count} árvores}}"
+  "gardenTreeCount": "{count, plural, =0{Nenhuma árvore ainda} =1{1 árvore} other{{count} árvores}}",
+
+  "streakStart": "Comece uma sequência",
+  "streakDays": "sequência de {count} dias",
+  "focusLiveNow": "{count} focando agora",
+  "focusPreview": "Um(a) {species} jovem em {minutes} min.",
+  "focusPlant": "Plantar e focar",
+  "focusGiveUpConfirmTitle": "Sair agora? Sua árvore vai murchar.",
+  "focusKeepFocusing": "Continuar focando",
+
+  "statMinFocused": "{minutes} min de foco",
+  "statTrees": "{count} árvores",
+  "statHoursFocused": "{hours}h de foco",
+  "statLongest": "Recorde: {count} dias",
+  "statSpecies": "{count}/6 espécies",
+  "addedToGarden": "Adicionada ao seu jardim",
+  "plantAnother": "Plantar outra",
+  "viewGarden": "Ver jardim",
+
+  "reviveWithVideo": "Reviver com um vídeo curto",
+  "startFresh": "Começar de novo",
+  "reviveSheetBody": "Assista a um vídeo de 30s para reviver esta árvore.",
+  "watchAndRevive": "Assistir e reviver",
+  "noThanks": "Não, obrigado(a)",
+  "reviveUnavailable": "Não deu pra carregar o vídeo — sua árvore segue aqui pra replantar.",
+  "witheredBodyKind": "Você saiu antes do fim — acontece. Quer trazê-la de volta?",
+
+  "plantFirst": "Plantar minha primeira árvore",
+  "gardenWaiting": "Seu jardim está esperando.",
+  "gardenWaitingSub": "Conclua uma sessão de foco para plantar sua primeira árvore.",
+
+  "speciesOak": "carvalho",
+  "speciesPine": "pinheiro",
+  "speciesRoundBush": "arbusto",
+  "speciesWillow": "salgueiro",
+  "speciesBirch": "bétula",
+  "speciesCherryBlossom": "cerejeira"
 }

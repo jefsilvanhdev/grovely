@@ -117,4 +117,117 @@ class AppLocalizationsPt extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get streakStart => 'Comece uma sequência';
+
+  @override
+  String streakDays(int count) {
+    return 'sequência de $count dias';
+  }
+
+  @override
+  String focusLiveNow(int count) {
+    return '$count focando agora';
+  }
+
+  @override
+  String focusPreview(String species, int minutes) {
+    return 'Um(a) $species jovem em $minutes min.';
+  }
+
+  @override
+  String get focusPlant => 'Plantar e focar';
+
+  @override
+  String get focusGiveUpConfirmTitle => 'Sair agora? Sua árvore vai murchar.';
+
+  @override
+  String get focusKeepFocusing => 'Continuar focando';
+
+  @override
+  String statMinFocused(int minutes) {
+    return '$minutes min de foco';
+  }
+
+  @override
+  String statTrees(int count) {
+    return '$count árvores';
+  }
+
+  @override
+  String statHoursFocused(int hours) {
+    return '${hours}h de foco';
+  }
+
+  @override
+  String statLongest(int count) {
+    return 'Recorde: $count dias';
+  }
+
+  @override
+  String statSpecies(int count) {
+    return '$count/6 espécies';
+  }
+
+  @override
+  String get addedToGarden => 'Adicionada ao seu jardim';
+
+  @override
+  String get plantAnother => 'Plantar outra';
+
+  @override
+  String get viewGarden => 'Ver jardim';
+
+  @override
+  String get reviveWithVideo => 'Reviver com um vídeo curto';
+
+  @override
+  String get startFresh => 'Começar de novo';
+
+  @override
+  String get reviveSheetBody =>
+      'Assista a um vídeo de 30s para reviver esta árvore.';
+
+  @override
+  String get watchAndRevive => 'Assistir e reviver';
+
+  @override
+  String get noThanks => 'Não, obrigado(a)';
+
+  @override
+  String get reviveUnavailable =>
+      'Não deu pra carregar o vídeo — sua árvore segue aqui pra replantar.';
+
+  @override
+  String get witheredBodyKind =>
+      'Você saiu antes do fim — acontece. Quer trazê-la de volta?';
+
+  @override
+  String get plantFirst => 'Plantar minha primeira árvore';
+
+  @override
+  String get gardenWaiting => 'Seu jardim está esperando.';
+
+  @override
+  String get gardenWaitingSub =>
+      'Conclua uma sessão de foco para plantar sua primeira árvore.';
+
+  @override
+  String get speciesOak => 'carvalho';
+
+  @override
+  String get speciesPine => 'pinheiro';
+
+  @override
+  String get speciesRoundBush => 'arbusto';
+
+  @override
+  String get speciesWillow => 'salgueiro';
+
+  @override
+  String get speciesBirch => 'bétula';
+
+  @override
+  String get speciesCherryBlossom => 'cerejeira';
 }

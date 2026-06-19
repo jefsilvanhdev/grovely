@@ -138,6 +138,13 @@ class FocusSessionController extends Notifier<FocusState> {
   /// Voltou ao app dentro da carência → cancela a murcha.
   void onAppResumed() => _graceTimer?.cancel();
 
+  /// Revive a árvore murcha (após rewarded ad — wiring real do anúncio é do
+  /// Agente D). Planta a sessão como concluída. Permitido só a partir de murcha.
+  Future<void> revive() async {
+    if (state.phase != FocusPhase.withered) return;
+    await _complete();
+  }
+
   /// Volta para a seleção (nova árvore aleatória).
   void reset() {
     _timer?.cancel();

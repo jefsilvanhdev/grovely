@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/focus_session/focus_session_controller.dart';
 import '../../l10n/app_localizations.dart';
 
 /// Casca principal com bottom nav de 5 abas: Foco · Jardim · Círculo · Liga ·
 /// Perfil. Cada aba é um branch do [StatefulShellRoute] (mantém estado).
-class MainShell extends StatelessWidget {
+///
+/// Durante uma sessão de foco rodando, a nav some (modo imersivo) — evita
+/// "sair" acidental e reforça "fique aqui".
+class MainShell extends ConsumerWidget {
   const MainShell({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final running = ref.watch(
+        focusSessionProvider.select((s) => s.phase == FocusPhase.running));
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: running
+          ? null
+          : NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: (index) => navigationShell.goBranch(
           index,

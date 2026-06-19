@@ -115,4 +115,116 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get streakStart => 'Start a streak';
+
+  @override
+  String streakDays(int count) {
+    return '$count-day streak';
+  }
+
+  @override
+  String focusLiveNow(int count) {
+    return '$count focusing now';
+  }
+
+  @override
+  String focusPreview(String species, int minutes) {
+    return 'A young $species in $minutes min.';
+  }
+
+  @override
+  String get focusPlant => 'Plant & focus';
+
+  @override
+  String get focusGiveUpConfirmTitle => 'Leave now? Your tree will wither.';
+
+  @override
+  String get focusKeepFocusing => 'Keep focusing';
+
+  @override
+  String statMinFocused(int minutes) {
+    return '$minutes min focused';
+  }
+
+  @override
+  String statTrees(int count) {
+    return '$count trees';
+  }
+
+  @override
+  String statHoursFocused(int hours) {
+    return '${hours}h focused';
+  }
+
+  @override
+  String statLongest(int count) {
+    return 'Longest: $count days';
+  }
+
+  @override
+  String statSpecies(int count) {
+    return '$count/6 species';
+  }
+
+  @override
+  String get addedToGarden => 'Added to your garden';
+
+  @override
+  String get plantAnother => 'Plant another';
+
+  @override
+  String get viewGarden => 'View garden';
+
+  @override
+  String get reviveWithVideo => 'Revive with a short video';
+
+  @override
+  String get startFresh => 'Start fresh';
+
+  @override
+  String get reviveSheetBody => 'Watch a 30-second video to revive this tree.';
+
+  @override
+  String get watchAndRevive => 'Watch & revive';
+
+  @override
+  String get noThanks => 'No thanks';
+
+  @override
+  String get reviveUnavailable =>
+      'Couldn\'t load the video — your tree\'s still here to replant.';
+
+  @override
+  String get witheredBodyKind =>
+      'You left before the session finished — it happens. Want to bring it back?';
+
+  @override
+  String get plantFirst => 'Plant your first tree';
+
+  @override
+  String get gardenWaiting => 'Your garden is waiting.';
+
+  @override
+  String get gardenWaitingSub =>
+      'Finish a focus session to plant your first tree.';
+
+  @override
+  String get speciesOak => 'oak';
+
+  @override
+  String get speciesPine => 'pine';
+
+  @override
+  String get speciesRoundBush => 'bush';
+
+  @override
+  String get speciesWillow => 'willow';
+
+  @override
+  String get speciesBirch => 'birch';
+
+  @override
+  String get speciesCherryBlossom => 'cherry blossom';
 }

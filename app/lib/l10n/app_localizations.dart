@@ -283,6 +283,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =0{No trees yet} =1{1 tree} other{{count} trees}}'**
   String gardenTreeCount(int count);
+
+  /// No description provided for @streakStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start a streak'**
+  String get streakStart;
+
+  /// No description provided for @streakDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}-day streak'**
+  String streakDays(int count);
+
+  /// No description provided for @focusLiveNow.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} focusing now'**
+  String focusLiveNow(int count);
+
+  /// No description provided for @focusPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'A young {species} in {minutes} min.'**
+  String focusPreview(String species, int minutes);
+
+  /// No description provided for @focusPlant.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant & focus'**
+  String get focusPlant;
+
+  /// No description provided for @focusGiveUpConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave now? Your tree will wither.'**
+  String get focusGiveUpConfirmTitle;
+
+  /// No description provided for @focusKeepFocusing.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep focusing'**
+  String get focusKeepFocusing;
+
+  /// No description provided for @statMinFocused.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min focused'**
+  String statMinFocused(int minutes);
+
+  /// No description provided for @statTrees.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} trees'**
+  String statTrees(int count);
+
+  /// No description provided for @statHoursFocused.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h focused'**
+  String statHoursFocused(int hours);
+
+  /// No description provided for @statLongest.
+  ///
+  /// In en, this message translates to:
+  /// **'Longest: {count} days'**
+  String statLongest(int count);
+
+  /// No description provided for @statSpecies.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}/6 species'**
+  String statSpecies(int count);
+
+  /// No description provided for @addedToGarden.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to your garden'**
+  String get addedToGarden;
+
+  /// No description provided for @plantAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant another'**
+  String get plantAnother;
+
+  /// No description provided for @viewGarden.
+  ///
+  /// In en, this message translates to:
+  /// **'View garden'**
+  String get viewGarden;
+
+  /// No description provided for @reviveWithVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Revive with a short video'**
+  String get reviveWithVideo;
+
+  /// No description provided for @startFresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Start fresh'**
+  String get startFresh;
+
+  /// No description provided for @reviveSheetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch a 30-second video to revive this tree.'**
+  String get reviveSheetBody;
+
+  /// No description provided for @watchAndRevive.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch & revive'**
+  String get watchAndRevive;
+
+  /// No description provided for @noThanks.
+  ///
+  /// In en, this message translates to:
+  /// **'No thanks'**
+  String get noThanks;
+
+  /// No description provided for @reviveUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the video — your tree\'s still here to replant.'**
+  String get reviveUnavailable;
+
+  /// No description provided for @witheredBodyKind.
+  ///
+  /// In en, this message translates to:
+  /// **'You left before the session finished — it happens. Want to bring it back?'**
+  String get witheredBodyKind;
+
+  /// No description provided for @plantFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant your first tree'**
+  String get plantFirst;
+
+  /// No description provided for @gardenWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Your garden is waiting.'**
+  String get gardenWaiting;
+
+  /// No description provided for @gardenWaitingSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish a focus session to plant your first tree.'**
+  String get gardenWaitingSub;
+
+  /// No description provided for @speciesOak.
+  ///
+  /// In en, this message translates to:
+  /// **'oak'**
+  String get speciesOak;
+
+  /// No description provided for @speciesPine.
+  ///
+  /// In en, this message translates to:
+  /// **'pine'**
+  String get speciesPine;
+
+  /// No description provided for @speciesRoundBush.
+  ///
+  /// In en, this message translates to:
+  /// **'bush'**
+  String get speciesRoundBush;
+
+  /// No description provided for @speciesWillow.
+  ///
+  /// In en, this message translates to:
+  /// **'willow'**
+  String get speciesWillow;
+
+  /// No description provided for @speciesBirch.
+  ///
+  /// In en, this message translates to:
+  /// **'birch'**
+  String get speciesBirch;
+
+  /// No description provided for @speciesCherryBlossom.
+  ///
+  /// In en, this message translates to:
+  /// **'cherry blossom'**
+  String get speciesCherryBlossom;
 }
 
 class _AppLocalizationsDelegate
