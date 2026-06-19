@@ -847,6 +847,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Plant a tree to start this week\'s recap.'**
   String get recapEmptySub;
+
+  /// No description provided for @circleEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Grow together.'**
+  String get circleEmptyTitle;
+
+  /// No description provided for @circleEmptySub.
+  ///
+  /// In en, this message translates to:
+  /// **'A circle is 6–12 people focusing toward a shared garden and a weekly league.'**
+  String get circleEmptySub;
+
+  /// No description provided for @circleCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a circle'**
+  String get circleCreate;
+
+  /// No description provided for @circleJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Join with a code'**
+  String get circleJoin;
+
+  /// No description provided for @circlePrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Only your first name and tree count are visible to members.'**
+  String get circlePrivacy;
+
+  /// No description provided for @circleNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Circle name'**
+  String get circleNameLabel;
+
+  /// No description provided for @circleNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Deep Work Club'**
+  String get circleNameHint;
+
+  /// No description provided for @circleCreateCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Create circle'**
+  String get circleCreateCta;
+
+  /// No description provided for @circleJoinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Join a circle'**
+  String get circleJoinTitle;
+
+  /// No description provided for @circleCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite code'**
+  String get circleCodeLabel;
+
+  /// No description provided for @circleJoinCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Join'**
+  String get circleJoinCta;
+
+  /// No description provided for @circleInvalidCode.
+  ///
+  /// In en, this message translates to:
+  /// **'That code didn\'t match a circle.'**
+  String get circleInvalidCode;
+
+  /// No description provided for @circleFull.
+  ///
+  /// In en, this message translates to:
+  /// **'This circle is full.'**
+  String get circleFull;
+
+  /// No description provided for @circleInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Share invite'**
+  String get circleInvite;
+
+  /// No description provided for @circleMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get circleMembers;
+
+  /// No description provided for @circleGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'{planted}/{goal} trees this week'**
+  String circleGoal(int planted, int goal);
+
+  /// No description provided for @circleLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave circle'**
+  String get circleLeave;
+
+  /// No description provided for @circleLeaveConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave circle?'**
+  String get circleLeaveConfirm;
+
+  /// No description provided for @circleLeaveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You can rejoin with the code.'**
+  String get circleLeaveBody;
+
+  /// No description provided for @circleStay.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay'**
+  String get circleStay;
+
+  /// No description provided for @memberWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} this week'**
+  String memberWeekly(int count);
+
+  /// No description provided for @leagueSolo.
+  ///
+  /// In en, this message translates to:
+  /// **'Join a circle to enter the weekly league.'**
+  String get leagueSolo;
+
+  /// No description provided for @leagueTitleWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week\'s standings'**
+  String get leagueTitleWeek;
+
+  /// No description provided for @leagueYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get leagueYou;
 }
 
 class _AppLocalizationsDelegate

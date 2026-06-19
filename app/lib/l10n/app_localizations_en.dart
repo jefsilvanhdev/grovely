@@ -425,4 +425,82 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recapEmptySub => 'Plant a tree to start this week\'s recap.';
+
+  @override
+  String get circleEmptyTitle => 'Grow together.';
+
+  @override
+  String get circleEmptySub =>
+      'A circle is 6–12 people focusing toward a shared garden and a weekly league.';
+
+  @override
+  String get circleCreate => 'Create a circle';
+
+  @override
+  String get circleJoin => 'Join with a code';
+
+  @override
+  String get circlePrivacy =>
+      'Only your first name and tree count are visible to members.';
+
+  @override
+  String get circleNameLabel => 'Circle name';
+
+  @override
+  String get circleNameHint => 'e.g. Deep Work Club';
+
+  @override
+  String get circleCreateCta => 'Create circle';
+
+  @override
+  String get circleJoinTitle => 'Join a circle';
+
+  @override
+  String get circleCodeLabel => 'Invite code';
+
+  @override
+  String get circleJoinCta => 'Join';
+
+  @override
+  String get circleInvalidCode => 'That code didn\'t match a circle.';
+
+  @override
+  String get circleFull => 'This circle is full.';
+
+  @override
+  String get circleInvite => 'Share invite';
+
+  @override
+  String get circleMembers => 'Members';
+
+  @override
+  String circleGoal(int planted, int goal) {
+    return '$planted/$goal trees this week';
+  }
+
+  @override
+  String get circleLeave => 'Leave circle';
+
+  @override
+  String get circleLeaveConfirm => 'Leave circle?';
+
+  @override
+  String get circleLeaveBody => 'You can rejoin with the code.';
+
+  @override
+  String get circleStay => 'Stay';
+
+  @override
+  String memberWeekly(int count) {
+    return '$count this week';
+  }
+
+  @override
+  String get leagueSolo => 'Join a circle to enter the weekly league.';
+
+  @override
+  String get leagueTitleWeek => 'This week\'s standings';
+
+  @override
+  String get leagueYou => 'You';
 }

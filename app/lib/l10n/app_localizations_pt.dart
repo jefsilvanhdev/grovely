@@ -429,4 +429,83 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get recapEmptySub =>
       'Plante uma árvore pra começar o recap da semana.';
+
+  @override
+  String get circleEmptyTitle => 'Cresçam juntos.';
+
+  @override
+  String get circleEmptySub =>
+      'Um círculo são 6–12 pessoas focando por um jardim comum e uma liga semanal.';
+
+  @override
+  String get circleCreate => 'Criar um círculo';
+
+  @override
+  String get circleJoin => 'Entrar com código';
+
+  @override
+  String get circlePrivacy =>
+      'Só seu primeiro nome e número de árvores ficam visíveis.';
+
+  @override
+  String get circleNameLabel => 'Nome do círculo';
+
+  @override
+  String get circleNameHint => 'ex.: Clube do Foco';
+
+  @override
+  String get circleCreateCta => 'Criar círculo';
+
+  @override
+  String get circleJoinTitle => 'Entrar num círculo';
+
+  @override
+  String get circleCodeLabel => 'Código de convite';
+
+  @override
+  String get circleJoinCta => 'Entrar';
+
+  @override
+  String get circleInvalidCode =>
+      'Esse código não corresponde a nenhum círculo.';
+
+  @override
+  String get circleFull => 'Este círculo está cheio.';
+
+  @override
+  String get circleInvite => 'Compartilhar convite';
+
+  @override
+  String get circleMembers => 'Membros';
+
+  @override
+  String circleGoal(int planted, int goal) {
+    return '$planted/$goal árvores esta semana';
+  }
+
+  @override
+  String get circleLeave => 'Sair do círculo';
+
+  @override
+  String get circleLeaveConfirm => 'Sair do círculo?';
+
+  @override
+  String get circleLeaveBody => 'Você pode voltar com o código.';
+
+  @override
+  String get circleStay => 'Ficar';
+
+  @override
+  String memberWeekly(int count) {
+    return '$count esta semana';
+  }
+
+  @override
+  String get leagueSolo => 'Entre num círculo para participar da liga semanal.';
+
+  @override
+  String get leagueTitleWeek => 'Ranking da semana';
+
+  @override
+  String get leagueYou => 'Você';
 }
