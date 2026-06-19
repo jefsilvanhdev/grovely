@@ -230,4 +230,132 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get speciesCherryBlossom => 'cerejeira';
+
+  @override
+  String get commonSkip => 'Pular';
+
+  @override
+  String get onbWelcomeSub =>
+      'Plante uma árvore a cada sessão de foco. Veja seu bosque crescer.';
+
+  @override
+  String get onbGetStarted => 'Começar';
+
+  @override
+  String get onbHaveAccount => 'Já tenho conta';
+
+  @override
+  String get onbNotifTitle => 'Lembretes gentis, nunca barulho.';
+
+  @override
+  String get onbNotifBullet1 => 'Um lembrete diário pra plantar uma árvore';
+
+  @override
+  String get onbNotifBullet2 => 'Avisamos antes da sua sequência quebrar';
+
+  @override
+  String get onbNotifBullet3 => 'Saiba quando seu círculo está focando';
+
+  @override
+  String get onbNotifCta => 'Ativar lembretes';
+
+  @override
+  String get onbNotNow => 'Agora não';
+
+  @override
+  String get onbSocialTitle => 'Foque do seu jeito.';
+
+  @override
+  String get onbSocialSub => 'Você pode mudar isso depois.';
+
+  @override
+  String get onbSoloTitle => 'Focar sozinho(a)';
+
+  @override
+  String get onbSoloDesc => 'Só você e seu bosque.';
+
+  @override
+  String get onbCircleTitle => 'Focar com um círculo';
+
+  @override
+  String get onbCircleDesc => 'Cultive um jardim com 6–12 pessoas.';
+
+  @override
+  String get onbRecommended => 'Recomendado';
+
+  @override
+  String get onbPrivacy =>
+      'Só compartilhamos seu primeiro nome e número de árvores.';
+
+  @override
+  String get onbGuidedCoach =>
+      'Vamos plantar sua primeira árvore. Fique aqui por 5 minutos — só isso.';
+
+  @override
+  String get onbBegin => 'Começar';
+
+  @override
+  String get onbGuidedDone => 'Sua primeira árvore! 🌱 Essa é por nossa conta.';
+
+  @override
+  String get pwTitle => 'Vá além com o Grovely Premium.';
+
+  @override
+  String get pwSub => 'Tudo o que você ama, e mais formas de crescer.';
+
+  @override
+  String get pwTrialCta => 'Iniciar teste grátis de 21 dias';
+
+  @override
+  String pwTrialSub(String price) {
+    return 'Grátis por 21 dias, depois $price. Cancele quando quiser em dois toques.';
+  }
+
+  @override
+  String get pwAnnual => 'Anual';
+
+  @override
+  String get pwMonthly => 'Mensal';
+
+  @override
+  String get pwSave => 'Economize 40%';
+
+  @override
+  String get pwContinueFree => 'Continuar no plano grátis';
+
+  @override
+  String get pwRestore => 'Restaurar compras';
+
+  @override
+  String get pwFree => 'Grátis';
+
+  @override
+  String get pwPremium => 'Premium';
+
+  @override
+  String get pwRowSoloFocus => 'Foco solo ilimitado';
+
+  @override
+  String get pwRowGarden => 'Jardim e sequência completos';
+
+  @override
+  String get pwRowOneCircle => 'Entrar em 1 círculo';
+
+  @override
+  String get pwRowCustom => 'Durações personalizadas';
+
+  @override
+  String get pwRowSpecies => 'Todas as espécies e árvores sazonais';
+
+  @override
+  String get pwRowStats => 'Estatísticas avançadas';
+
+  @override
+  String get pwRowMultiCircle => 'Vários círculos';
+
+  @override
+  String get pwRowRecap => 'Temas de recap';
+
+  @override
+  String get pwPriceTbd => 'preço a definir';
 }

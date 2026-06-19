@@ -227,4 +227,132 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get speciesCherryBlossom => 'cherry blossom';
+
+  @override
+  String get commonSkip => 'Skip';
+
+  @override
+  String get onbWelcomeSub =>
+      'Plant a tree with every focused session. Watch your grove grow.';
+
+  @override
+  String get onbGetStarted => 'Get started';
+
+  @override
+  String get onbHaveAccount => 'I already have an account';
+
+  @override
+  String get onbNotifTitle => 'Gentle nudges, never noise.';
+
+  @override
+  String get onbNotifBullet1 => 'A daily reminder to plant one tree';
+
+  @override
+  String get onbNotifBullet2 =>
+      'We\'ll help you save a streak before it breaks';
+
+  @override
+  String get onbNotifBullet3 => 'Know when your circle is focusing';
+
+  @override
+  String get onbNotifCta => 'Turn on reminders';
+
+  @override
+  String get onbNotNow => 'Not now';
+
+  @override
+  String get onbSocialTitle => 'Focus your way.';
+
+  @override
+  String get onbSocialSub => 'You can always change this later.';
+
+  @override
+  String get onbSoloTitle => 'Focus solo';
+
+  @override
+  String get onbSoloDesc => 'Just you and your grove.';
+
+  @override
+  String get onbCircleTitle => 'Focus with a circle';
+
+  @override
+  String get onbCircleDesc => 'Grow a shared garden with 6–12 people.';
+
+  @override
+  String get onbRecommended => 'Recommended';
+
+  @override
+  String get onbPrivacy => 'We only ever share your first name and tree count.';
+
+  @override
+  String get onbGuidedCoach =>
+      'Let\'s plant your first tree. Stay here for 5 minutes — that\'s it.';
+
+  @override
+  String get onbBegin => 'Begin';
+
+  @override
+  String get onbGuidedDone => 'Your first tree! 🌱 This one\'s on us.';
+
+  @override
+  String get pwTitle => 'Go deeper with Grovely Premium.';
+
+  @override
+  String get pwSub => 'Everything you love, plus more ways to grow.';
+
+  @override
+  String get pwTrialCta => 'Start 21-day free trial';
+
+  @override
+  String pwTrialSub(String price) {
+    return 'Free for 21 days, then $price. Cancel anytime in two taps.';
+  }
+
+  @override
+  String get pwAnnual => 'Annual';
+
+  @override
+  String get pwMonthly => 'Monthly';
+
+  @override
+  String get pwSave => 'Save 40%';
+
+  @override
+  String get pwContinueFree => 'Continue with Free';
+
+  @override
+  String get pwRestore => 'Restore purchases';
+
+  @override
+  String get pwFree => 'Free';
+
+  @override
+  String get pwPremium => 'Premium';
+
+  @override
+  String get pwRowSoloFocus => 'Unlimited solo focus';
+
+  @override
+  String get pwRowGarden => 'Full garden & streak';
+
+  @override
+  String get pwRowOneCircle => 'Join 1 circle';
+
+  @override
+  String get pwRowCustom => 'Custom durations';
+
+  @override
+  String get pwRowSpecies => 'All species & seasonal trees';
+
+  @override
+  String get pwRowStats => 'Advanced stats';
+
+  @override
+  String get pwRowMultiCircle => 'Multiple circles';
+
+  @override
+  String get pwRowRecap => 'Recap themes';
+
+  @override
+  String get pwPriceTbd => 'price TBD';
 }

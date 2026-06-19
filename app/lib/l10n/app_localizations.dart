@@ -469,6 +469,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'cherry blossom'**
   String get speciesCherryBlossom;
+
+  /// No description provided for @commonSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get commonSkip;
+
+  /// No description provided for @onbWelcomeSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant a tree with every focused session. Watch your grove grow.'**
+  String get onbWelcomeSub;
+
+  /// No description provided for @onbGetStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get onbGetStarted;
+
+  /// No description provided for @onbHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'I already have an account'**
+  String get onbHaveAccount;
+
+  /// No description provided for @onbNotifTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gentle nudges, never noise.'**
+  String get onbNotifTitle;
+
+  /// No description provided for @onbNotifBullet1.
+  ///
+  /// In en, this message translates to:
+  /// **'A daily reminder to plant one tree'**
+  String get onbNotifBullet1;
+
+  /// No description provided for @onbNotifBullet2.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll help you save a streak before it breaks'**
+  String get onbNotifBullet2;
+
+  /// No description provided for @onbNotifBullet3.
+  ///
+  /// In en, this message translates to:
+  /// **'Know when your circle is focusing'**
+  String get onbNotifBullet3;
+
+  /// No description provided for @onbNotifCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on reminders'**
+  String get onbNotifCta;
+
+  /// No description provided for @onbNotNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get onbNotNow;
+
+  /// No description provided for @onbSocialTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus your way.'**
+  String get onbSocialTitle;
+
+  /// No description provided for @onbSocialSub.
+  ///
+  /// In en, this message translates to:
+  /// **'You can always change this later.'**
+  String get onbSocialSub;
+
+  /// No description provided for @onbSoloTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus solo'**
+  String get onbSoloTitle;
+
+  /// No description provided for @onbSoloDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Just you and your grove.'**
+  String get onbSoloDesc;
+
+  /// No description provided for @onbCircleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus with a circle'**
+  String get onbCircleTitle;
+
+  /// No description provided for @onbCircleDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Grow a shared garden with 6–12 people.'**
+  String get onbCircleDesc;
+
+  /// No description provided for @onbRecommended.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended'**
+  String get onbRecommended;
+
+  /// No description provided for @onbPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'We only ever share your first name and tree count.'**
+  String get onbPrivacy;
+
+  /// No description provided for @onbGuidedCoach.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s plant your first tree. Stay here for 5 minutes — that\'s it.'**
+  String get onbGuidedCoach;
+
+  /// No description provided for @onbBegin.
+  ///
+  /// In en, this message translates to:
+  /// **'Begin'**
+  String get onbBegin;
+
+  /// No description provided for @onbGuidedDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first tree! 🌱 This one\'s on us.'**
+  String get onbGuidedDone;
+
+  /// No description provided for @pwTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Go deeper with Grovely Premium.'**
+  String get pwTitle;
+
+  /// No description provided for @pwSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything you love, plus more ways to grow.'**
+  String get pwSub;
+
+  /// No description provided for @pwTrialCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Start 21-day free trial'**
+  String get pwTrialCta;
+
+  /// No description provided for @pwTrialSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Free for 21 days, then {price}. Cancel anytime in two taps.'**
+  String pwTrialSub(String price);
+
+  /// No description provided for @pwAnnual.
+  ///
+  /// In en, this message translates to:
+  /// **'Annual'**
+  String get pwAnnual;
+
+  /// No description provided for @pwMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get pwMonthly;
+
+  /// No description provided for @pwSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save 40%'**
+  String get pwSave;
+
+  /// No description provided for @pwContinueFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Free'**
+  String get pwContinueFree;
+
+  /// No description provided for @pwRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore purchases'**
+  String get pwRestore;
+
+  /// No description provided for @pwFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get pwFree;
+
+  /// No description provided for @pwPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium'**
+  String get pwPremium;
+
+  /// No description provided for @pwRowSoloFocus.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited solo focus'**
+  String get pwRowSoloFocus;
+
+  /// No description provided for @pwRowGarden.
+  ///
+  /// In en, this message translates to:
+  /// **'Full garden & streak'**
+  String get pwRowGarden;
+
+  /// No description provided for @pwRowOneCircle.
+  ///
+  /// In en, this message translates to:
+  /// **'Join 1 circle'**
+  String get pwRowOneCircle;
+
+  /// No description provided for @pwRowCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom durations'**
+  String get pwRowCustom;
+
+  /// No description provided for @pwRowSpecies.
+  ///
+  /// In en, this message translates to:
+  /// **'All species & seasonal trees'**
+  String get pwRowSpecies;
+
+  /// No description provided for @pwRowStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced stats'**
+  String get pwRowStats;
+
+  /// No description provided for @pwRowMultiCircle.
+  ///
+  /// In en, this message translates to:
+  /// **'Multiple circles'**
+  String get pwRowMultiCircle;
+
+  /// No description provided for @pwRowRecap.
+  ///
+  /// In en, this message translates to:
+  /// **'Recap themes'**
+  String get pwRowRecap;
+
+  /// No description provided for @pwPriceTbd.
+  ///
+  /// In en, this message translates to:
+  /// **'price TBD'**
+  String get pwPriceTbd;
 }
 
 class _AppLocalizationsDelegate
