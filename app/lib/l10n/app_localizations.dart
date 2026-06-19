@@ -805,6 +805,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark'**
   String get themeDark;
+
+  /// No description provided for @recapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly recap'**
+  String get recapTitle;
+
+  /// No description provided for @recapHero.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} trees this week'**
+  String recapHero(int count);
+
+  /// No description provided for @recapSub.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m focused'**
+  String recapSub(int hours, int minutes);
+
+  /// No description provided for @recapFooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Made with Grovely'**
+  String get recapFooter;
+
+  /// No description provided for @recapShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share my week'**
+  String get recapShare;
+
+  /// No description provided for @recapEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'A fresh week to grow.'**
+  String get recapEmpty;
+
+  /// No description provided for @recapEmptySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant a tree to start this week\'s recap.'**
+  String get recapEmptySub;
 }
 
 class _AppLocalizationsDelegate

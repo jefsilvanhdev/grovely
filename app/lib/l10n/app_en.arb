@@ -149,5 +149,15 @@
   "rowAbout": "About",
   "themeSystem": "System",
   "themeLight": "Light",
-  "themeDark": "Dark"
+  "themeDark": "Dark",
+
+  "recapTitle": "Weekly recap",
+  "recapHero": "{count} trees this week",
+  "@recapHero": { "placeholders": { "count": { "type": "int" } } },
+  "recapSub": "{hours}h {minutes}m focused",
+  "@recapSub": { "placeholders": { "hours": { "type": "int" }, "minutes": { "type": "int" } } },
+  "recapFooter": "Made with Grovely",
+  "recapShare": "Share my week",
+  "recapEmpty": "A fresh week to grow.",
+  "recapEmptySub": "Plant a tree to start this week's recap."
 }

@@ -403,4 +403,30 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get themeDark => 'Escuro';
+
+  @override
+  String get recapTitle => 'Recap semanal';
+
+  @override
+  String recapHero(int count) {
+    return '$count árvores esta semana';
+  }
+
+  @override
+  String recapSub(int hours, int minutes) {
+    return '${hours}h ${minutes}m de foco';
+  }
+
+  @override
+  String get recapFooter => 'Feito com Grovely';
+
+  @override
+  String get recapShare => 'Compartilhar minha semana';
+
+  @override
+  String get recapEmpty => 'Uma semana nova pra crescer.';
+
+  @override
+  String get recapEmptySub =>
+      'Plante uma árvore pra começar o recap da semana.';
 }
