@@ -1,8 +1,8 @@
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:plantio_coletivo/data/models/tree.dart';
-import 'package:plantio_coletivo/features/focus_session/focus_session_controller.dart';
+import 'package:grovely/data/models/tree.dart';
+import 'package:grovely/features/focus_session/focus_session_controller.dart';
 
 void main() {
   ProviderContainer makeContainer() {

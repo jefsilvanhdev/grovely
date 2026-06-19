@@ -1,8 +1,8 @@
 {
   "@@locale": "en",
 
-  "appName": "Plantio Coletivo",
-  "@appName": { "description": "Working title of the app (public name TBD by Agent A)." },
+  "appName": "Grovely",
+  "@appName": { "description": "Public name of the app." },
 
   "navFocus": "Focus",
   "@navFocus": { "description": "Bottom nav label — focus session tab." },

@@ -5,7 +5,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:plantio_coletivo/main.dart';
+import 'package:grovely/main.dart';
 
 void main() {
   testWidgets('App monta e mostra o onboarding', (tester) async {

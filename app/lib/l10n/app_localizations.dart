@@ -98,10 +98,10 @@ abstract class AppLocalizations {
     Locale('pt'),
   ];
 
-  /// Working title of the app (public name TBD by Agent A).
+  /// Public name of the app.
   ///
   /// In en, this message translates to:
-  /// **'Plantio Coletivo'**
+  /// **'Grovely'**
   String get appName;
 
   /// Bottom nav label — focus session tab.

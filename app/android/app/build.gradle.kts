@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.plantiocoletivo.plantio_coletivo"
+    namespace = "com.grovely.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.plantiocoletivo.plantio_coletivo"
+        applicationId = "com.grovely.app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         // firebase_* e google_mobile_ads exigem minSdk 23.

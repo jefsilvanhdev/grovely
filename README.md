@@ -1,6 +1,7 @@
-# Plantio Coletivo
+# Grovely
 
 Timer de foco com jardim que cresce e sessões coletivas em tempo real.
+Nome de trabalho anterior: "Plantio Coletivo" (a pasta do repo ainda usa esse path).
 Stack: **Flutter · Supabase · RevenueCat · AdMob · Firebase**. Plataforma
 inicial: Android. Mercado-alvo: público global (en) + Brasil (pt) como teste.
 

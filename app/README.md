@@ -1,6 +1,6 @@
-# plantio_coletivo
+# grovely
 
-Plantio Coletivo — timer de foco com jardim que cresce e sessões coletivas em tempo real.
+Grovely — timer de foco com jardim que cresce e sessões coletivas em tempo real.
 
 ## Getting Started
 

@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grovely · MVP Screens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   GROVELY — DESIGN TOKENS (from brand/tokens.json)
+   ============================================================ */
+:root{
+  --primary:#2E7D52; --on-primary:#FFFFFF; --primary-container:#C8E6CF; --on-primary-container:#14361F;
+  --accent:#E0A458; --on-accent:#2A1C08;
+  --bg:#F3F6F1; --surface:#FFFFFF; --surface-variant:#E7EEE7;
+  --on-surface:#18241D; --on-surface-variant:#4A5A50; --outline:#C2D0C5;
+  --tree-healthy:#43A86B; --tree-withered:#A89274;
+  --r-sm:8px; --r-md:14px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --shadow-card:0 14px 34px rgba(46,125,82,.12);
+  --shadow-soft:0 6px 18px rgba(46,125,82,.10);
+  --shadow-hero:0 22px 50px rgba(46,125,82,.20);
+  --display:'Bricolage Grotesque',sans-serif; --body:'Hanken Grotesk',sans-serif;
+}
+.dark{
+  --primary:#6FD79B; --on-primary:#07120C; --primary-container:#1E5238; --on-primary-container:#C8E6CF;
+  --accent:#F0B978; --on-accent:#2A1C08;
+  --bg:#0F1A15; --surface:#16221C; --surface-variant:#213029;
+  --on-surface:#E7F0E9; --on-surface-variant:#A7B8AD; --outline:#3A4D42;
+  --tree-healthy:#5FD394; --tree-withered:#B9A488;
+  --shadow-card:0 0 0 1px var(--outline); --shadow-soft:0 0 0 1px var(--outline); --shadow-hero:0 0 0 1px var(--outline);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  background:#0c130f;
+  color:#cdd9cf;
+  background-image:radial-gradient(1200px 600px at 12% -5%, rgba(46,125,82,.22), transparent 60%),
+                   radial-gradient(900px 500px at 100% 8%, rgba(224,164,88,.10), transparent 55%);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- DOC CHROME ---------- */
+.doc-head{max-width:1180px;margin:0 auto;padding:56px 28px 8px}
+.doc-eyebrow{font-family:var(--body);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#7fd6a4;font-weight:600}
+.doc-title{font-family:var(--display);font-weight:800;font-size:clamp(38px,6vw,68px);letter-spacing:-.035em;line-height:1;color:#f1f7f1;margin:10px 0 14px;
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.doc-sub{max-width:760px;font-size:16px;line-height:1.6;color:#9fb3a6}
+.doc-sub b{color:#d7e6da;font-weight:600}
+.legend{max-width:1180px;margin:26px auto 0;padding:0 28px;display:flex;gap:10px;flex-wrap:wrap}
+.legend .tag{font-size:12px;font-weight:600;letter-spacing:.02em;padding:7px 13px;border-radius:var(--r-pill);
+  border:1px solid rgba(127,214,164,.22);color:#bfe6cd;background:rgba(46,125,82,.12)}
+.legend .tag.amber{border-color:rgba(240,185,120,.28);color:#f0c79a;background:rgba(224,164,88,.10)}
+
+/* section dividers between screen groups */
+.group{max-width:1180px;margin:0 auto;padding:60px 28px 0}
+.group-num{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#7fd6a4}
+.group-name{font-family:var(--display);font-weight:800;font-size:clamp(26px,3.4vw,40px);letter-spacing:-.03em;color:#eef6ef;line-height:1.05;margin:6px 0 6px}
+.group-desc{max-width:720px;color:#94a99c;font-size:15px;line-height:1.55}
+.group-hr{height:1px;background:linear-gradient(90deg, rgba(127,214,164,.35), transparent);margin-top:22px}
+
+/* deck of phones */
+.deck{max-width:1180px;margin:0 auto;padding:30px 28px 8px;display:flex;flex-wrap:wrap;gap:34px 28px;align-items:flex-start;justify-content:flex-start}
+.unit{display:flex;flex-direction:column;gap:12px;width:300px}
+.unit.wide{width:300px}
+.cap{display:flex;flex-direction:column;gap:3px;padding:0 4px}
+.cap .k{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:-.01em;color:#e7f0e9}
+.cap .v{font-size:12.5px;line-height:1.45;color:#8ca395}
+.cap .pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.cap .pillk{font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#9fcdb1;border:1px solid rgba(127,214,164,.2);border-radius:var(--r-pill);padding:3px 8px}
+.cap .pillk.amber{color:#f0c79a;border-color:rgba(240,185,120,.26)}
+
+/* ============================================================
+   PHONE FRAME
+   ============================================================ */
+.phone{
+  width:300px;height:640px;border-radius:42px;padding:11px;
+  background:linear-gradient(160deg,#222c27,#0c120f);
+  box-shadow:0 30px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06), 0 0 0 1px rgba(255,255,255,.04);
+  position:relative;flex:0 0 auto;
+}
+.screen{
+  position:relative;width:100%;height:100%;border-radius:32px;overflow:hidden;
+  background:var(--bg);color:var(--on-surface);font-family:var(--body);
+  display:flex;flex-direction:column;
+}
+.notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:96px;height:22px;background:#0a0f0c;border-radius:var(--r-pill);z-index:40}
+.statusbar{position:absolute;top:0;left:0;right:0;height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-size:11px;font-weight:700;color:var(--on-surface);z-index:30;font-family:var(--body)}
+.statusbar .r{display:flex;gap:5px;align-items:center;opacity:.9}
+.body{flex:1;overflow:hidden;position:relative;display:flex;flex-direction:column;padding-top:34px}
+
+/* generic UI atoms inside screens */
+.pad{padding:16px 18px}
+.h-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--primary)}
+.h-display{font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:1.02;color:var(--on-surface)}
+.muted{color:var(--on-surface-variant)}
+.btn{height:46px;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--body);font-weight:600;font-size:14.5px;border:none;cursor:default}
+.btn.primary{background:var(--primary);color:var(--on-primary);box-shadow:var(--shadow-soft)}
+.btn.tonal{background:var(--primary-container);color:var(--on-primary-container)}
+.btn.ghost{background:transparent;color:var(--primary)}
+.btn.block{width:100%}
+.btn.sm{height:38px;font-size:13px;padding:0 16px}
+.card{background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--shadow-card);padding:16px}
+.tile{background:var(--surface-variant);border-radius:var(--r-md);aspect-ratio:1;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;position:relative}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:var(--r-pill);font-size:12px;font-weight:600;padding:6px 11px;background:var(--surface-variant);color:var(--on-surface)}
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:var(--r-pill);font-size:12.5px;font-weight:600;padding:7px 13px;border:1px solid var(--outline);color:var(--on-surface-variant);background:transparent}
+.chip.on{background:var(--primary-container);color:var(--on-primary-container);border-color:transparent}
+.flame{color:var(--accent)}
+.divider{height:1px;background:var(--outline);opacity:.7}
+.dotline{display:flex;gap:6px;justify-content:center;align-items:center}
+.dotline i{width:6px;height:6px;border-radius:50%;background:var(--outline);display:block}
+.dotline i.on{width:18px;border-radius:var(--r-pill);background:var(--primary)}
+
+/* live dot with pulse */
+.livedot{position:relative;width:9px;height:9px;border-radius:50%;background:var(--tree-healthy);flex:0 0 auto}
+.livedot::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--tree-healthy);opacity:.5;animation:pulse 1.8s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.6);opacity:.6}100%{transform:scale(1.5);opacity:0}}
+
+/* bottom nav */
+.nav{display:flex;justify-content:space-around;align-items:center;height:60px;background:var(--surface);border-top:1px solid var(--outline)}
+.nav .item{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9.5px;font-weight:600;color:var(--on-surface-variant)}
+.nav .item.on{color:var(--primary)}
+.nav .ico{width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+.nav .item.on .ico{background:var(--primary-container);border-radius:var(--r-pill);width:46px;height:26px}
+
+/* timer ring */
+.ring{position:relative;width:200px;height:200px;margin:0 auto}
+.ring > svg{transform:rotate(-90deg)}
+.ring .tree-in{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+
+/* skeleton shimmer */
+.sk{background:var(--surface-variant);border-radius:var(--r-md);position:relative;overflow:hidden}
+.sk::after{content:"";position:absolute;inset:0;transform:translateX(-100%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:sh 1.4s infinite}
+.dark .sk::after{background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent)}
+@keyframes sh{100%{transform:translateX(100%)}}
+
+/* watermark symbol */
+.wm{position:absolute;opacity:.06;pointer-events:none}
+.dark .wm{opacity:.10}
+
+/* bottom sheet */
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-radius:var(--r-xl) var(--r-xl) 0 0;
+  box-shadow:0 -10px 40px rgba(0,0,0,.18);padding:10px 18px 18px;z-index:25}
+.dark .sheet{box-shadow:0 -1px 0 var(--outline)}
+.grabber{width:38px;height:4px;border-radius:var(--r-pill);background:var(--outline);margin:6px auto 12px}
+.scrim{position:absolute;inset:0;background:rgba(8,14,11,.34);z-index:24}
+
+/* avatar */
+.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;font-family:var(--display);border:2px solid var(--surface)}
+.av.s{width:24px;height:24px;font-size:10px}
+.stack{display:flex}.stack .av+.av{margin-left:-9px}
+
+/* segmented */
+.seg{display:flex;background:var(--surface-variant);border-radius:var(--r-pill);padding:4px;gap:4px}
+.seg .s{flex:1;text-align:center;font-size:12.5px;font-weight:600;padding:8px 6px;border-radius:var(--r-pill);color:var(--on-surface-variant)}
+.seg .s.on{background:var(--surface);color:var(--on-surface);box-shadow:var(--shadow-soft)}
+.dark .seg .s.on{background:var(--primary-container);color:var(--on-primary-container)}
+
+/* duration dial */
+.dial{display:flex;background:var(--surface-variant);border-radius:var(--r-pill);padding:5px;gap:3px}
+.dial .d{flex:1;text-align:center;font-family:var(--display);font-weight:700;font-size:14px;padding:11px 4px;border-radius:var(--r-pill);color:var(--on-surface-variant)}
+.dial .d.on{background:var(--primary);color:var(--on-primary)}
+
+/* list row */
+.row{display:flex;align-items:center;gap:12px;padding:13px 2px}
+.row .ic{width:34px;height:34px;border-radius:var(--r-md);background:var(--surface-variant);display:flex;align-items:center;justify-content:center;color:var(--primary);flex:0 0 auto}
+.row .tx{flex:1;min-width:0}
+.row .tx b{font-weight:600;font-size:14px}
+.row .tx small{display:block;font-size:11.5px;color:var(--on-surface-variant)}
+.row .chev{color:var(--on-surface-variant);font-size:18px}
+
+/* comparison table */
+.cmp{display:grid;grid-template-columns:1.3fr .85fr .85fr;font-size:11.5px}
+.cmp .hd{font-weight:700;padding:8px 6px;text-align:center;font-family:var(--display);letter-spacing:-.01em}
+.cmp .hd.free{color:var(--on-surface-variant)}
+.cmp .hd.prem{color:var(--on-primary-container);background:var(--primary-container);border-radius:var(--r-sm) var(--r-sm) 0 0}
+.cmp .ft{padding:8px 6px;color:var(--on-surface);border-top:1px solid var(--outline)}
+.cmp .ck{text-align:center;padding:8px 6px;border-top:1px solid var(--outline)}
+.cmp .ck.prem{background:color-mix(in srgb,var(--primary-container) 35%, transparent)}
+.ok{color:var(--tree-healthy);font-weight:700}
+.no{color:var(--outline)}
+
+/* tier badge */
+.tier{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(145deg,#F0C97A,#D99A3F);box-shadow:0 8px 18px rgba(217,154,63,.35)}
+
+/* recap export card */
+.recap{border-radius:var(--r-xl);overflow:hidden;position:relative;color:#fff;
+  background:linear-gradient(165deg,#2E7D52,#16412B 78%);box-shadow:var(--shadow-hero);padding:20px 18px 22px}
+.recap .num{font-family:var(--display);font-weight:800;font-size:42px;letter-spacing:-.04em;line-height:.95}
+
+/* small inline svg sizing */
+.svgbox{display:block}
+
+/* responsive: let phones wrap nicely; on small screens single column */
+@media(max-width:680px){ .unit,.unit.wide{width:100%;max-width:330px;margin:0 auto} .deck{justify-content:center} }
+.footer{max-width:1180px;margin:40px auto 70px;padding:0 28px;color:#7e9488;font-size:13px;line-height:1.6}
+.footer code{background:rgba(127,214,164,.12);padding:2px 7px;border-radius:6px;color:#bfe6cd;font-size:12px}
+</style>
+</head>
+<body>
+
+<!-- ============ DOC HEADER ============ -->
+<header class="doc-head">
+  <div class="doc-eyebrow">Grovely · Product Design</div>
+  <h1 class="doc-title">
+    <span style="display:inline-flex;width:54px;height:54px;border-radius:16px;background:var(--primary);align-items:center;justify-content:center;box-shadow:0 16px 34px rgba(46,125,82,.4)">
+      <!-- grovely symbol, white on green -->
+      <svg width="34" height="34" viewBox="0 0 100 100"><g><circle cx="87" cy="16" r="6.2" fill="#F0B978"/><rect x="25" y="62" width="4" height="18" rx="2" fill="#fff"/><rect x="47.75" y="62" width="4.5" height="18" rx="2.25" fill="#fff"/><rect x="69.75" y="62" width="5" height="18" rx="2.5" fill="#fff"/><path d="M27 47 L16 64 L38 64 Z" fill="#fff"/><path d="M27 39 L19 53 L35 53 Z" fill="#fff"/><path d="M50 45 L35 65 L65 65 Z" fill="#fff"/><path d="M50 36 L39 52 L61 52 Z" fill="#fff"/><path d="M50 28 L42 42 L58 42 Z" fill="#fff"/><path d="M72 41 L55 65 L89 65 Z" fill="#fff"/><path d="M72 31 L60 50 L84 50 Z" fill="#fff"/><path d="M72 22 L63 38 L81 38 Z" fill="#fff"/></g></svg>
+    </span>
+    Grovely — MVP Screens
+  </h1>
+  <p class="doc-sub">Every screen of the MVP, on-brand to the Grovely design system (real tokens, fonts, and the actual tree &amp; grove SVGs). Plant a tree by staying focused; grow a shared garden with your circle. <b>Light &amp; dark</b> shown where it matters. Pairs with <b>SCREENS_SPEC.md</b> (detail + microcopy) and <b>flow-map.md</b> (navigation).</p>
+</header>
+<div class="legend">
+  <span class="tag">Honest paywall · 21-day trial</span>
+  <span class="tag">Social = opt-in</span>
+  <span class="tag amber">Rewarded ad only by choice</span>
+  <span class="tag">Cancel ≤ 2 taps</span>
+  <span class="tag">LGPD · minimal data</span>
+  <span class="tag">i18n pt + en</span>
+</div>
+
+<!-- ============================================================
+     GROUP 1 — ONBOARDING
+     ============================================================ -->
+<section class="group">
+  <div class="group-num">01 · Flow</div>
+  <h2 class="group-name">Onboarding</h2>
+  <p class="group-desc">Cold install → planted first tree → honest trial decision in under ~90s. Welcome → Notifications → Social opt-in → <b>guided 5-min session (the aha)</b> → rigid-but-honest paywall. Account is optional (guest-first).</p>
+  <div class="group-hr"></div>
+</section>
+
+<div class="deck">
+
+  <!-- 1.1 Welcome (light) -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="justify-content:center;align-items:center;text-align:center;padding:34px 26px 22px;position:relative">
+        <svg class="wm" style="bottom:-10px;right:-30px;width:240px" viewBox="0 0 100 100"><g fill="var(--primary)"><rect x="25" y="62" width="4" height="18" rx="2"/><rect x="47.75" y="62" width="4.5" height="18" rx="2.25"/><rect x="69.75" y="62" width="5" height="18" rx="2.5"/><path d="M27 47 L16 64 L38 64 Z"/><path d="M50 45 L35 65 L65 65 Z"/><path d="M50 36 L39 52 L61 52 Z"/><path d="M50 28 L42 42 L58 42 Z"/><path d="M72 41 L55 65 L89 65 Z"/><path d="M72 31 L60 50 L84 50 Z"/></g></svg>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:18px;z-index:2">
+          <span style="width:64px;height:64px;border-radius:20px;background:var(--primary);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-hero)">
+            <svg width="40" height="40" viewBox="0 0 100 100"><circle cx="87" cy="16" r="6.2" fill="#F0B978"/><g fill="#fff"><rect x="25" y="62" width="4" height="18" rx="2"/><rect x="47.75" y="62" width="4.5" height="18" rx="2.25"/><rect x="69.75" y="62" width="5" height="18" rx="2.5"/><path d="M27 47 L16 64 L38 64 Z"/><path d="M27 39 L19 53 L35 53 Z"/><path d="M50 45 L35 65 L65 65 Z"/><path d="M50 36 L39 52 L61 52 Z"/><path d="M50 28 L42 42 L58 42 Z"/><path d="M72 41 L55 65 L89 65 Z"/><path d="M72 31 L60 50 L84 50 Z"/><path d="M72 22 L63 38 L81 38 Z"/></g></svg>
+          </span>
+          <div class="h-display" style="font-size:30px">Grow focus,<br>together.</div>
+          <p class="muted" style="font-size:14px;line-height:1.5;max-width:240px">Plant a tree with every focused session. Watch your grove grow.</p>
+        </div>
+        <div style="width:100%;display:flex;flex-direction:column;gap:10px;z-index:2">
+          <div class="dotline" style="margin-bottom:6px"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+          <button class="btn primary block">Get started</button>
+          <button class="btn ghost block">I already have an account</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">1.1 Welcome</span><span class="v">Wordmark + tagline. Guest-first; sign-in link for returners.</span></div>
+  </div>
+
+  <!-- 1.2 Notifications pre-prompt -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding:34px 22px 20px">
+        <div style="display:flex;justify-content:flex-end"><span class="btn ghost sm">Skip</span></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:22px">
+          <div style="display:flex;justify-content:center">
+            <span style="position:relative;width:96px;height:96px;border-radius:50%;background:var(--primary-container);display:flex;align-items:center;justify-content:center">
+              <span style="font-size:38px">🔔</span>
+              <span style="position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid var(--surface)"></span>
+            </span>
+          </div>
+          <div style="text-align:center">
+            <div class="h-display" style="font-size:25px">Gentle nudges,<br>never noise.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;gap:10px;align-items:flex-start"><span class="ok">✓</span><span style="font-size:13.5px">A daily reminder to plant one tree</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><span class="ok">✓</span><span style="font-size:13.5px">We’ll help you save a streak before it breaks</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><span class="ok">✓</span><span style="font-size:13.5px">Know when your circle is focusing</span></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="dotline" style="margin-bottom:6px"><i></i><i class="on"></i><i></i><i></i><i></i></div>
+          <button class="btn primary block">Turn on reminders</button>
+          <button class="btn ghost block">Not now</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">1.2 Notifications</span><span class="v">Value-first pre-prompt. “Allow” and “Not now” equal weight — no dark pattern.</span></div>
+  </div>
+
+  <!-- 1.3 Social opt-in -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding:34px 22px 20px">
+        <div style="display:flex;justify-content:flex-end"><span class="btn ghost sm">Skip</span></div>
+        <div style="text-align:center;margin-top:6px">
+          <div class="h-display" style="font-size:25px">Focus your way.</div>
+          <p class="muted" style="font-size:13px;margin-top:6px">You can always change this later.</p>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:12px;justify-content:center">
+          <!-- solo (selected) -->
+          <div style="border:2px solid var(--primary);background:var(--primary-container);border-radius:var(--r-lg);padding:14px;display:flex;gap:12px;align-items:center">
+            <span style="font-size:26px">🌳</span>
+            <div><b style="font-size:14.5px;color:var(--on-primary-container)">Focus solo</b><div style="font-size:12px;color:var(--on-primary-container);opacity:.8">Just you and your grove.</div></div>
+            <span style="margin-left:auto;color:var(--primary);font-size:18px">●</span>
+          </div>
+          <!-- circle -->
+          <div style="border:1.5px solid var(--outline);border-radius:var(--r-lg);padding:14px;display:flex;gap:12px;align-items:center;position:relative">
+            <span style="font-size:26px">🌲🌳🌲</span>
+            <div><b style="font-size:14.5px">Focus with a circle</b><div class="muted" style="font-size:12px">Grow a shared garden with 6–12 people.</div></div>
+            <span style="margin-left:auto;color:var(--outline);font-size:18px">○</span>
+            <span style="position:absolute;top:-9px;right:12px;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--accent);color:var(--on-accent);padding:3px 8px;border-radius:var(--r-pill)">Popular</span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:4px;padding:0 4px">
+            <span class="muted">🔒</span><span class="muted" style="font-size:11.5px">We only ever share your first name and tree count.</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="dotline" style="margin-bottom:6px"><i></i><i></i><i class="on"></i><i></i><i></i></div>
+          <button class="btn primary block">Continue</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">1.3 Social opt-in ★</span><span class="v">Default = Solo (honest). Privacy reassurance at the decision point.</span>
+      <div class="pills"><span class="pillk">opt-in</span><span class="pillk">LGPD</span></div></div>
+  </div>
+
+  <!-- 1.4 Guided first session -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding:50px 22px 22px;text-align:center;position:relative;background:linear-gradient(180deg,var(--bg),var(--surface-variant))">
+        <p class="muted" style="font-size:13.5px;line-height:1.5;max-width:240px;margin:0 auto">Let’s plant your first tree. Stay here for <b style="color:var(--on-surface)">5 minutes</b> — that’s it.</p>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center">
+          <div class="ring" style="width:180px;height:180px">
+            <svg width="180" height="180" viewBox="0 0 180 180">
+              <circle cx="90" cy="90" r="80" fill="none" stroke="var(--outline)" stroke-width="6"/>
+              <circle cx="90" cy="90" r="80" fill="none" stroke="var(--primary)" stroke-width="6" stroke-linecap="round" stroke-dasharray="502" stroke-dashoffset="360"/>
+            </svg>
+            <div class="tree-in">
+              <!-- sprout svg -->
+              <svg width="92" height="110" viewBox="0 0 100 120"><path d="M16 110 Q50 95 84 110 Q84 116 50 116 Q16 116 16 110 Z" fill="#C2A878"/><path d="M48 110 C 48 102 48.64 99 48.64 92 L 51.36 92 C 51.36 99 52 102 52 110 Z" fill="#8A6A46"/><path d="M50 94 C 40 92 33 84 32 74 C 43 74 50 82 50 94 Z" fill="#43A86B"/><path d="M50 90 C 60 88 67 80 68 70 C 57 70 50 78 50 90 Z" fill="#2F8F66"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="h-display" style="font-size:40px;font-feature-settings:'tnum'">02:48</div>
+        <p class="muted" style="font-size:12.5px;margin-top:6px">Stay in Grovely and watch it grow.</p>
+        <div class="dotline" style="margin-top:18px"><i></i><i></i><i></i><i class="on"></i><i></i></div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">1.4 Guided session</span><span class="v">Forgiving 5-min tutorial (no wither). Delivers the “aha” before any ask.</span></div>
+  </div>
+
+  <!-- 1.5 / 7 Paywall -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding:40px 18px 16px;position:relative;overflow-y:auto">
+        <svg class="wm" style="top:30px;right:-26px;width:150px" viewBox="0 0 100 100"><g fill="var(--primary)"><path d="M50 45 L35 65 L65 65 Z"/><path d="M50 36 L39 52 L61 52 Z"/><path d="M50 28 L42 42 L58 42 Z"/></g></svg>
+        <div style="text-align:center;z-index:2;position:relative">
+          <span class="pill" style="background:var(--accent);color:var(--on-accent)">✦ Premium</span>
+          <div class="h-display" style="font-size:24px;margin-top:10px">Go deeper with<br>Grovely Premium.</div>
+          <p class="muted" style="font-size:12.5px;margin-top:6px">Everything you love, plus more ways to grow.</p>
+        </div>
+        <!-- comparison -->
+        <div class="card" style="padding:10px;margin-top:14px">
+          <div class="cmp">
+            <div class="hd"></div><div class="hd free">Free</div><div class="hd prem">Premium</div>
+            <div class="ft">Unlimited solo focus</div><div class="ck">✓</div><div class="ck prem">✓</div>
+            <div class="ft">Full garden &amp; streak</div><div class="ck">✓</div><div class="ck prem">✓</div>
+            <div class="ft">Join 1 circle</div><div class="ck">✓</div><div class="ck prem">✓</div>
+            <div class="ft">Custom durations</div><div class="ck"><span class="no">—</span></div><div class="ck prem"><span class="ok">✓</span></div>
+            <div class="ft">All trees + seasonal</div><div class="ck"><span class="no">—</span></div><div class="ck prem"><span class="ok">✓</span></div>
+            <div class="ft">Multiple circles</div><div class="ck"><span class="no">—</span></div><div class="ck prem"><span class="ok">✓</span></div>
+          </div>
+        </div>
+        <div class="seg" style="margin-top:12px">
+          <div class="s on">Annual <span style="color:var(--accent)">· Save 40%</span></div>
+          <div class="s">Monthly</div>
+        </div>
+        <div style="text-align:center;margin-top:10px">
+          <div class="h-display" style="font-size:18px">$3.33<span style="font-size:12px;font-weight:500" class="muted">/mo · billed yearly</span></div>
+        </div>
+        <button class="btn primary block" style="margin-top:10px">Start 21-day free trial</button>
+        <p class="muted" style="font-size:10.5px;text-align:center;margin-top:8px;line-height:1.45">Free for 21 days, then $39.99/yr.<br>Cancel anytime in two taps.</p>
+        <button class="btn ghost block" style="margin-top:4px">Continue with Free</button>
+        <p style="font-size:10px;text-align:center;margin-top:6px"><span class="muted">Restore purchases · Terms · Privacy</span></p>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">1.5 / 7 Paywall</span><span class="v">Honest Free column (real checks), annual anchoring, escape always visible.</span>
+      <div class="pills"><span class="pillk amber">$ trial</span><span class="pillk">honest</span></div></div>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     GROUP 2 — FOCUS (core loop)
+     ============================================================ -->
+<section class="group">
+  <div class="group-num">02 · Core loop</div>
+  <h2 class="group-name">Focus</h2>
+  <p class="group-desc">The home tab. Refined duration dial, an immersive running session (timer ring + growing tree + a sky that warms toward completion), a celebratory success, and a kind withered state with an <b>opt-in rewarded revive</b>. Bottom nav hides while running.</p>
+  <div class="group-hr"></div>
+</section>
+
+<div class="deck">
+
+  <!-- 2.1 Selecting (light) -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="position:relative;padding-top:34px">
+        <div class="pad" style="display:flex;justify-content:space-between;align-items:center">
+          <span class="pill" style="background:color-mix(in srgb,var(--accent) 22%,transparent);color:var(--on-surface)"><span class="flame">🔥</span> 7</span>
+          <span class="pill"><span class="livedot"></span> 3 focusing now</span>
+        </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;position:relative">
+          <svg class="wm" style="width:200px" viewBox="0 0 100 100"><g fill="var(--primary)"><path d="M50 45 L35 65 L65 65 Z"/><path d="M50 36 L39 52 L61 52 Z"/><path d="M50 28 L42 42 L58 42 Z"/></g></svg>
+          <svg width="150" height="180" viewBox="0 0 100 120" style="position:relative"><path d="M16 110 Q50 95 84 110 Q84 116 50 116 Q16 116 16 110 Z" fill="#C2A878"/><path d="M38 107 Q50 100 62 107 Z" fill="#D8C29B"/><circle cx="50" cy="104" r="4.5" fill="#8A6A46"/><path d="M50 100 C 54 95 60 94 62 96 C 60 101 54 102 50 100 Z" fill="#43A86B"/></svg>
+        </div>
+        <div class="pad" style="padding-bottom:8px">
+          <div class="dial">
+            <div class="d">15</div><div class="d on">25</div><div class="d">45</div><div class="d">60</div>
+          </div>
+          <p style="text-align:center;font-size:12px;margin-top:10px" class="muted">A young <b style="color:var(--on-surface)">oak</b> in 25 min · <span style="color:var(--primary)">Custom ✦</span></p>
+          <button class="btn primary block" style="margin-top:12px">Plant &amp; focus</button>
+        </div>
+        <div class="nav">
+          <div class="item on"><div class="ico">⏱</div>Focus</div>
+          <div class="item"><div class="ico">🌿</div>Garden</div>
+          <div class="item"><div class="ico">👥</div>Circle</div>
+          <div class="item"><div class="ico">🏆</div>League</div>
+          <div class="item"><div class="ico">👤</div>Profile</div>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">2.1 Selecting</span><span class="v">Duration dial replaces raw chips. Streak + opt-in live chip in header.</span></div>
+  </div>
+
+  <!-- 2.2 Running (DARK, immersive) -->
+  <div class="unit">
+    <div class="phone"><div class="screen dark">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding:30px 22px 22px;text-align:center;position:relative;background:linear-gradient(180deg,#0c1812 0%, #16241a 60%, #3a2f1c 130%)">
+        <p style="font-size:12.5px;color:var(--on-surface-variant)">Stay in Grovely to keep it growing.</p>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center">
+          <div class="ring">
+            <svg width="200" height="200" viewBox="0 0 200 200">
+              <circle cx="100" cy="100" r="90" fill="none" stroke="var(--outline)" stroke-width="7"/>
+              <circle cx="100" cy="100" r="90" fill="none" stroke="var(--primary)" stroke-width="7" stroke-linecap="round" stroke-dasharray="565" stroke-dashoffset="180"/>
+            </svg>
+            <div class="tree-in">
+              <!-- oak young -->
+              <svg width="120" height="144" viewBox="0 0 100 120"><path d="M16 110 Q50 95 84 110 Q84 116 50 116 Q16 116 16 110 Z" fill="#C2A878"/><path d="M47.25 110 C 47.25 102 48.13 79 48.13 72 L 51.87 72 C 51.87 79 52.75 102 52.75 110 Z" fill="#8A6A46"/><circle cx="41.84" cy="58.72" r="10.2" fill="#2F8F66"/><circle cx="58.16" cy="58.72" r="10.2" fill="#2F8F66"/><circle cx="50" cy="49.88" r="11.56" fill="#2F8F66"/><circle cx="43.88" cy="56" r="8.16" fill="#43A86B"/><circle cx="56.8" cy="55.32" r="8.16" fill="#43A86B"/><circle cx="50" cy="48.52" r="9.52" fill="#43A86B"/><circle cx="50" cy="59.4" r="8.84" fill="#43A86B"/><circle cx="45.92" cy="51.24" r="6.12" fill="#6FC089"/><circle cx="48.64" cy="56.68" r="5.44" fill="#6FC089"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="h-display" style="font-size:50px;font-feature-settings:'tnum';color:var(--on-surface)">17:32</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:14px">
+          <div class="stack">
+            <span class="av s" style="background:#3f9b6b">A</span><span class="av s" style="background:#c98a3f">M</span><span class="av s" style="background:#6c79c9">J</span>
+          </div>
+          <span style="font-size:11.5px;color:var(--on-surface-variant)">you + 3 growing</span>
+        </div>
+        <button class="btn ghost block" style="margin-top:14px;color:var(--on-surface-variant)">Give up</button>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">2.2 Running · Dark</span><span class="v">Immersive: nav hidden, sky warms toward the finish, ambient circle presence (non-tappable).</span>
+      <div class="pills"><span class="pillk">dark</span><span class="pillk amber">no ads here</span></div></div>
+  </div>
+
+  <!-- 2.3 Completed -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding:40px 22px 22px;text-align:center;position:relative">
+        <svg class="wm" style="top:50px;left:50%;transform:translateX(-50%);width:260px" viewBox="0 0 100 100"><g fill="var(--primary)"><rect x="25" y="62" width="4" height="18" rx="2"/><rect x="47.75" y="62" width="4.5" height="18" rx="2.25"/><rect x="69.75" y="62" width="5" height="18" rx="2.5"/><path d="M27 47 L16 64 L38 64 Z"/><path d="M50 45 L35 65 L65 65 Z"/><path d="M50 36 L39 52 L61 52 Z"/><path d="M50 28 L42 42 L58 42 Z"/><path d="M72 41 L55 65 L89 65 Z"/><path d="M72 31 L60 50 L84 50 Z"/></g></svg>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;z-index:2">
+          <!-- oak mature -->
+          <svg width="140" height="168" viewBox="0 0 100 120"><path d="M16 110 Q50 95 84 110 Q84 116 50 116 Q16 116 16 110 Z" fill="#C2A878"/><path d="M46.4 110 C 46.4 102 47.552 67 47.552 60 L 52.448 60 C 52.448 67 53.6 102 53.6 110 Z" fill="#8A6A46"/><circle cx="39.2" cy="49.6" r="13.5" fill="#2F8F66"/><circle cx="60.8" cy="49.6" r="13.5" fill="#2F8F66"/><circle cx="50" cy="37.9" r="15.3" fill="#2F8F66"/><circle cx="41.9" cy="46" r="10.8" fill="#43A86B"/><circle cx="59" cy="45.1" r="10.8" fill="#43A86B"/><circle cx="50" cy="36.1" r="12.6" fill="#43A86B"/><circle cx="50" cy="50.5" r="11.7" fill="#43A86B"/><circle cx="44.6" cy="39.7" r="8.1" fill="#6FC089"/><circle cx="54.5" cy="37.9" r="6.3" fill="#6FC089"/></svg>
+          <div class="h-display" style="font-size:27px">Tree planted!</div>
+          <span class="pill" style="background:var(--primary-container);color:var(--on-primary-container);margin-top:2px">✓ Added to your garden</span>
+          <p style="font-size:11.5px;margin-top:4px" class="muted">+1 to <b style="color:var(--on-surface)">Deep Work Club</b>’s garden</p>
+        </div>
+        <div style="display:flex;gap:8px;z-index:2;margin-bottom:14px">
+          <span class="pill" style="flex:1;justify-content:center;flex-direction:column;padding:10px 6px"><b class="h-display" style="font-size:17px">25</b><small style="font-size:9.5px" class="muted">min focused</small></span>
+          <span class="pill" style="flex:1;justify-content:center;flex-direction:column;padding:10px 6px"><b class="h-display" style="font-size:17px;color:var(--accent)">8</b><small style="font-size:9.5px" class="muted">day streak</small></span>
+          <span class="pill" style="flex:1;justify-content:center;flex-direction:column;padding:10px 6px"><b class="h-display" style="font-size:17px">24</b><small style="font-size:9.5px" class="muted">trees</small></span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;z-index:2">
+          <button class="btn primary block">Plant another</button>
+          <button class="btn tonal block">View garden</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">2.3 Completed</span><span class="v">Stats row + streak + garden confirm + circle contribution. (Was a shared generic result.)</span></div>
+  </div>
+
+  <!-- 2.4 Withered + revive sheet -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding:40px 22px 0;text-align:center;position:relative;filter:saturate(.85)">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px">
+          <!-- withered svg -->
+          <svg width="130" height="156" viewBox="0 0 100 120"><path d="M16 110 Q50 95 84 110 Q84 116 50 116 Q16 116 16 110 Z" fill="#C2A878"/><path d="M46 110 C 45 92 50 74 47 60 C 46 56 49 54 51 56 C 54 70 53 92 54 110 Z" fill="#8A7A60"/><g transform="rotate(6 50 52)" opacity="0.95"><circle cx="40.64" cy="53.12" r="11.7" fill="#9A8463"/><circle cx="59.36" cy="53.12" r="11.7" fill="#9A8463"/><circle cx="50" cy="42.98" r="13.26" fill="#9A8463"/><circle cx="42.98" cy="50" r="9.36" fill="#B09A78"/><circle cx="57.8" cy="49.22" r="9.36" fill="#B09A78"/><circle cx="50" cy="41.42" r="10.92" fill="#B09A78"/><circle cx="50" cy="53.9" r="10.14" fill="#B09A78"/><circle cx="45.32" cy="44.54" r="7.02" fill="#C4B190"/></g></svg>
+          <div class="h-display" style="font-size:24px;color:var(--on-surface-variant)">Your tree withered.</div>
+          <p class="muted" style="font-size:13px;max-width:230px;line-height:1.5">You left before the session finished — it happens. Want to bring it back?</p>
+        </div>
+        <!-- revive sheet -->
+        <div class="scrim"></div>
+        <div class="sheet">
+          <div class="grabber"></div>
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:14px">
+            <span style="width:42px;height:42px;border-radius:var(--r-md);background:color-mix(in srgb,var(--accent) 22%,transparent);display:flex;align-items:center;justify-content:center;font-size:20px">▶</span>
+            <div style="text-align:left"><b style="font-size:14px">Revive this tree</b><div class="muted" style="font-size:12px">Watch a 30-second video to bring it back.</div></div>
+          </div>
+          <button class="btn block" style="background:var(--accent);color:var(--on-accent)">Watch &amp; revive</button>
+          <button class="btn ghost block" style="margin-top:6px">No thanks</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">2.4 Withered + Revive</span><span class="v">No shame. Rewarded ad strictly by choice, capped &amp; honest. “Start fresh” equally easy.</span>
+      <div class="pills"><span class="pillk amber">rewarded · opt-in</span></div></div>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     GROUP 3 — GARDEN
+     ============================================================ -->
+<section class="group">
+  <div class="group-num">03 · Personal</div>
+  <h2 class="group-name">Garden</h2>
+  <p class="group-desc">The trophy case. A header with streak &amp; stats, a unified grove-grid of your real species (not all-elder), tree detail, and proper loading (skeletons) / empty / dark states.</p>
+  <div class="group-hr"></div>
+</section>
+
+<div class="deck">
+
+  <!-- 3.1 Garden grid (light) -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding-top:34px">
+        <div class="pad" style="padding-bottom:8px">
+          <div class="h-display" style="font-size:22px">Your garden</div>
+          <div class="card" style="margin-top:10px;padding:13px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="pill" style="background:color-mix(in srgb,var(--accent) 22%,transparent)"><span class="flame">🔥</span> 14</span>
+              <b class="h-display" style="font-size:16px">24 trees</b>
+            </div>
+            <div style="display:flex;gap:14px;margin-top:11px">
+              <div><b class="h-display" style="font-size:15px">18h</b><div style="font-size:9.5px" class="muted">focused</div></div>
+              <div><b class="h-display" style="font-size:15px">21</b><div style="font-size:9.5px" class="muted">longest streak</div></div>
+              <div><b class="h-display" style="font-size:15px">4/6</b><div style="font-size:9.5px" class="muted">species</div></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:7px;margin-top:11px">
+            <span class="chip on">All</span><span class="chip">By species</span><span class="chip">Recent</span>
+          </div>
+        </div>
+        <div class="pad" style="padding-top:4px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;overflow-y:auto">
+          <!-- cherry -->
+          <div class="tile"><svg width="62" height="74" viewBox="0 0 100 120"><path d="M46.4 110 C 46.4 102 47.552 67 47.552 60 L 52.448 60 C 52.448 67 53.6 102 53.6 110 Z" fill="#8A6A46"/><circle cx="40.1" cy="47.8" r="11.7" fill="#E58AAB"/><circle cx="59.9" cy="47.8" r="11.7" fill="#E58AAB"/><circle cx="50" cy="37.9" r="12.6" fill="#E58AAB"/><circle cx="50" cy="49.6" r="9.9" fill="#F3B6CB"/><circle cx="46.4" cy="39.7" r="7.2" fill="#FBD3E0"/></svg></div>
+          <!-- pine -->
+          <div class="tile"><svg width="62" height="74" viewBox="0 0 100 120"><path d="M46.4 110 C 46.4 102 47.552 67 47.552 60 L 52.448 60 C 52.448 67 53.6 102 53.6 110 Z" fill="#8A6A46"/><path d="M 50 39.7 Q 63.68 55.144 67.1 59.5 Q 58.55 63.5 50 62.5 Q 41.45 63.5 32.9 59.5 Q 36.32 55.144 50 39.7 Z" fill="#1F7A57"/><path d="M 50 31.6 Q 60.8 45.64 63.5 49.6 Q 56.75 53.6 50 52.6 Q 43.25 53.6 36.5 49.6 Q 39.2 45.64 50 31.6 Z" fill="#2F8F66"/><path d="M 50 23.5 Q 57.92 36.136 59.9 39.7 Q 54.95 43.7 50 42.7 Q 45.05 43.7 40.1 39.7 Q 42.08 36.136 50 23.5 Z" fill="#52B07F"/></svg></div>
+          <!-- oak -->
+          <div class="tile"><svg width="62" height="74" viewBox="0 0 100 120"><path d="M46.4 110 C 46.4 102 47.552 67 47.552 60 L 52.448 60 C 52.448 67 53.6 102 53.6 110 Z" fill="#8A6A46"/><circle cx="39.2" cy="49.6" r="13.5" fill="#2F8F66"/><circle cx="60.8" cy="49.6" r="13.5" fill="#2F8F66"/><circle cx="50" cy="37.9" r="15.3" fill="#2F8F66"/><circle cx="50" cy="36.1" r="12.6" fill="#43A86B"/><circle cx="50" cy="50.5" r="11.7" fill="#43A86B"/><circle cx="44.6" cy="39.7" r="8.1" fill="#6FC089"/></svg></div>
+          <!-- repeat smaller for fill -->
+          <div class="tile"><svg width="58" height="70" viewBox="0 0 100 120"><path d="M47.25 110 C 47.25 102 48.13 79 48.13 72 L 51.87 72 C 51.87 79 52.75 102 52.75 110 Z" fill="#8A6A46"/><circle cx="41.84" cy="58.72" r="10.2" fill="#2F8F66"/><circle cx="58.16" cy="58.72" r="10.2" fill="#2F8F66"/><circle cx="50" cy="49.88" r="11.56" fill="#2F8F66"/><circle cx="50" cy="48.52" r="9.52" fill="#43A86B"/><circle cx="50" cy="59.4" r="8.84" fill="#43A86B"/></svg></div>
+          <div class="tile"><svg width="58" height="70" viewBox="0 0 100 120"><path d="M46.4 110 C 46.4 102 47.552 67 47.552 60 L 52.448 60 C 52.448 67 53.6 102 53.6 110 Z" fill="#8A6A46"/><circle cx="40.1" cy="47.8" r="11.7" fill="#E58AAB"/><circle cx="59.9" cy="47.8" r="11.7" fill="#E58AAB"/><circle cx="50" cy="49.6" r="9.9" fill="#F3B6CB"/></svg></div>
+          <div class="tile"><svg width="58" height="70" viewBox="0 0 100 120"><path d="M46.4 110 C 46.4 102 47.552 67 47.552 60 L 52.448 60 C 52.448 67 53.6 102 53.6 110 Z" fill="#8A6A46"/><path d="M 50 31.6 Q 60.8 45.64 63.5 49.6 Q 56.75 53.6 50 52.6 Q 43.25 53.6 36.5 49.6 Q 39.2 45.64 50 31.6 Z" fill="#2F8F66"/><path d="M 50 23.5 Q 57.92 36.136 59.9 39.7 Q 54.95 43.7 50 42.7 Q 45.05 43.7 40.1 39.7 Q 42.08 36.136 50 23.5 Z" fill="#52B07F"/></svg></div>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">3.1 Garden grid</span><span class="v">Header card (streak+stats) + filter chips + real species, newest-first.</span></div>
+  </div>
+
+  <!-- 3.1b Garden loading skeleton -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding-top:34px">
+        <div class="pad" style="padding-bottom:8px">
+          <div class="sk" style="height:22px;width:55%;border-radius:8px"></div>
+          <div class="sk" style="height:74px;margin-top:12px;border-radius:var(--r-lg)"></div>
+          <div style="display:flex;gap:7px;margin-top:12px"><div class="sk" style="height:30px;width:50px;border-radius:var(--r-pill)"></div><div class="sk" style="height:30px;width:80px;border-radius:var(--r-pill)"></div><div class="sk" style="height:30px;width:62px;border-radius:var(--r-pill)"></div></div>
+        </div>
+        <div class="pad" style="padding-top:4px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px">
+          <div class="sk" style="aspect-ratio:1"></div><div class="sk" style="aspect-ratio:1"></div><div class="sk" style="aspect-ratio:1"></div>
+          <div class="sk" style="aspect-ratio:1"></div><div class="sk" style="aspect-ratio:1"></div><div class="sk" style="aspect-ratio:1"></div>
+          <div class="sk" style="aspect-ratio:1"></div><div class="sk" style="aspect-ratio:1"></div><div class="sk" style="aspect-ratio:1"></div>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">3.1 Loading</span><span class="v">Skeleton tiles + shimmer — replaces the bare spinner in the current build.</span>
+      <div class="pills"><span class="pillk">loading</span></div></div>
+  </div>
+
+  <!-- 3.1c Garden empty -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="position:relative;text-align:center;align-items:center;justify-content:center;padding:24px">
+        <svg class="wm" style="width:230px;top:54%;left:50%;transform:translate(-50%,-50%)" viewBox="0 0 100 100"><g fill="var(--primary)"><rect x="25" y="62" width="4" height="18" rx="2"/><rect x="47.75" y="62" width="4.5" height="18" rx="2.25"/><rect x="69.75" y="62" width="5" height="18" rx="2.5"/><path d="M27 47 L16 64 L38 64 Z"/><path d="M50 45 L35 65 L65 65 Z"/><path d="M50 36 L39 52 L61 52 Z"/><path d="M50 28 L42 42 L58 42 Z"/><path d="M72 41 L55 65 L89 65 Z"/><path d="M72 31 L60 50 L84 50 Z"/></g></svg>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;z-index:2">
+          <div style="font-size:46px;opacity:.9">🌱</div>
+          <div class="h-display" style="font-size:23px">Your garden is waiting.</div>
+          <p class="muted" style="font-size:13px;max-width:230px;line-height:1.5">Finish a focus session to plant your first tree.</p>
+          <button class="btn primary" style="padding:0 22px;margin-top:6px">Plant your first tree</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">3.1 Empty</span><span class="v">Symbol watermark + encouraging headline + a single CTA → Focus.</span>
+      <div class="pills"><span class="pillk">empty</span></div></div>
+  </div>
+
+  <!-- 3.2 Tree detail -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="position:relative">
+        <div class="pad" style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:20px;color:var(--on-surface-variant)">‹</span>
+          <span style="font-size:18px;color:var(--accent)">★</span>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;position:relative">
+          <svg class="wm" style="width:200px" viewBox="0 0 100 100"><g fill="var(--primary)"><path d="M50 45 L35 65 L65 65 Z"/><path d="M50 36 L39 52 L61 52 Z"/><path d="M50 28 L42 42 L58 42 Z"/></g></svg>
+          <!-- cherry mature large -->
+          <svg width="160" height="192" viewBox="0 0 100 120"><path d="M16 110 Q50 95 84 110 Q84 116 50 116 Q16 116 16 110 Z" fill="#C2A878"/><path d="M46.4 110 C 46.4 102 47.552 67 47.552 60 L 52.448 60 C 52.448 67 53.6 102 53.6 110 Z" fill="#8A6A46"/><circle cx="40.1" cy="47.8" r="11.7" fill="#E58AAB"/><circle cx="59.9" cy="47.8" r="11.7" fill="#E58AAB"/><circle cx="50" cy="37.9" r="12.6" fill="#E58AAB"/><circle cx="43.7" cy="44.2" r="9" fill="#F3B6CB"/><circle cx="56.3" cy="44.2" r="9" fill="#F3B6CB"/><circle cx="50" cy="49.6" r="9.9" fill="#F3B6CB"/><circle cx="46.4" cy="39.7" r="7.2" fill="#FBD3E0"/><circle cx="52.7" cy="43.3" r="6.3" fill="#FBD3E0"/><circle cx="43.7" cy="33.05" r="1.98" fill="#E8728F"/><circle cx="55.85" cy="33.05" r="1.98" fill="#E8728F"/></svg>
+          <div class="h-display" style="font-size:24px">Cherry Blossom</div>
+          <p class="muted" style="font-size:13px;line-height:1.5;max-width:240px;text-align:center">A 45-minute session, grown with your circle. Planted Jun 14.</p>
+          <div style="display:flex;gap:8px;margin-top:4px">
+            <span class="pill">📅 Jun 14</span><span class="pill">⏱ 45 min</span><span class="pill">👥 Deep Work Club</span>
+          </div>
+        </div>
+        <div class="pad" style="display:flex;gap:8px">
+          <button class="btn primary block">Share</button>
+          <button class="btn tonal" style="padding:0 16px">★</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">3.2 Tree detail</span><span class="v">Species, the session behind it, share + favorite. Solo vs “with circle” shown.</span></div>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     GROUP 4 — CIRCLE (differentiator)
+     ============================================================ -->
+<section class="group">
+  <div class="group-num">04 · Collective · ★ opt-in</div>
+  <h2 class="group-name">Circle</h2>
+  <p class="group-desc">The differentiator. Create or join (6–12), then a <b>live collective garden</b> — “N focusing now,” a shared grove, a weekly-league snapshot, and members. Presence is ambient; leaving is ≤2 taps.</p>
+  <div class="group-hr"></div>
+</section>
+
+<div class="deck">
+
+  <!-- 4.1 Circle empty -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="position:relative;padding:24px;text-align:center;align-items:center;justify-content:center">
+        <svg class="wm" style="width:240px;top:46%;left:50%;transform:translate(-50%,-50%)" viewBox="0 0 100 100"><g fill="var(--primary)"><path d="M27 47 L16 64 L38 64 Z"/><path d="M50 45 L35 65 L65 65 Z"/><path d="M50 36 L39 52 L61 52 Z"/><path d="M72 41 L55 65 L89 65 Z"/></g></svg>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;z-index:2">
+          <div style="font-size:42px">🌲🌳🌲</div>
+          <div class="h-display" style="font-size:25px">Grow together.</div>
+          <p class="muted" style="font-size:13px;max-width:250px;line-height:1.5">A circle is 6–12 people focusing toward a shared garden and a weekly league.</p>
+        </div>
+        <div style="width:100%;display:flex;flex-direction:column;gap:9px;z-index:2">
+          <button class="btn primary block">Create a circle</button>
+          <button class="btn tonal block">Join with a code</button>
+          <p class="muted" style="font-size:11px;margin-top:4px">🔒 Only your first name and tree count are visible to members.</p>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">4.1 Circle · empty</span><span class="v">Two clear actions + minimal-data reassurance.</span>
+      <div class="pills"><span class="pillk">empty</span><span class="pillk">opt-in</span></div></div>
+  </div>
+
+  <!-- 4.3 Join sheet -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="position:relative">
+        <div class="pad"><div class="h-display" style="font-size:22px">Circles</div></div>
+        <div style="flex:1"></div>
+        <div class="scrim"></div>
+        <div class="sheet">
+          <div class="grabber"></div>
+          <div class="h-display" style="font-size:20px;text-align:center">Join a circle</div>
+          <p class="muted" style="font-size:12.5px;text-align:center;margin:4px 0 16px">Enter the 6-character invite code.</p>
+          <div style="display:flex;gap:8px;justify-content:center;margin-bottom:16px">
+            <span style="width:38px;height:46px;border:2px solid var(--primary);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:20px">G</span>
+            <span style="width:38px;height:46px;border:1.5px solid var(--outline);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:20px">R</span>
+            <span style="width:38px;height:46px;border:1.5px solid var(--outline);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:20px">7</span>
+            <span style="width:38px;height:46px;border:1.5px solid var(--outline);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:20px;color:var(--outline)">·</span>
+            <span style="width:38px;height:46px;border:1.5px solid var(--outline);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:20px;color:var(--outline)">·</span>
+            <span style="width:38px;height:46px;border:1.5px solid var(--outline);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:20px;color:var(--outline)">·</span>
+          </div>
+          <button class="btn primary block">Join</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">4.3 Join with code</span><span class="v">Segmented code input, paste-friendly, case-insensitive. (Create is a sibling sheet.)</span></div>
+  </div>
+
+  <!-- 4.4 Circle detail (the hero) -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding-top:34px;overflow-y:auto">
+        <div class="pad" style="padding-bottom:6px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div><div class="h-display" style="font-size:20px">Deep Work Club</div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:4px"><span class="livedot"></span><span style="font-size:12px;font-weight:600;color:var(--primary)">3 focusing now</span></div>
+            </div>
+            <span style="font-size:20px;color:var(--on-surface-variant)">⋯</span>
+          </div>
+        </div>
+        <!-- collective garden composite -->
+        <div class="pad" style="padding-top:4px;padding-bottom:6px">
+          <div class="card" style="padding:12px 10px;background:linear-gradient(180deg,color-mix(in srgb,var(--primary-container) 50%,var(--surface)),var(--surface))">
+            <div style="display:flex;align-items:flex-end;justify-content:center;height:96px;gap:-6px;position:relative">
+              <svg width="46" height="56" viewBox="0 0 100 120" style="margin:0 -4px"><path d="M46.4 110 C 46.4 102 47.5 67 47.5 60 L 52.4 60 C 52.4 67 53.6 102 53.6 110 Z" fill="#8A6A46"/><path d="M 50 39.7 Q 63.6 55 67 59.5 Q 58.5 63.5 50 62.5 Q 41.4 63.5 32.9 59.5 Q 36.3 55 50 39.7 Z" fill="#1F7A57"/><path d="M 50 31.6 Q 60.8 45.6 63.5 49.6 Q 56.7 53.6 50 52.6 Q 43.2 53.6 36.5 49.6 Q 39.2 45.6 50 31.6 Z" fill="#2F8F66"/></svg>
+              <svg width="58" height="70" viewBox="0 0 100 120" style="margin:0 -6px"><path d="M46.4 110 C 46.4 102 47.5 67 47.5 60 L 52.4 60 C 52.4 67 53.6 102 53.6 110 Z" fill="#8A6A46"/><circle cx="39.2" cy="49.6" r="13.5" fill="#2F8F66"/><circle cx="60.8" cy="49.6" r="13.5" fill="#2F8F66"/><circle cx="50" cy="37.9" r="15.3" fill="#2F8F66"/><circle cx="50" cy="50.5" r="11.7" fill="#43A86B"/><circle cx="44.6" cy="39.7" r="8.1" fill="#6FC089"/></svg>
+              <svg width="50" height="60" viewBox="0 0 100 120" style="margin:0 -4px"><path d="M46.4 110 C 46.4 102 47.5 67 47.5 60 L 52.4 60 C 52.4 67 53.6 102 53.6 110 Z" fill="#8A6A46"/><circle cx="40.1" cy="47.8" r="11.7" fill="#E58AAB"/><circle cx="59.9" cy="47.8" r="11.7" fill="#E58AAB"/><circle cx="50" cy="37.9" r="12.6" fill="#E58AAB"/><circle cx="50" cy="49.6" r="9.9" fill="#F3B6CB"/></svg>
+              <svg width="44" height="53" viewBox="0 0 100 120" style="margin:0 -4px"><path d="M47.2 110 C 47.2 102 48.1 79 48.1 72 L 51.8 72 C 51.8 79 52.7 102 52.7 110 Z" fill="#8A6A46"/><circle cx="41.8" cy="58.7" r="10.2" fill="#2F8F66"/><circle cx="58.1" cy="58.7" r="10.2" fill="#2F8F66"/><circle cx="50" cy="49.8" r="11.5" fill="#43A86B"/></svg>
+            </div>
+            <div style="margin-top:10px">
+              <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px"><span class="muted">This week’s grove</span><b style="font-size:11.5px">38 / 60 trees</b></div>
+              <div style="height:7px;border-radius:var(--r-pill);background:var(--outline)"><div style="width:63%;height:100%;border-radius:var(--r-pill);background:var(--primary)"></div></div>
+            </div>
+          </div>
+        </div>
+        <!-- league snapshot -->
+        <div class="pad" style="padding-top:2px;padding-bottom:6px">
+          <div class="card" style="padding:11px;display:flex;align-items:center;gap:11px">
+            <span class="tier" style="width:38px;height:38px;border-radius:11px"><span style="font-size:18px">🏆</span></span>
+            <div style="flex:1"><b style="font-size:13px">Gold league · rank 2</b><div class="muted" style="font-size:11px">Ends in 2d 14h</div></div>
+            <span class="chev" style="color:var(--on-surface-variant)">›</span>
+          </div>
+        </div>
+        <!-- members -->
+        <div class="pad" style="padding-top:2px">
+          <div class="h-eyebrow" style="margin-bottom:6px">Members · 8</div>
+          <div class="row" style="background:var(--primary-container);border-radius:var(--r-md);padding:9px 11px;margin-bottom:6px">
+            <span class="av" style="background:#3f9b6b">YOU</span><div class="tx"><b>You</b><small style="color:var(--on-primary-container);opacity:.8">6 this week</small></div><span class="livedot"></span>
+          </div>
+          <div class="row" style="padding:8px 2px"><span class="av" style="background:#c98a3f">M</span><div class="tx"><b>Mara</b><small>9 this week</small></div><span class="livedot"></span></div>
+          <div class="row" style="padding:8px 2px"><span class="av" style="background:#6c79c9">J</span><div class="tx"><b>Jonas</b><small>7 this week</small></div></div>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">4.4 Circle detail</span><span class="v">Live count, a shared <i>grove</i> (not a cold grid), group goal, league snapshot, members.</span>
+      <div class="pills"><span class="pillk">live</span><span class="pillk">hero</span></div></div>
+  </div>
+
+  <!-- 4.4 dark variant -->
+  <div class="unit">
+    <div class="phone"><div class="screen dark">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding-top:34px;overflow-y:auto">
+        <div class="pad" style="padding-bottom:6px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div><div class="h-display" style="font-size:20px">Deep Work Club</div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:4px"><span class="livedot"></span><span style="font-size:12px;font-weight:600;color:var(--primary)">3 focusing now</span></div>
+            </div>
+            <span style="font-size:20px;color:var(--on-surface-variant)">⋯</span>
+          </div>
+        </div>
+        <div class="pad" style="padding-top:4px;padding-bottom:6px">
+          <div class="card" style="padding:12px 10px;background:linear-gradient(180deg,#1d3a2a,var(--surface))">
+            <div style="display:flex;align-items:flex-end;justify-content:center;height:90px">
+              <svg width="56" height="68" viewBox="0 0 100 120"><path d="M46.4 110 C 46.4 102 47.5 67 47.5 60 L 52.4 60 C 52.4 67 53.6 102 53.6 110 Z" fill="#8A6A46"/><circle cx="39.2" cy="49.6" r="13.5" fill="#2F8F66"/><circle cx="60.8" cy="49.6" r="13.5" fill="#2F8F66"/><circle cx="50" cy="37.9" r="15.3" fill="#2F8F66"/><circle cx="50" cy="50.5" r="11.7" fill="#43A86B"/><circle cx="44.6" cy="39.7" r="8.1" fill="#6FC089"/></svg>
+              <svg width="48" height="58" viewBox="0 0 100 120"><path d="M46.4 110 C 46.4 102 47.5 67 47.5 60 L 52.4 60 C 52.4 67 53.6 102 53.6 110 Z" fill="#8A6A46"/><circle cx="40.1" cy="47.8" r="11.7" fill="#E58AAB"/><circle cx="59.9" cy="47.8" r="11.7" fill="#E58AAB"/><circle cx="50" cy="37.9" r="12.6" fill="#E58AAB"/></svg>
+              <svg width="44" height="53" viewBox="0 0 100 120"><path d="M46.4 110 C 46.4 102 47.5 67 47.5 60 L 52.4 60 C 52.4 67 53.6 102 53.6 110 Z" fill="#8A6A46"/><path d="M 50 31.6 Q 60.8 45.6 63.5 49.6 Q 56.7 53.6 50 52.6 Q 43.2 53.6 36.5 49.6 Q 39.2 45.6 50 31.6 Z" fill="#2F8F66"/><path d="M 50 23.5 Q 57.9 36 59.9 39.7 Q 54.9 43.7 50 42.7 Q 45 43.7 40.1 39.7 Q 42 36 50 23.5 Z" fill="#52B07F"/></svg>
+            </div>
+            <div style="margin-top:10px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px"><span class="muted">This week’s grove</span><b style="font-size:11.5px">38 / 60</b></div>
+              <div style="height:7px;border-radius:var(--r-pill);background:var(--outline)"><div style="width:63%;height:100%;border-radius:var(--r-pill);background:var(--primary)"></div></div></div>
+          </div>
+        </div>
+        <div class="pad" style="padding-top:2px">
+          <div class="row" style="border:1px solid var(--primary);border-radius:var(--r-md);padding:9px 11px;margin-bottom:6px;background:var(--primary-container)">
+            <span class="av" style="background:#5fd394;color:#07120c">YOU</span><div class="tx"><b style="color:var(--on-primary-container)">You</b><small style="color:var(--on-primary-container);opacity:.75">6 this week</small></div><span class="livedot"></span>
+          </div>
+          <div class="row" style="padding:8px 2px"><span class="av" style="background:#c98a3f">M</span><div class="tx"><b>Mara</b><small>9 this week</small></div><span class="livedot"></span></div>
+          <div class="row" style="padding:8px 2px"><span class="av" style="background:#6c79c9">J</span><div class="tx"><b>Jonas</b><small>7 this week</small></div></div>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">4.4 Circle · Dark</span><span class="v">Dark tokens: shadows → outline borders, brighter primary, live dots hold contrast.</span>
+      <div class="pills"><span class="pillk">dark</span></div></div>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     GROUP 5 — LEAGUE
+     ============================================================ -->
+<section class="group">
+  <div class="group-num">05 · Weekly · 🔒 circle-gated</div>
+  <h2 class="group-name">League</h2>
+  <p class="group-desc">A light, resetting weekly ladder (a circle benefit). Tier badge + countdown, your sticky position, promotion/relegation zones. Solo users see an honest path in, not a locked tease.</p>
+  <div class="group-hr"></div>
+</section>
+
+<div class="deck">
+
+  <!-- 5.1 League standings -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding-top:34px;overflow-y:auto">
+        <div class="pad" style="padding-bottom:8px;text-align:center">
+          <div style="display:flex;justify-content:center;margin-bottom:8px"><span class="tier">🏆</span></div>
+          <div class="h-display" style="font-size:21px">Gold League</div>
+          <p class="muted" style="font-size:12px;margin-top:2px">Ends in 2d 14h · Top 3 promote</p>
+        </div>
+        <div class="pad" style="padding-top:0">
+          <!-- promote zone -->
+          <div style="background:color-mix(in srgb,var(--primary-container) 55%,transparent);border-radius:var(--r-md) var(--r-md) 0 0;padding:2px 10px">
+            <div class="row" style="padding:9px 2px"><b class="h-display" style="width:22px;text-align:center;color:var(--primary)">1</b><span class="av" style="background:#c98a3f">M</span><div class="tx"><b>Mara</b></div><b style="font-size:13px;color:var(--primary)">412</b></div>
+            <div class="row" style="padding:9px 2px;border-top:1px solid var(--outline)"><b class="h-display" style="width:22px;text-align:center">2</b><span class="av" style="background:#3f9b6b">YOU</span><div class="tx"><b>You</b><small style="color:var(--primary)">▲ 1 today</small></div><b style="font-size:13px">388</b></div>
+            <div class="row" style="padding:9px 2px;border-top:1px solid var(--outline)"><b class="h-display" style="width:22px;text-align:center">3</b><span class="av" style="background:#6c79c9">J</span><div class="tx"><b>Jonas</b></div><b style="font-size:13px">355</b></div>
+          </div>
+          <div style="border-left:1px solid var(--outline);border-right:1px solid var(--outline)">
+            <div class="row" style="padding:9px 12px"><b class="h-display" style="width:22px;text-align:center" class="muted">4</b><span class="av" style="background:#9a6cc9">T</span><div class="tx"><b>Theo</b></div><b style="font-size:13px" class="muted">311</b></div>
+            <div class="row" style="padding:9px 12px;border-top:1px solid var(--outline)"><b class="h-display" style="width:22px;text-align:center">5</b><span class="av" style="background:#c95f6c">L</span><div class="tx"><b>Lena</b></div><b style="font-size:13px" class="muted">289</b></div>
+          </div>
+          <!-- relegate zone -->
+          <div style="background:color-mix(in srgb,var(--accent) 16%,transparent);border-radius:0 0 var(--r-md) var(--r-md);padding:2px 10px">
+            <div class="row" style="padding:9px 2px"><b class="h-display" style="width:22px;text-align:center" class="muted">7</b><span class="av" style="background:#888">R</span><div class="tx"><b>Remy</b></div><b style="font-size:13px" class="muted">120</b></div>
+            <div style="text-align:center;font-size:10px;font-weight:600;color:var(--accent);padding:4px 0 7px">Bottom 2 relegate</div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">5.1 League</span><span class="v">Tier + countdown, sticky “you”, green promote / amber relegate zones.</span></div>
+  </div>
+
+  <!-- 5.1 solo / not-in-league -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="position:relative;text-align:center;align-items:center;justify-content:center;padding:24px">
+        <svg class="wm" style="width:200px;top:50%;left:50%;transform:translate(-50%,-50%)" viewBox="0 0 100 100"><circle cx="50" cy="40" r="20" fill="var(--accent)"/></svg>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;z-index:2">
+          <div style="font-size:44px">🏆</div>
+          <div class="h-display" style="font-size:22px">A weekly league<br>awaits.</div>
+          <p class="muted" style="font-size:13px;max-width:240px;line-height:1.5">Leagues run inside circles. Join one to compete in a friendly, weekly reset.</p>
+          <button class="btn primary" style="padding:0 22px;margin-top:6px">Join a circle</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">5.1 Solo / no league</span><span class="v">Honest: league is a circle benefit, with a path in (not a locked tease).</span>
+      <div class="pills"><span class="pillk">empty</span><span class="pillk">honest gate</span></div></div>
+  </div>
+
+  <!-- 5.1 week rollover result overlay -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="position:relative;align-items:center;justify-content:center;text-align:center;padding:24px;background:linear-gradient(180deg,var(--bg),color-mix(in srgb,var(--accent) 12%,var(--bg)))">
+        <svg class="wm" style="width:300px;top:50%;left:50%;transform:translate(-50%,-50%)" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="var(--accent)"/></svg>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;z-index:2">
+          <span class="tier" style="width:74px;height:74px;border-radius:22px"><span style="font-size:34px">🏆</span></span>
+          <div class="h-eyebrow">Week complete</div>
+          <div class="h-display" style="font-size:28px">You finished #2 —<br>promoted to Gold!</div>
+          <p class="muted" style="font-size:13px">Your circle held the top of Silver. Onward.</p>
+        </div>
+        <div style="width:100%;display:flex;flex-direction:column;gap:9px;z-index:2">
+          <button class="btn primary block">Share my week</button>
+          <button class="btn ghost block">See new league</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">5.1 Week rollover</span><span class="v">One-time celebratory result on first open after reset → optional share to Recap.</span></div>
+  </div>
+
+  <!-- 5.1 loading -->
+  <div class="unit">
+    <div class="phone"><div class="screen dark">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding-top:40px">
+        <div class="pad" style="text-align:center">
+          <div class="sk" style="width:56px;height:56px;border-radius:16px;margin:0 auto"></div>
+          <div class="sk" style="width:50%;height:18px;margin:12px auto 6px;border-radius:8px"></div>
+          <div class="sk" style="width:65%;height:11px;margin:0 auto;border-radius:8px"></div>
+        </div>
+        <div class="pad" style="display:flex;flex-direction:column;gap:9px;margin-top:8px">
+          <div class="sk" style="height:42px"></div><div class="sk" style="height:42px"></div><div class="sk" style="height:42px"></div>
+          <div class="sk" style="height:42px"></div><div class="sk" style="height:42px"></div><div class="sk" style="height:42px"></div>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">5.1 Loading · Dark</span><span class="v">Tier + 6 row skeletons. (Pattern reused across Circle &amp; Garden.)</span>
+      <div class="pills"><span class="pillk">loading</span><span class="pillk">dark</span></div></div>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     GROUP 6 — RECAP
+     ============================================================ -->
+<section class="group">
+  <div class="group-num">06 · Shareable</div>
+  <h2 class="group-name">Recap</h2>
+  <p class="group-desc">A 9:16 weekly card built for Stories/Reels — hero number, a mini grove of the week, streak &amp; league result, Grovely footer. Never auto-shares; blank weeks don’t pressure.</p>
+  <div class="group-hr"></div>
+</section>
+
+<div class="deck">
+
+  <!-- 6.1 Recap (light surface, dark card) -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding:14px 16px 16px">
+        <div class="pad" style="padding:6px 2px 12px"><div class="h-display" style="font-size:20px">Your week</div></div>
+        <div class="recap" style="flex:1;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:8px;opacity:.92">
+            <svg width="22" height="22" viewBox="0 0 100 100"><circle cx="87" cy="16" r="7" fill="#F0B978"/><g fill="#fff"><path d="M50 45 L35 65 L65 65 Z"/><path d="M50 36 L39 52 L61 52 Z"/><path d="M50 28 L42 42 L58 42 Z"/><path d="M27 47 L16 64 L38 64 Z"/><path d="M72 41 L55 65 L89 65 Z"/></g></svg>
+            <b style="font-family:var(--display);letter-spacing:-.02em;font-size:15px">Grovely</b>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:4px;margin-top:8px">
+            <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.8;font-weight:600">Jun 9 – 15</div>
+            <div class="num">8 trees</div>
+            <div style="font-size:15px;font-weight:600;opacity:.92">4h 20m focused</div>
+            <!-- mini grove -->
+            <div style="display:flex;align-items:flex-end;gap:-4px;margin-top:14px">
+              <svg width="40" height="48" viewBox="0 0 100 120"><circle cx="50" cy="44" r="16" fill="#6FC089"/><path d="M48 110 L48 60 L52 60 L52 110Z" fill="#cdb089"/></svg>
+              <svg width="46" height="55" viewBox="0 0 100 120"><path d="M 50 31.6 Q 60.8 45.6 63.5 49.6 Q 56.7 53.6 50 52.6 Q 43.2 53.6 36.5 49.6 Q 39.2 45.6 50 31.6 Z" fill="#8FD0A6"/><path d="M48 110 L48 56 L52 56 L52 110Z" fill="#cdb089"/></svg>
+              <svg width="38" height="46" viewBox="0 0 100 120"><circle cx="50" cy="46" r="13" fill="#F3B6CB"/><path d="M48 110 L48 60 L52 60 L52 110Z" fill="#cdb089"/></svg>
+              <svg width="34" height="41" viewBox="0 0 100 120"><circle cx="50" cy="50" r="11" fill="#A6DCAE"/><path d="M49 110 L49 64 L51 64 L51 110Z" fill="#cdb089"/></svg>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:14px">
+            <span style="background:rgba(255,255,255,.16);border-radius:var(--r-pill);font-size:11px;font-weight:600;padding:6px 11px">🔥 14-day streak</span>
+            <span style="background:rgba(255,255,255,.16);border-radius:var(--r-pill);font-size:11px;font-weight:600;padding:6px 11px">🏆 Gold · #2</span>
+          </div>
+          <div style="margin-top:14px;font-size:11px;opacity:.7;text-align:center">Made with Grovely</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="btn primary block">Share my week</button>
+          <button class="btn tonal" style="padding:0 16px">⤓</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">6.1 Recap card</span><span class="v">9:16 export artifact — hero number + mini grove + streak/league. The card <i>is</i> the share.</span></div>
+  </div>
+
+  <!-- 6.1 recap empty -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="position:relative;text-align:center;align-items:center;justify-content:center;padding:24px">
+        <svg class="wm" style="width:220px;top:50%;left:50%;transform:translate(-50%,-50%)" viewBox="0 0 100 100"><g fill="var(--primary)"><path d="M50 45 L35 65 L65 65 Z"/><path d="M50 36 L39 52 L61 52 Z"/><path d="M50 28 L42 42 L58 42 Z"/></g></svg>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;z-index:2">
+          <div style="font-size:42px">🌤️</div>
+          <div class="h-display" style="font-size:24px">A fresh week<br>to grow.</div>
+          <p class="muted" style="font-size:13px;max-width:230px;line-height:1.5">Plant a few trees this week and your recap will bloom here.</p>
+          <button class="btn primary" style="padding:0 22px;margin-top:6px">Start focusing</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">6.1 Recap · empty</span><span class="v">No focus yet → encourage, don’t push sharing a blank week.</span>
+      <div class="pills"><span class="pillk">empty</span></div></div>
+  </div>
+
+  <!-- error generic -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="position:relative;align-items:center;justify-content:center;padding:24px">
+        <div class="card" style="text-align:center;max-width:250px">
+          <div style="font-size:34px;margin-bottom:8px">🍂</div>
+          <div class="h-display" style="font-size:18px">Couldn’t reach the grove.</div>
+          <p class="muted" style="font-size:12.5px;margin:6px 0 14px;line-height:1.5">Check your connection — your trees are safe and waiting.</p>
+          <button class="btn primary block">Retry</button>
+          <button class="btn ghost block" style="margin-top:4px">View cached garden</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">Error (transversal)</span><span class="v">Plain cause, Retry, a quiet secondary path. Never a dead end; cached content stays.</span>
+      <div class="pills"><span class="pillk">error</span></div></div>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     GROUP 7 — PROFILE / SETTINGS + AUTH
+     ============================================================ -->
+<section class="group">
+  <div class="group-num">07 · Account</div>
+  <h2 class="group-name">Profile · Settings · Auth</h2>
+  <p class="group-desc">Guest-first identity, lifetime stats, and the settings hub. <b>Cancel = ≤2 taps</b> (no maze). Anonymous → email/OAuth upgrade migrates the grove intact. LGPD: export/delete data.</p>
+  <div class="group-hr"></div>
+</section>
+
+<div class="deck">
+
+  <!-- 8.1 Profile home -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding-top:34px;overflow-y:auto">
+        <div class="pad">
+          <div style="display:flex;align-items:center;gap:12px">
+            <span class="av" style="width:52px;height:52px;font-size:18px;background:#3f9b6b">A</span>
+            <div><div class="h-display" style="font-size:19px">Alex</div>
+              <span class="pill" style="margin-top:3px;background:color-mix(in srgb,var(--accent) 20%,transparent)"><span class="flame">🔥</span> 14-day streak</span></div>
+          </div>
+          <!-- guest upgrade banner -->
+          <div class="card" style="margin-top:14px;display:flex;align-items:center;gap:11px;background:var(--primary-container);box-shadow:none">
+            <span style="font-size:22px">🔐</span>
+            <div style="flex:1"><b style="font-size:13px;color:var(--on-primary-container)">You’re a guest</b><div style="font-size:11.5px;color:var(--on-primary-container);opacity:.85">Save your progress so it’s never lost.</div></div>
+            <span class="btn sm" style="background:var(--primary);color:var(--on-primary)">Save</span>
+          </div>
+          <!-- stats -->
+          <div class="card" style="margin-top:12px;display:flex;justify-content:space-between;text-align:center;padding:14px 10px">
+            <div><b class="h-display" style="font-size:18px">24</b><div style="font-size:10px" class="muted">trees</div></div>
+            <div><b class="h-display" style="font-size:18px">18h</b><div style="font-size:10px" class="muted">focused</div></div>
+            <div><b class="h-display" style="font-size:18px">21</b><div style="font-size:10px" class="muted">best streak</div></div>
+            <div><b class="h-display" style="font-size:18px">4/6</b><div style="font-size:10px" class="muted">species</div></div>
+          </div>
+        </div>
+        <div class="pad" style="padding-top:2px">
+          <div class="row"><span class="ic">✦</span><div class="tx"><b>Subscription</b><small>Free plan</small></div><span class="chev">›</span></div>
+          <div class="divider"></div>
+          <div class="row"><span class="ic">🔔</span><div class="tx"><b>Notifications</b></div><span class="chev">›</span></div>
+          <div class="divider"></div>
+          <div class="row"><span class="ic">🎨</span><div class="tx"><b>Appearance</b><small>System</small></div><span class="chev">›</span></div>
+          <div class="divider"></div>
+          <div class="row"><span class="ic">🔒</span><div class="tx"><b>Privacy</b></div><span class="chev">›</span></div>
+          <div class="divider"></div>
+          <div class="row"><span class="ic">📄</span><div class="tx"><b>Terms</b></div><span class="chev">›</span></div>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">8.1 Profile</span><span class="v">Guest chip + Save CTA, lifetime stats, grouped settings, sub status inline.</span></div>
+  </div>
+
+  <!-- 8.3 Cancel (<=2 taps) -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="position:relative">
+        <div class="pad" style="display:flex;align-items:center;gap:10px"><span style="font-size:20px;color:var(--on-surface-variant)">‹</span><div class="h-display" style="font-size:19px">Subscription</div></div>
+        <div class="pad" style="padding-top:4px">
+          <div class="card">
+            <span class="pill" style="background:var(--accent);color:var(--on-accent)">✦ Premium</span>
+            <div class="h-display" style="font-size:18px;margin-top:10px">Grovely Premium · Annual</div>
+            <p class="muted" style="font-size:12.5px;margin-top:4px">Trial ends Jun 30 · then $39.99/yr</p>
+          </div>
+          <p class="muted" style="font-size:12px;margin:14px 2px 8px;line-height:1.5">Cancel anytime — it takes two taps, and you keep Premium until your period ends.</p>
+          <button class="btn block" style="background:var(--surface-variant);color:var(--on-surface)">Cancel subscription</button>
+        </div>
+        <div style="flex:1"></div>
+        <!-- confirm sheet = tap 2 -->
+        <div class="scrim"></div>
+        <div class="sheet">
+          <div class="grabber"></div>
+          <div class="h-display" style="font-size:19px;text-align:center">Cancel subscription?</div>
+          <p class="muted" style="font-size:12.5px;text-align:center;margin:6px 0 16px">You’ll keep Premium until Jun 30. No charge after that.</p>
+          <button class="btn block" style="background:var(--surface-variant);color:#c0392b">Cancel subscription</button>
+          <button class="btn primary block" style="margin-top:8px">Keep Premium</button>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">8.3 Manage / Cancel</span><span class="v">Tap 1: Cancel. Tap 2: confirm. No retention maze, no guilt, keeps access to period end.</span>
+      <div class="pills"><span class="pillk">≤2 taps</span><span class="pillk">no dark pattern</span></div></div>
+  </div>
+
+  <!-- 9.1 Auth -->
+  <div class="unit">
+    <div class="phone"><div class="screen dark">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding:40px 24px 22px;position:relative">
+        <svg class="wm" style="bottom:0;right:-30px;width:200px" viewBox="0 0 100 100"><g fill="var(--primary)"><path d="M50 45 L35 65 L65 65 Z"/><path d="M50 36 L39 52 L61 52 Z"/><path d="M50 28 L42 42 L58 42 Z"/><path d="M72 41 L55 65 L89 65 Z"/></g></svg>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;z-index:2">
+          <div>
+            <div class="h-display" style="font-size:27px">Welcome back.</div>
+            <p class="muted" style="font-size:13px;margin-top:6px">Sign in to sync your grove across devices.</p>
+          </div>
+          <button class="btn block" style="background:var(--surface);color:var(--on-surface);border:1px solid var(--outline)"> Continue with Apple</button>
+          <button class="btn block" style="background:var(--surface);color:var(--on-surface);border:1px solid var(--outline)">G Continue with Google</button>
+          <div style="display:flex;align-items:center;gap:10px;color:var(--on-surface-variant);font-size:11px"><div class="divider" style="flex:1"></div>or<div class="divider" style="flex:1"></div></div>
+          <div style="border:1px solid var(--outline);border-radius:var(--r-sm);padding:13px 14px;font-size:13px;color:var(--on-surface-variant)">Email</div>
+          <button class="btn primary block">Continue</button>
+        </div>
+        <p style="font-size:10.5px;text-align:center;z-index:2" class="muted">By continuing you agree to our Terms and Privacy Policy.</p>
+        <p style="font-size:12px;text-align:center;margin-top:8px;z-index:2"><span class="muted">New here? </span><span style="color:var(--primary);font-weight:600">Create an account</span></p>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">9.1 Auth · Dark</span><span class="v">One adaptive screen: sign-in / sign-up / guest-upgrade. OAuth-first, email fallback.</span>
+      <div class="pills"><span class="pillk">dark</span></div></div>
+  </div>
+
+  <!-- 8.4 Notifications settings -->
+  <div class="unit">
+    <div class="phone"><div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">✦ ▮▮▮</span></div>
+      <div class="body" style="padding-top:34px">
+        <div class="pad" style="display:flex;align-items:center;gap:10px"><span style="font-size:20px;color:var(--on-surface-variant)">‹</span><div class="h-display" style="font-size:19px">Notifications</div></div>
+        <div class="pad" style="padding-top:4px">
+          <div class="row"><div class="tx"><b>Daily reminder</b><small>A nudge to plant one tree · 9:00</small></div><span style="width:42px;height:24px;border-radius:var(--r-pill);background:var(--primary);position:relative"><span style="position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:50%;background:#fff"></span></span></div>
+          <div class="divider"></div>
+          <div class="row"><div class="tx"><b>Streak saver</b><small>Before your streak breaks</small></div><span style="width:42px;height:24px;border-radius:var(--r-pill);background:var(--primary);position:relative"><span style="position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:50%;background:#fff"></span></span></div>
+          <div class="divider"></div>
+          <div class="row"><div class="tx"><b>Circle activity</b><small>When someone in your circle starts</small></div><span style="width:42px;height:24px;border-radius:var(--r-pill);background:var(--primary);position:relative"><span style="position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:50%;background:#fff"></span></span></div>
+          <div class="divider"></div>
+          <div class="row"><div class="tx"><b>League results</b><small>Weekly promotion / relegation</small></div><span style="width:42px;height:24px;border-radius:var(--r-pill);background:var(--outline);position:relative"><span style="position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff"></span></span></div>
+          <div class="divider"></div>
+          <div class="row"><div class="tx"><b>Product news</b><small>Off by default</small></div><span style="width:42px;height:24px;border-radius:var(--r-pill);background:var(--outline);position:relative"><span style="position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff"></span></span></div>
+        </div>
+      </div>
+    </div></div>
+    <div class="cap"><span class="k">8.2 Notifications</span><span class="v">Granular toggles, product news off by default (honest defaults).</span></div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <b style="color:#cfe3d4">Built to the Grovely DS.</b> Tokens from <code>brand/tokens.json</code> · fonts Bricolage Grotesque + Hanken Grotesk · tree &amp; grove geometry traced from the real <code>assets/brand/trees/*.svg</code> and <code>logo/grovely-symbol.svg</code>.
+  Emoji glyphs in nav/rows are mockup stand-ins for the production Flutter icon set (and a future custom leaf/grove glyph family).
+  Full per-screen specs, states, and pt/en microcopy in <code>SCREENS_SPEC.md</code>; navigation in <code>flow-map.md</code>.
+</footer>
+
+</body>
+</html>

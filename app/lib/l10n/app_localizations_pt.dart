@@ -9,7 +9,7 @@ class AppLocalizationsPt extends AppLocalizations {
   AppLocalizationsPt([String locale = 'pt']) : super(locale);
 
   @override
-  String get appName => 'Plantio Coletivo';
+  String get appName => 'Grovely';
 
   @override
   String get navFocus => 'Foco';
