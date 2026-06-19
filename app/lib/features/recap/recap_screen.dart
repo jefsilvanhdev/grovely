@@ -140,7 +140,7 @@ class _RecapCard extends StatelessWidget {
                     fontSize: 96,
                     height: 1,
                     fontWeight: FontWeight.w800)),
-            Text(l10n.recapHero(count).replaceFirst('$count ', ''),
+            Text(l10n.recapHeroLabel(count),
                 style: const TextStyle(color: Colors.white, fontSize: 22)),
             const SizedBox(height: 8),
             Text(l10n.recapSub(minutes ~/ 60, minutes % 60),

@@ -27,17 +27,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navProfile => 'Profile';
 
   @override
-  String get focusTitle => 'Focus session';
+  String get focusTitle => 'Focus';
 
   @override
-  String get focusSubtitle => 'Plant a tree by staying focused.';
+  String get focusSubtitle => 'Stay focused and watch it grow.';
 
   @override
   String get gardenTitle => 'Your garden';
 
   @override
-  String get gardenEmpty =>
-      'No trees yet. Finish a focus session to plant your first.';
+  String get gardenEmpty => 'No trees yet — your first focus plants one.';
 
   @override
   String get circleTitle => 'Circles';
@@ -46,16 +45,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get circleEmpty => 'Join a circle to grow a garden together.';
 
   @override
-  String get leagueTitle => 'Weekly league';
+  String get leagueTitle => 'League';
 
   @override
   String get profileTitle => 'Profile';
 
   @override
-  String get onboardingWelcome => 'Grow focus, together.';
+  String get onboardingWelcome => 'Grow your focus. Together.';
 
   @override
-  String get paywallTitle => 'Go Premium';
+  String get paywallTitle => 'Grovely Premium';
 
   @override
   String get commonContinue => 'Continue';
@@ -64,40 +63,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonCancel => 'Cancel';
 
   @override
-  String get commonRetry => 'Retry';
+  String get commonRetry => 'Try again';
 
   @override
   String get commonLoading => 'Loading…';
 
   @override
-  String get commonError => 'Something went wrong.';
+  String get commonError => 'That didn\'t work — let\'s try again.';
 
   @override
   String get focusStart => 'Start focus';
 
   @override
-  String get focusGiveUp => 'Give up';
+  String get focusGiveUp => 'Stop';
 
   @override
-  String get focusKeepGrowing => 'Stay in the app to keep your tree growing.';
+  String get focusKeepGrowing => 'Stay here. Your tree\'s growing.';
 
   @override
   String get focusCompletedTitle => 'Tree planted!';
 
   @override
   String focusCompletedBody(int minutes) {
-    return 'You focused for $minutes minutes.';
+    return '$minutes minutes of focus, well spent.';
   }
 
   @override
-  String get focusWitheredTitle => 'Your tree withered';
+  String get focusWitheredTitle => 'Your tree didn\'t make it';
 
   @override
   String get focusWitheredBody =>
-      'You left before the session ended. Try again.';
+      'You stepped away before it finished. It happens.';
 
   @override
-  String get focusNewSession => 'New session';
+  String get focusNewSession => 'Start again';
 
   @override
   String minutesShort(int minutes) {
@@ -131,17 +130,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String focusPreview(String species, int minutes) {
-    return 'A young $species in $minutes min.';
+    return 'A $species, grown in $minutes min.';
   }
 
   @override
   String get focusPlant => 'Plant & focus';
 
   @override
-  String get focusGiveUpConfirmTitle => 'Leave now? Your tree will wither.';
+  String get focusGiveUpConfirmTitle => 'Leave now? Your tree won\'t make it.';
 
   @override
-  String get focusKeepFocusing => 'Keep focusing';
+  String get focusKeepFocusing => 'Keep growing';
 
   @override
   String statMinFocused(int minutes) {
@@ -160,7 +159,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String statLongest(int count) {
-    return 'Longest: $count days';
+    return 'Best: $count days';
   }
 
   @override
@@ -175,40 +174,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get plantAnother => 'Plant another';
 
   @override
-  String get viewGarden => 'View garden';
+  String get viewGarden => 'See my garden';
 
   @override
-  String get reviveWithVideo => 'Revive with a short video';
+  String get reviveWithVideo => 'Bring it back with a short video';
 
   @override
   String get startFresh => 'Start fresh';
 
   @override
-  String get reviveSheetBody => 'Watch a 30-second video to revive this tree.';
+  String get reviveSheetBody => 'A 30-second video brings this tree back.';
 
   @override
-  String get watchAndRevive => 'Watch & revive';
+  String get watchAndRevive => 'Watch & bring it back';
 
   @override
   String get noThanks => 'No thanks';
 
   @override
   String get reviveUnavailable =>
-      'Couldn\'t load the video — your tree\'s still here to replant.';
+      'No video right now — but you can replant it.';
 
   @override
   String get witheredBodyKind =>
-      'You left before the session finished — it happens. Want to bring it back?';
+      'You stepped away before it finished — it happens. Want it back?';
 
   @override
-  String get plantFirst => 'Plant your first tree';
+  String get plantFirst => 'Plant my first tree';
 
   @override
-  String get gardenWaiting => 'Your garden is waiting.';
+  String get gardenWaiting => 'Your garden starts here.';
 
   @override
-  String get gardenWaitingSub =>
-      'Finish a focus session to plant your first tree.';
+  String get gardenWaitingSub => 'One focused session plants your first tree.';
 
   @override
   String get speciesOak => 'oak';
@@ -233,79 +231,79 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onbWelcomeSub =>
-      'Plant a tree with every focused session. Watch your grove grow.';
+      'Every focused minute plants a tree. Watch your grove grow.';
 
   @override
-  String get onbGetStarted => 'Get started';
+  String get onbGetStarted => 'Plant my first tree';
 
   @override
   String get onbHaveAccount => 'I already have an account';
 
   @override
-  String get onbNotifTitle => 'Gentle nudges, never noise.';
+  String get onbNotifTitle => 'A nudge when it helps. Never noise.';
 
   @override
-  String get onbNotifBullet1 => 'A daily reminder to plant one tree';
+  String get onbNotifBullet1 => 'A daily nudge to plant one tree';
 
   @override
-  String get onbNotifBullet2 =>
-      'We\'ll help you save a streak before it breaks';
+  String get onbNotifBullet2 => 'A heads-up before your streak slips';
 
   @override
-  String get onbNotifBullet3 => 'Know when your circle is focusing';
+  String get onbNotifBullet3 => 'A ping when your circle starts focusing';
 
   @override
   String get onbNotifCta => 'Turn on reminders';
 
   @override
-  String get onbNotNow => 'Not now';
+  String get onbNotNow => 'Maybe later';
 
   @override
   String get onbSocialTitle => 'Focus your way.';
 
   @override
-  String get onbSocialSub => 'You can always change this later.';
+  String get onbSocialSub => 'Change this anytime.';
 
   @override
-  String get onbSoloTitle => 'Focus solo';
+  String get onbSoloTitle => 'On my own';
 
   @override
   String get onbSoloDesc => 'Just you and your grove.';
 
   @override
-  String get onbCircleTitle => 'Focus with a circle';
+  String get onbCircleTitle => 'With a circle';
 
   @override
-  String get onbCircleDesc => 'Grow a shared garden with 6–12 people.';
+  String get onbCircleDesc => 'Grow one garden with 6–12 people.';
 
   @override
   String get onbRecommended => 'Recommended';
 
   @override
-  String get onbPrivacy => 'We only ever share your first name and tree count.';
+  String get onbPrivacy =>
+      'Only your first name and tree count are ever shared.';
 
   @override
   String get onbGuidedCoach =>
-      'Let\'s plant your first tree. Stay here for 30 seconds — that\'s it.';
+      'Let\'s plant your first one. Just stay here 30 seconds.';
 
   @override
-  String get onbBegin => 'Begin';
+  String get onbBegin => 'Plant it';
 
   @override
-  String get onbGuidedDone => 'Your first tree! 🌱 This one\'s on us.';
+  String get onbGuidedDone => 'Your first tree. 🌱 On us.';
 
   @override
-  String get pwTitle => 'Go deeper with Grovely Premium.';
+  String get pwTitle => 'More room to grow.';
 
   @override
-  String get pwSub => 'Everything you love, plus more ways to grow.';
+  String get pwSub => 'Keep everything free, unlock a little more.';
 
   @override
-  String get pwTrialCta => 'Start 21-day free trial';
+  String get pwTrialCta => 'Try free for 21 days';
 
   @override
   String pwTrialSub(String price) {
-    return 'Free for 21 days, then $price. Cancel anytime in two taps.';
+    return 'Free for 21 days, then $price. Cancel anytime, two taps.';
   }
 
   @override
@@ -318,7 +316,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pwSave => 'Save 40%';
 
   @override
-  String get pwContinueFree => 'Continue with Free';
+  String get pwContinueFree => 'Stay on Free';
 
   @override
   String get pwRestore => 'Restore purchases';
@@ -360,13 +358,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileGuest => 'Guest';
 
   @override
-  String get profileSaveProgress => 'Save your progress';
+  String get profileSaveProgress => 'Save my progress';
 
   @override
-  String get profileFreePlan => 'Free plan';
+  String get profileFreePlan => 'Free';
 
   @override
-  String get profileLifetime => 'Lifetime';
+  String get profileLifetime => 'All time';
 
   @override
   String get rowAccount => 'Account';
@@ -402,20 +400,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themeDark => 'Dark';
 
   @override
-  String get recapTitle => 'Weekly recap';
+  String get recapTitle => 'Your week';
 
   @override
   String recapHero(int count) {
-    return '$count trees this week';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count trees this week',
+      one: '1 tree this week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recapHeroLabel(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'trees this week',
+      one: 'tree this week',
+    );
+    return '$_temp0';
   }
 
   @override
   String recapSub(int hours, int minutes) {
-    return '${hours}h ${minutes}m focused';
+    return '${hours}h ${minutes}m in focus';
   }
 
   @override
-  String get recapFooter => 'Made with Grovely';
+  String get recapFooter => 'Grown with Grovely';
 
   @override
   String get recapShare => 'Share my week';
@@ -424,24 +439,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recapEmpty => 'A fresh week to grow.';
 
   @override
-  String get recapEmptySub => 'Plant a tree to start this week\'s recap.';
+  String get recapEmptySub => 'Plant your first tree to start the week.';
 
   @override
   String get circleEmptyTitle => 'Grow together.';
 
   @override
   String get circleEmptySub =>
-      'A circle is 6–12 people focusing toward a shared garden and a weekly league.';
+      '6–12 friends, one shared garden, a friendly weekly league.';
 
   @override
-  String get circleCreate => 'Create a circle';
+  String get circleCreate => 'Start a circle';
 
   @override
   String get circleJoin => 'Join with a code';
 
   @override
   String get circlePrivacy =>
-      'Only your first name and tree count are visible to members.';
+      'Members only see your first name and tree count.';
 
   @override
   String get circleNameLabel => 'Circle name';
@@ -462,10 +477,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get circleJoinCta => 'Join';
 
   @override
-  String get circleInvalidCode => 'That code didn\'t match a circle.';
+  String get circleInvalidCode => 'We couldn\'t find a circle for that code.';
 
   @override
-  String get circleFull => 'This circle is full.';
+  String get circleFull => 'This circle\'s full for now.';
 
   @override
   String get circleInvite => 'Share invite';
@@ -475,7 +490,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String circleGoal(int planted, int goal) {
-    return '$planted/$goal trees this week';
+    return '$planted of $goal trees this week';
   }
 
   @override
@@ -485,7 +500,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get circleLeaveConfirm => 'Leave circle?';
 
   @override
-  String get circleLeaveBody => 'You can rejoin with the code.';
+  String get circleLeaveBody => 'You can come back anytime with the code.';
 
   @override
   String get circleStay => 'Stay';
@@ -496,10 +511,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get leagueSolo => 'Join a circle to enter the weekly league.';
+  String get leagueSolo => 'Join a circle and the league opens up.';
 
   @override
-  String get leagueTitleWeek => 'This week\'s standings';
+  String get leagueTitleWeek => 'This week';
 
   @override
   String get leagueYou => 'You';

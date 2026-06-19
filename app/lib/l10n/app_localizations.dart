@@ -104,31 +104,31 @@ abstract class AppLocalizations {
   /// **'Grovely'**
   String get appName;
 
-  /// Bottom nav label — focus session tab.
+  /// No description provided for @navFocus.
   ///
   /// In en, this message translates to:
   /// **'Focus'**
   String get navFocus;
 
-  /// Bottom nav label — personal garden tab.
+  /// No description provided for @navGarden.
   ///
   /// In en, this message translates to:
   /// **'Garden'**
   String get navGarden;
 
-  /// Bottom nav label — circles / collective garden tab.
+  /// No description provided for @navCircle.
   ///
   /// In en, this message translates to:
   /// **'Circle'**
   String get navCircle;
 
-  /// Bottom nav label — weekly league tab.
+  /// No description provided for @navLeague.
   ///
   /// In en, this message translates to:
   /// **'League'**
   String get navLeague;
 
-  /// Bottom nav label — profile / settings tab.
+  /// No description provided for @navProfile.
   ///
   /// In en, this message translates to:
   /// **'Profile'**
@@ -137,13 +137,13 @@ abstract class AppLocalizations {
   /// No description provided for @focusTitle.
   ///
   /// In en, this message translates to:
-  /// **'Focus session'**
+  /// **'Focus'**
   String get focusTitle;
 
   /// No description provided for @focusSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Plant a tree by staying focused.'**
+  /// **'Stay focused and watch it grow.'**
   String get focusSubtitle;
 
   /// No description provided for @gardenTitle.
@@ -155,7 +155,7 @@ abstract class AppLocalizations {
   /// No description provided for @gardenEmpty.
   ///
   /// In en, this message translates to:
-  /// **'No trees yet. Finish a focus session to plant your first.'**
+  /// **'No trees yet — your first focus plants one.'**
   String get gardenEmpty;
 
   /// No description provided for @circleTitle.
@@ -173,7 +173,7 @@ abstract class AppLocalizations {
   /// No description provided for @leagueTitle.
   ///
   /// In en, this message translates to:
-  /// **'Weekly league'**
+  /// **'League'**
   String get leagueTitle;
 
   /// No description provided for @profileTitle.
@@ -185,13 +185,13 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingWelcome.
   ///
   /// In en, this message translates to:
-  /// **'Grow focus, together.'**
+  /// **'Grow your focus. Together.'**
   String get onboardingWelcome;
 
   /// No description provided for @paywallTitle.
   ///
   /// In en, this message translates to:
-  /// **'Go Premium'**
+  /// **'Grovely Premium'**
   String get paywallTitle;
 
   /// No description provided for @commonContinue.
@@ -209,7 +209,7 @@ abstract class AppLocalizations {
   /// No description provided for @commonRetry.
   ///
   /// In en, this message translates to:
-  /// **'Retry'**
+  /// **'Try again'**
   String get commonRetry;
 
   /// No description provided for @commonLoading.
@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// No description provided for @commonError.
   ///
   /// In en, this message translates to:
-  /// **'Something went wrong.'**
+  /// **'That didn\'t work — let\'s try again.'**
   String get commonError;
 
   /// No description provided for @focusStart.
@@ -233,13 +233,13 @@ abstract class AppLocalizations {
   /// No description provided for @focusGiveUp.
   ///
   /// In en, this message translates to:
-  /// **'Give up'**
+  /// **'Stop'**
   String get focusGiveUp;
 
   /// No description provided for @focusKeepGrowing.
   ///
   /// In en, this message translates to:
-  /// **'Stay in the app to keep your tree growing.'**
+  /// **'Stay here. Your tree\'s growing.'**
   String get focusKeepGrowing;
 
   /// No description provided for @focusCompletedTitle.
@@ -251,25 +251,25 @@ abstract class AppLocalizations {
   /// No description provided for @focusCompletedBody.
   ///
   /// In en, this message translates to:
-  /// **'You focused for {minutes} minutes.'**
+  /// **'{minutes} minutes of focus, well spent.'**
   String focusCompletedBody(int minutes);
 
   /// No description provided for @focusWitheredTitle.
   ///
   /// In en, this message translates to:
-  /// **'Your tree withered'**
+  /// **'Your tree didn\'t make it'**
   String get focusWitheredTitle;
 
   /// No description provided for @focusWitheredBody.
   ///
   /// In en, this message translates to:
-  /// **'You left before the session ended. Try again.'**
+  /// **'You stepped away before it finished. It happens.'**
   String get focusWitheredBody;
 
   /// No description provided for @focusNewSession.
   ///
   /// In en, this message translates to:
-  /// **'New session'**
+  /// **'Start again'**
   String get focusNewSession;
 
   /// No description provided for @minutesShort.
@@ -305,7 +305,7 @@ abstract class AppLocalizations {
   /// No description provided for @focusPreview.
   ///
   /// In en, this message translates to:
-  /// **'A young {species} in {minutes} min.'**
+  /// **'A {species}, grown in {minutes} min.'**
   String focusPreview(String species, int minutes);
 
   /// No description provided for @focusPlant.
@@ -317,13 +317,13 @@ abstract class AppLocalizations {
   /// No description provided for @focusGiveUpConfirmTitle.
   ///
   /// In en, this message translates to:
-  /// **'Leave now? Your tree will wither.'**
+  /// **'Leave now? Your tree won\'t make it.'**
   String get focusGiveUpConfirmTitle;
 
   /// No description provided for @focusKeepFocusing.
   ///
   /// In en, this message translates to:
-  /// **'Keep focusing'**
+  /// **'Keep growing'**
   String get focusKeepFocusing;
 
   /// No description provided for @statMinFocused.
@@ -347,7 +347,7 @@ abstract class AppLocalizations {
   /// No description provided for @statLongest.
   ///
   /// In en, this message translates to:
-  /// **'Longest: {count} days'**
+  /// **'Best: {count} days'**
   String statLongest(int count);
 
   /// No description provided for @statSpecies.
@@ -371,13 +371,13 @@ abstract class AppLocalizations {
   /// No description provided for @viewGarden.
   ///
   /// In en, this message translates to:
-  /// **'View garden'**
+  /// **'See my garden'**
   String get viewGarden;
 
   /// No description provided for @reviveWithVideo.
   ///
   /// In en, this message translates to:
-  /// **'Revive with a short video'**
+  /// **'Bring it back with a short video'**
   String get reviveWithVideo;
 
   /// No description provided for @startFresh.
@@ -389,13 +389,13 @@ abstract class AppLocalizations {
   /// No description provided for @reviveSheetBody.
   ///
   /// In en, this message translates to:
-  /// **'Watch a 30-second video to revive this tree.'**
+  /// **'A 30-second video brings this tree back.'**
   String get reviveSheetBody;
 
   /// No description provided for @watchAndRevive.
   ///
   /// In en, this message translates to:
-  /// **'Watch & revive'**
+  /// **'Watch & bring it back'**
   String get watchAndRevive;
 
   /// No description provided for @noThanks.
@@ -407,31 +407,31 @@ abstract class AppLocalizations {
   /// No description provided for @reviveUnavailable.
   ///
   /// In en, this message translates to:
-  /// **'Couldn\'t load the video — your tree\'s still here to replant.'**
+  /// **'No video right now — but you can replant it.'**
   String get reviveUnavailable;
 
   /// No description provided for @witheredBodyKind.
   ///
   /// In en, this message translates to:
-  /// **'You left before the session finished — it happens. Want to bring it back?'**
+  /// **'You stepped away before it finished — it happens. Want it back?'**
   String get witheredBodyKind;
 
   /// No description provided for @plantFirst.
   ///
   /// In en, this message translates to:
-  /// **'Plant your first tree'**
+  /// **'Plant my first tree'**
   String get plantFirst;
 
   /// No description provided for @gardenWaiting.
   ///
   /// In en, this message translates to:
-  /// **'Your garden is waiting.'**
+  /// **'Your garden starts here.'**
   String get gardenWaiting;
 
   /// No description provided for @gardenWaitingSub.
   ///
   /// In en, this message translates to:
-  /// **'Finish a focus session to plant your first tree.'**
+  /// **'One focused session plants your first tree.'**
   String get gardenWaitingSub;
 
   /// No description provided for @speciesOak.
@@ -479,13 +479,13 @@ abstract class AppLocalizations {
   /// No description provided for @onbWelcomeSub.
   ///
   /// In en, this message translates to:
-  /// **'Plant a tree with every focused session. Watch your grove grow.'**
+  /// **'Every focused minute plants a tree. Watch your grove grow.'**
   String get onbWelcomeSub;
 
   /// No description provided for @onbGetStarted.
   ///
   /// In en, this message translates to:
-  /// **'Get started'**
+  /// **'Plant my first tree'**
   String get onbGetStarted;
 
   /// No description provided for @onbHaveAccount.
@@ -497,25 +497,25 @@ abstract class AppLocalizations {
   /// No description provided for @onbNotifTitle.
   ///
   /// In en, this message translates to:
-  /// **'Gentle nudges, never noise.'**
+  /// **'A nudge when it helps. Never noise.'**
   String get onbNotifTitle;
 
   /// No description provided for @onbNotifBullet1.
   ///
   /// In en, this message translates to:
-  /// **'A daily reminder to plant one tree'**
+  /// **'A daily nudge to plant one tree'**
   String get onbNotifBullet1;
 
   /// No description provided for @onbNotifBullet2.
   ///
   /// In en, this message translates to:
-  /// **'We\'ll help you save a streak before it breaks'**
+  /// **'A heads-up before your streak slips'**
   String get onbNotifBullet2;
 
   /// No description provided for @onbNotifBullet3.
   ///
   /// In en, this message translates to:
-  /// **'Know when your circle is focusing'**
+  /// **'A ping when your circle starts focusing'**
   String get onbNotifBullet3;
 
   /// No description provided for @onbNotifCta.
@@ -527,7 +527,7 @@ abstract class AppLocalizations {
   /// No description provided for @onbNotNow.
   ///
   /// In en, this message translates to:
-  /// **'Not now'**
+  /// **'Maybe later'**
   String get onbNotNow;
 
   /// No description provided for @onbSocialTitle.
@@ -539,13 +539,13 @@ abstract class AppLocalizations {
   /// No description provided for @onbSocialSub.
   ///
   /// In en, this message translates to:
-  /// **'You can always change this later.'**
+  /// **'Change this anytime.'**
   String get onbSocialSub;
 
   /// No description provided for @onbSoloTitle.
   ///
   /// In en, this message translates to:
-  /// **'Focus solo'**
+  /// **'On my own'**
   String get onbSoloTitle;
 
   /// No description provided for @onbSoloDesc.
@@ -557,13 +557,13 @@ abstract class AppLocalizations {
   /// No description provided for @onbCircleTitle.
   ///
   /// In en, this message translates to:
-  /// **'Focus with a circle'**
+  /// **'With a circle'**
   String get onbCircleTitle;
 
   /// No description provided for @onbCircleDesc.
   ///
   /// In en, this message translates to:
-  /// **'Grow a shared garden with 6–12 people.'**
+  /// **'Grow one garden with 6–12 people.'**
   String get onbCircleDesc;
 
   /// No description provided for @onbRecommended.
@@ -575,49 +575,49 @@ abstract class AppLocalizations {
   /// No description provided for @onbPrivacy.
   ///
   /// In en, this message translates to:
-  /// **'We only ever share your first name and tree count.'**
+  /// **'Only your first name and tree count are ever shared.'**
   String get onbPrivacy;
 
   /// No description provided for @onbGuidedCoach.
   ///
   /// In en, this message translates to:
-  /// **'Let\'s plant your first tree. Stay here for 30 seconds — that\'s it.'**
+  /// **'Let\'s plant your first one. Just stay here 30 seconds.'**
   String get onbGuidedCoach;
 
   /// No description provided for @onbBegin.
   ///
   /// In en, this message translates to:
-  /// **'Begin'**
+  /// **'Plant it'**
   String get onbBegin;
 
   /// No description provided for @onbGuidedDone.
   ///
   /// In en, this message translates to:
-  /// **'Your first tree! 🌱 This one\'s on us.'**
+  /// **'Your first tree. 🌱 On us.'**
   String get onbGuidedDone;
 
   /// No description provided for @pwTitle.
   ///
   /// In en, this message translates to:
-  /// **'Go deeper with Grovely Premium.'**
+  /// **'More room to grow.'**
   String get pwTitle;
 
   /// No description provided for @pwSub.
   ///
   /// In en, this message translates to:
-  /// **'Everything you love, plus more ways to grow.'**
+  /// **'Keep everything free, unlock a little more.'**
   String get pwSub;
 
   /// No description provided for @pwTrialCta.
   ///
   /// In en, this message translates to:
-  /// **'Start 21-day free trial'**
+  /// **'Try free for 21 days'**
   String get pwTrialCta;
 
   /// No description provided for @pwTrialSub.
   ///
   /// In en, this message translates to:
-  /// **'Free for 21 days, then {price}. Cancel anytime in two taps.'**
+  /// **'Free for 21 days, then {price}. Cancel anytime, two taps.'**
   String pwTrialSub(String price);
 
   /// No description provided for @pwAnnual.
@@ -641,7 +641,7 @@ abstract class AppLocalizations {
   /// No description provided for @pwContinueFree.
   ///
   /// In en, this message translates to:
-  /// **'Continue with Free'**
+  /// **'Stay on Free'**
   String get pwContinueFree;
 
   /// No description provided for @pwRestore.
@@ -725,19 +725,19 @@ abstract class AppLocalizations {
   /// No description provided for @profileSaveProgress.
   ///
   /// In en, this message translates to:
-  /// **'Save your progress'**
+  /// **'Save my progress'**
   String get profileSaveProgress;
 
   /// No description provided for @profileFreePlan.
   ///
   /// In en, this message translates to:
-  /// **'Free plan'**
+  /// **'Free'**
   String get profileFreePlan;
 
   /// No description provided for @profileLifetime.
   ///
   /// In en, this message translates to:
-  /// **'Lifetime'**
+  /// **'All time'**
   String get profileLifetime;
 
   /// No description provided for @rowAccount.
@@ -809,25 +809,31 @@ abstract class AppLocalizations {
   /// No description provided for @recapTitle.
   ///
   /// In en, this message translates to:
-  /// **'Weekly recap'**
+  /// **'Your week'**
   String get recapTitle;
 
   /// No description provided for @recapHero.
   ///
   /// In en, this message translates to:
-  /// **'{count} trees this week'**
+  /// **'{count, plural, =1{1 tree this week} other{{count} trees this week}}'**
   String recapHero(int count);
+
+  /// No description provided for @recapHeroLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{tree this week} other{trees this week}}'**
+  String recapHeroLabel(int count);
 
   /// No description provided for @recapSub.
   ///
   /// In en, this message translates to:
-  /// **'{hours}h {minutes}m focused'**
+  /// **'{hours}h {minutes}m in focus'**
   String recapSub(int hours, int minutes);
 
   /// No description provided for @recapFooter.
   ///
   /// In en, this message translates to:
-  /// **'Made with Grovely'**
+  /// **'Grown with Grovely'**
   String get recapFooter;
 
   /// No description provided for @recapShare.
@@ -845,7 +851,7 @@ abstract class AppLocalizations {
   /// No description provided for @recapEmptySub.
   ///
   /// In en, this message translates to:
-  /// **'Plant a tree to start this week\'s recap.'**
+  /// **'Plant your first tree to start the week.'**
   String get recapEmptySub;
 
   /// No description provided for @circleEmptyTitle.
@@ -857,13 +863,13 @@ abstract class AppLocalizations {
   /// No description provided for @circleEmptySub.
   ///
   /// In en, this message translates to:
-  /// **'A circle is 6–12 people focusing toward a shared garden and a weekly league.'**
+  /// **'6–12 friends, one shared garden, a friendly weekly league.'**
   String get circleEmptySub;
 
   /// No description provided for @circleCreate.
   ///
   /// In en, this message translates to:
-  /// **'Create a circle'**
+  /// **'Start a circle'**
   String get circleCreate;
 
   /// No description provided for @circleJoin.
@@ -875,7 +881,7 @@ abstract class AppLocalizations {
   /// No description provided for @circlePrivacy.
   ///
   /// In en, this message translates to:
-  /// **'Only your first name and tree count are visible to members.'**
+  /// **'Members only see your first name and tree count.'**
   String get circlePrivacy;
 
   /// No description provided for @circleNameLabel.
@@ -917,13 +923,13 @@ abstract class AppLocalizations {
   /// No description provided for @circleInvalidCode.
   ///
   /// In en, this message translates to:
-  /// **'That code didn\'t match a circle.'**
+  /// **'We couldn\'t find a circle for that code.'**
   String get circleInvalidCode;
 
   /// No description provided for @circleFull.
   ///
   /// In en, this message translates to:
-  /// **'This circle is full.'**
+  /// **'This circle\'s full for now.'**
   String get circleFull;
 
   /// No description provided for @circleInvite.
@@ -941,7 +947,7 @@ abstract class AppLocalizations {
   /// No description provided for @circleGoal.
   ///
   /// In en, this message translates to:
-  /// **'{planted}/{goal} trees this week'**
+  /// **'{planted} of {goal} trees this week'**
   String circleGoal(int planted, int goal);
 
   /// No description provided for @circleLeave.
@@ -959,7 +965,7 @@ abstract class AppLocalizations {
   /// No description provided for @circleLeaveBody.
   ///
   /// In en, this message translates to:
-  /// **'You can rejoin with the code.'**
+  /// **'You can come back anytime with the code.'**
   String get circleLeaveBody;
 
   /// No description provided for @circleStay.
@@ -977,13 +983,13 @@ abstract class AppLocalizations {
   /// No description provided for @leagueSolo.
   ///
   /// In en, this message translates to:
-  /// **'Join a circle to enter the weekly league.'**
+  /// **'Join a circle and the league opens up.'**
   String get leagueSolo;
 
   /// No description provided for @leagueTitleWeek.
   ///
   /// In en, this message translates to:
-  /// **'This week\'s standings'**
+  /// **'This week'**
   String get leagueTitleWeek;
 
   /// No description provided for @leagueYou.
