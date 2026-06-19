@@ -2,12 +2,75 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show HapticFeedback;
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/models/tree.dart';
 import '../../l10n/app_localizations.dart';
+
+/// Decoração padrão de card de superfície: sombra suave no claro, borda no
+/// escuro (DS §elevation). Usar em todo card, em vez de Container+border ad-hoc.
+BoxDecoration grovelyCard(BuildContext context, {double radius = 20}) {
+  final scheme = Theme.of(context).colorScheme;
+  final dark = Theme.of(context).brightness == Brightness.dark;
+  return BoxDecoration(
+    color: scheme.surface,
+    borderRadius: BorderRadius.circular(radius),
+    border: dark ? Border.all(color: scheme.outline) : null,
+    boxShadow: dark ? null : GrovelyElevation.level2,
+  );
+}
+
+/// Feedback de toque: leve scale-down + haptic. Honra reduce-motion.
+class PressableScale extends StatefulWidget {
+  const PressableScale({super.key, required this.child, this.onTap});
+  final Widget child;
+  final VoidCallback? onTap;
+
+  @override
+  State<PressableScale> createState() => _PressableScaleState();
+}
+
+class _PressableScaleState extends State<PressableScale> {
+  bool _down = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final reduced = GrovelyMotion.reduced(context);
+    return GestureDetector(
+      onTapDown: (_) {
+        setState(() => _down = true);
+        HapticFeedback.selectionClick();
+      },
+      onTapUp: (_) => setState(() => _down = false),
+      onTapCancel: () => setState(() => _down = false),
+      onTap: widget.onTap,
+      child: AnimatedScale(
+        scale: (_down && !reduced) ? 0.97 : 1,
+        duration: GrovelyMotion.fast,
+        curve: Curves.easeOut,
+        child: widget.child,
+      ),
+    );
+  }
+}
+
+/// Entrada encadeada (stagger) para itens de lista — honra reduce-motion.
+extension GrovelyStagger on Widget {
+  Widget staggerIn(BuildContext context, int index) {
+    if (GrovelyMotion.reduced(context)) return this;
+    return animate(delay: (index * 45).ms)
+        .fadeIn(duration: 280.ms)
+        .slideY(
+          begin: 0.12,
+          end: 0,
+          curve: Curves.easeOutCubic,
+          duration: 320.ms,
+        );
+  }
+}
 
 /// Nome localizado da espécie (preview de foco, detalhe da árvore).
 String speciesName(AppLocalizations l10n, TreeType type) => switch (type) {

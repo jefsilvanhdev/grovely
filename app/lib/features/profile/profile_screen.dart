@@ -65,11 +65,7 @@ class ProfileScreen extends ConsumerWidget {
             // Stats vitalícios
             Container(
               padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                color: scheme.surface,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: scheme.outline),
-              ),
+              decoration: grovelyCard(context),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

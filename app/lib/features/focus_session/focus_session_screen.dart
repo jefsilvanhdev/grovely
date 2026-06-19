@@ -220,6 +220,9 @@ class _Running extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: theme.colorScheme.onSurfaceVariant,
+              ),
               onPressed: () => _confirmGiveUp(context, ref),
               child: Text(l10n.focusGiveUp),
             ),

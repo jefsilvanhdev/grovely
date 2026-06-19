@@ -22,7 +22,19 @@ class CircleScreen extends ConsumerWidget {
       body: SafeArea(
         child: circle.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (_, _) => _Empty(),
+          error: (_, _) => Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(l10n.commonError),
+                const SizedBox(height: 12),
+                OutlinedButton(
+                  onPressed: () => ref.invalidate(myCircleProvider),
+                  child: Text(l10n.commonRetry),
+                ),
+              ],
+            ),
+          ),
           data: (c) => c == null ? _Empty() : _Detail(circle: c),
         ),
       ),
@@ -280,11 +292,7 @@ class _Detail extends ConsumerWidget {
                   // Meta coletiva
                   Container(
                     padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.surface,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: theme.colorScheme.outline),
-                    ),
+                    decoration: grovelyCard(context),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -308,7 +316,7 @@ class _Detail extends ConsumerWidget {
                   const SizedBox(height: 20),
                   Text(l10n.circleMembers, style: theme.textTheme.titleMedium),
                   const SizedBox(height: 8),
-                  for (final m in list)
+                  for (final (i, m) in list.indexed)
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: CircleAvatar(
@@ -329,7 +337,7 @@ class _Detail extends ConsumerWidget {
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
-                    ),
+                    ).staggerIn(context, i),
                 ],
               );
             },

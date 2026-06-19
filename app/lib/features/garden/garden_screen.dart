@@ -50,11 +50,7 @@ class _GardenGrid extends ConsumerWidget {
         // Header card
         Container(
           padding: const EdgeInsets.all(18),
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surface,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: theme.colorScheme.outline),
-          ),
+          decoration: grovelyCard(context),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -100,7 +96,8 @@ class _GardenGrid extends ConsumerWidget {
             crossAxisSpacing: 12,
           ),
           itemCount: trees.length,
-          itemBuilder: (_, i) => _TreeTile(tree: trees[i]),
+          itemBuilder: (context, i) =>
+              _TreeTile(tree: trees[i]).staggerIn(context, i),
         ),
       ],
     );
@@ -114,7 +111,7 @@ class _TreeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return GestureDetector(
+    return PressableScale(
       onTap: () => showModalBottomSheet<void>(
         context: context,
         showDragHandle: true,

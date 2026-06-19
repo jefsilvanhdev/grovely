@@ -55,7 +55,7 @@ class LeagueScreen extends ConsumerWidget {
                           : list[i].displayName,
                       score: list[i].weeklyTrees,
                       isYou: list[i].userId == uid,
-                    ),
+                    ).staggerIn(context, i),
                 ],
               ),
             );
