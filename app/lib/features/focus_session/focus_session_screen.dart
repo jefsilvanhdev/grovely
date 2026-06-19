@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show HapticFeedback;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/providers/garden_provider.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets/grovely_components.dart';
+import '../../shared/widgets/leaf_confetti.dart';
 import 'focus_session_controller.dart';
 import 'widgets/tree_view.dart';
 
@@ -91,9 +93,12 @@ class _Selecting extends ConsumerWidget {
           ),
           Text(
             l10n.focusPreview(
-                speciesName(l10n, state.treeType), state.durationMinutes),
-            style: theme.textTheme.bodyMedium
-                ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+              speciesName(l10n, state.treeType),
+              state.durationMinutes,
+            ),
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 14),
           DurationDial(
@@ -106,7 +111,10 @@ class _Selecting extends ConsumerWidget {
             width: double.infinity,
             height: 56,
             child: FilledButton(
-              onPressed: controller.start,
+              onPressed: () {
+                HapticFeedback.mediumImpact();
+                controller.start();
+              },
               child: Text(l10n.focusPlant),
             ),
           ),
@@ -132,9 +140,11 @@ class _Running extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(l10n.focusGiveUpConfirmTitle,
-                textAlign: TextAlign.center,
-                style: Theme.of(sheetCtx).textTheme.titleMedium),
+            Text(
+              l10n.focusGiveUpConfirmTitle,
+              textAlign: TextAlign.center,
+              style: Theme.of(sheetCtx).textTheme.titleMedium,
+            ),
             const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
@@ -182,16 +192,23 @@ class _Running extends ConsumerWidget {
         padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
         child: Column(
           children: [
-            Text(l10n.focusKeepGrowing,
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+            Text(
+              l10n.focusKeepGrowing,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
             Expanded(
               child: Center(
                 child: TimerRing(
                   progress: state.progress,
                   size: 280,
                   child: TreeView(
-                      type: state.treeType, stage: state.stage, size: 170),
+                    type: state.treeType,
+                    stage: state.stage,
+                    size: 170,
+                    scale: 0.62 + 0.38 * state.progress,
+                  ),
                 ),
               ),
             ),
@@ -214,90 +231,135 @@ class _Running extends ConsumerWidget {
 }
 
 // ── Completed ────────────────────────────────────────────────────────────────
-class _Completed extends ConsumerWidget {
+class _Completed extends ConsumerStatefulWidget {
   const _Completed({required this.state});
   final FocusState state;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_Completed> createState() => _CompletedState();
+}
+
+class _CompletedState extends ConsumerState<_Completed> {
+  @override
+  void initState() {
+    super.initState();
+    HapticFeedback.heavyImpact();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = widget.state;
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final controller = ref.read(focusSessionProvider.notifier);
     final stats = ref.watch(gardenStatsProvider);
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
-      child: Column(
-        children: [
-          Expanded(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                const SymbolWatermark(size: 300),
-                TreeView(type: state.treeType, stage: state.stage, size: 220),
-              ],
-            ),
-          ),
-          Text(l10n.focusCompletedTitle, style: theme.textTheme.headlineSmall),
-          const SizedBox(height: 16),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            alignment: WrapAlignment.center,
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+          child: Column(
             children: [
-              StatPill(
-                  icon: Icons.timer_outlined,
-                  label: l10n.statMinFocused(state.durationMinutes)),
-              StatPill(
-                  icon: Icons.local_fire_department,
-                  label: l10n.streakDays(stats.currentStreak)),
-              StatPill(
-                  icon: Icons.park_outlined, label: l10n.statTrees(stats.trees)),
+              Expanded(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    const SymbolWatermark(size: 300),
+                    TreeView(
+                      type: state.treeType,
+                      stage: state.stage,
+                      size: 220,
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                l10n.focusCompletedTitle,
+                style: theme.textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 16),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                alignment: WrapAlignment.center,
+                children: [
+                  StatPill(
+                    icon: Icons.timer_outlined,
+                    label: l10n.statMinFocused(state.durationMinutes),
+                  ),
+                  StatPill(
+                    icon: Icons.local_fire_department,
+                    label: l10n.streakDays(stats.currentStreak),
+                  ),
+                  StatPill(
+                    icon: Icons.park_outlined,
+                    label: l10n.statTrees(stats.trees),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.check_circle,
+                    size: 16,
+                    color: theme.colorScheme.primary,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    l10n.addedToGarden,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: FilledButton(
+                  onPressed: controller.reset,
+                  child: Text(l10n.plantAnother),
+                ),
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                height: 52,
+                child: FilledButton.tonal(
+                  onPressed: () => context.go('/garden'),
+                  child: Text(l10n.viewGarden),
+                ),
+              ),
             ],
           ),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.check_circle,
-                  size: 16, color: theme.colorScheme.primary),
-              const SizedBox(width: 6),
-              Text(l10n.addedToGarden,
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
-            ],
-          ),
-          const SizedBox(height: 20),
-          SizedBox(
-            width: double.infinity,
-            height: 56,
-            child: FilledButton(
-              onPressed: controller.reset,
-              child: Text(l10n.plantAnother),
-            ),
-          ),
-          const SizedBox(height: 8),
-          SizedBox(
-            width: double.infinity,
-            height: 52,
-            child: FilledButton.tonal(
-              onPressed: () => context.go('/garden'),
-              child: Text(l10n.viewGarden),
-            ),
-          ),
-        ],
-      ),
+        ),
+        const Positioned.fill(child: LeafConfetti()),
+      ],
     );
   }
 }
 
 // ── Withered + Revive ────────────────────────────────────────────────────────
-class _Withered extends ConsumerWidget {
+class _Withered extends ConsumerStatefulWidget {
   const _Withered({required this.state});
   final FocusState state;
 
-  Future<void> _reviveSheet(BuildContext context, WidgetRef ref) async {
+  @override
+  ConsumerState<_Withered> createState() => _WitheredState();
+}
+
+class _WitheredState extends ConsumerState<_Withered> {
+  @override
+  void initState() {
+    super.initState();
+    HapticFeedback.lightImpact();
+  }
+
+  Future<void> _reviveSheet(BuildContext context) async {
     final l10n = AppLocalizations.of(context);
     await showModalBottomSheet<void>(
       context: context,
@@ -307,9 +369,11 @@ class _Withered extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(l10n.reviveSheetBody,
-                textAlign: TextAlign.center,
-                style: Theme.of(sheetCtx).textTheme.titleMedium),
+            Text(
+              l10n.reviveSheetBody,
+              textAlign: TextAlign.center,
+              style: Theme.of(sheetCtx).textTheme.titleMedium,
+            ),
             const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
@@ -335,7 +399,8 @@ class _Withered extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    final state = widget.state;
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final controller = ref.read(focusSessionProvider.notifier);
@@ -346,7 +411,11 @@ class _Withered extends ConsumerWidget {
         children: [
           Expanded(
             child: Center(
-              child: TreeView(type: state.treeType, stage: state.stage, size: 200),
+              child: TreeView(
+                type: state.treeType,
+                stage: state.stage,
+                size: 200,
+              ),
             ),
           ),
           Text(l10n.focusWitheredTitle, style: theme.textTheme.headlineSmall),
@@ -354,23 +423,21 @@ class _Withered extends ConsumerWidget {
           Text(
             l10n.witheredBodyKind,
             textAlign: TextAlign.center,
-            style: theme.textTheme.bodyMedium
-                ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 20),
           SizedBox(
             width: double.infinity,
             height: 56,
             child: FilledButton.tonal(
-              onPressed: () => _reviveSheet(context, ref),
+              onPressed: () => _reviveSheet(context),
               child: Text(l10n.reviveWithVideo),
             ),
           ),
           const SizedBox(height: 8),
-          TextButton(
-            onPressed: controller.reset,
-            child: Text(l10n.startFresh),
-          ),
+          TextButton(onPressed: controller.reset, child: Text(l10n.startFresh)),
         ],
       ),
     );

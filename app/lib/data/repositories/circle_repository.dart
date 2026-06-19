@@ -42,16 +42,21 @@ class CircleRepository {
         .insert({'name': name, 'invite_code': _genCode(), 'created_by': _uid})
         .select()
         .single();
-    await client
-        .from('circle_members')
-        .insert({'circle_id': row['id'], 'user_id': _uid});
+    await client.from('circle_members').insert({
+      'circle_id': row['id'],
+      'user_id': _uid,
+    });
     return Circle.fromJson(row);
   }
 
   Future<Circle> joinByCode(String code) async {
     try {
-      final id = await SupabaseService.instance.client
-          .rpc('join_circle_by_code', params: {'p_code': code}) as String;
+      final id =
+          await SupabaseService.instance.client.rpc(
+                'join_circle_by_code',
+                params: {'p_code': code},
+              )
+              as String;
       final row = await SupabaseService.instance.client
           .from('circles')
           .select()
@@ -60,15 +65,23 @@ class CircleRepository {
       return Circle.fromJson(row);
     } on Object catch (e) {
       final msg = e.toString();
-      if (msg.contains('circle_not_found')) throw CircleException(CircleError.notFound);
-      if (msg.contains('circle_full')) throw CircleException(CircleError.full);
+      if (msg.contains('circle_not_found')) {
+        throw CircleException(CircleError.notFound);
+      }
+      if (msg.contains('circle_full')) {
+        throw CircleException(CircleError.full);
+      }
       throw CircleException(CircleError.unknown);
     }
   }
 
   Future<List<MemberStat>> members(String circleId) async {
-    final rows = await SupabaseService.instance.client
-        .rpc('circle_member_stats', params: {'p_circle_id': circleId}) as List;
+    final rows =
+        await SupabaseService.instance.client.rpc(
+              'circle_member_stats',
+              params: {'p_circle_id': circleId},
+            )
+            as List;
     return rows
         .map((r) => MemberStat.fromJson(r as Map<String, dynamic>))
         .toList();

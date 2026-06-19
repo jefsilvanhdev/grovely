@@ -35,16 +35,24 @@ class LeagueScreen extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.emoji_events, color: theme.colorScheme.secondary),
+                      Icon(
+                        Icons.emoji_events,
+                        color: theme.colorScheme.secondary,
+                      ),
                       const SizedBox(width: 8),
-                      Text(l10n.leagueTitleWeek, style: theme.textTheme.titleMedium),
+                      Text(
+                        l10n.leagueTitleWeek,
+                        style: theme.textTheme.titleMedium,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 12),
                   for (var i = 0; i < list.length; i++)
                     _RankRow(
                       rank: i + 1,
-                      name: list[i].userId == uid ? l10n.leagueYou : list[i].displayName,
+                      name: list[i].userId == uid
+                          ? l10n.leagueYou
+                          : list[i].displayName,
                       score: list[i].weeklyTrees,
                       isYou: list[i].userId == uid,
                     ),
@@ -86,20 +94,31 @@ class _RankRow extends StatelessWidget {
         children: [
           SizedBox(
             width: 26,
-            child: Text('$rank',
-                style: const TextStyle(fontWeight: FontWeight.w700)),
+            child: Text(
+              '$rank',
+              style: const TextStyle(fontWeight: FontWeight.w700),
+            ),
           ),
           const SizedBox(width: 8),
           CircleAvatar(
             radius: 16,
             backgroundColor: scheme.surfaceContainerHighest,
-            child: Text(name.isNotEmpty ? name[0].toUpperCase() : '?',
-                style: const TextStyle(fontSize: 13)),
+            child: Text(
+              name.isNotEmpty ? name[0].toUpperCase() : '?',
+              style: const TextStyle(fontSize: 13),
+            ),
           ),
           const SizedBox(width: 12),
-          Expanded(child: Text(name, style: const TextStyle(fontWeight: FontWeight.w600))),
-          Text(l10n.memberWeekly(score),
-              style: TextStyle(color: scheme.onSurfaceVariant)),
+          Expanded(
+            child: Text(
+              name,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+          Text(
+            l10n.memberWeekly(score),
+            style: TextStyle(color: scheme.onSurfaceVariant),
+          ),
         ],
       ),
     );
@@ -120,13 +139,19 @@ class _Solo extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.emoji_events_outlined,
-                  size: 48, color: theme.colorScheme.secondary),
+              Icon(
+                Icons.emoji_events_outlined,
+                size: 48,
+                color: theme.colorScheme.secondary,
+              ),
               const SizedBox(height: 16),
-              Text(l10n.leagueSolo,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.titleMedium
-                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+              Text(
+                l10n.leagueSolo,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
             ],
           ),
         ),

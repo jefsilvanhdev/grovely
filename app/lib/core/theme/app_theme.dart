@@ -91,3 +91,67 @@ class AppTheme {
     );
   }
 }
+
+/// Tokens de motion (brand/tokens.json → motion). Orgânico, calmo, nunca brusco.
+class GrovelyMotion {
+  GrovelyMotion._();
+
+  static const Duration fast = Duration(milliseconds: 120);
+  static const Duration base = Duration(milliseconds: 220);
+  static const Duration slow = Duration(milliseconds: 360);
+  static const Duration grand = Duration(milliseconds: 600);
+
+  static const Curve standard = Curves.easeOutCubic;
+  static const Curve decelerate = Curves.decelerate;
+  static const Curve emphasized = Curves.easeInOutCubicEmphasized;
+
+  // Springs (mass/stiffness/damping) — crescimento, chegada e toque.
+  static const SpringDescription tree = SpringDescription(
+    mass: 1,
+    stiffness: 180,
+    damping: 16,
+  );
+  static const SpringDescription settle = SpringDescription(
+    mass: 1,
+    stiffness: 120,
+    damping: 14,
+  );
+  static const SpringDescription press = SpringDescription(
+    mass: 1,
+    stiffness: 500,
+    damping: 28,
+  );
+
+  /// True quando o sistema pede menos movimento (acessibilidade).
+  static bool reduced(BuildContext c) => MediaQuery.of(c).disableAnimations;
+
+  /// Duração efetiva: zera sob reduce-motion.
+  static Duration dur(BuildContext c, Duration d) =>
+      reduced(c) ? Duration.zero : d;
+}
+
+/// Escala de espaçamento — encerra os números soltos.
+class GrovelySpacing {
+  GrovelySpacing._();
+  static const double xs = 4;
+  static const double sm = 8;
+  static const double md = 12;
+  static const double lg = 16;
+  static const double xl = 20;
+  static const double xxl = 24;
+  static const double xxxl = 32;
+}
+
+/// Sombras suaves verde-acinzentadas por nível (claro). No escuro: usar borda.
+class GrovelyElevation {
+  GrovelyElevation._();
+  static const List<BoxShadow> level1 = [
+    BoxShadow(color: Color(0x0F2E7D52), blurRadius: 3, offset: Offset(0, 1)),
+  ];
+  static const List<BoxShadow> level2 = [
+    BoxShadow(color: Color(0x1A2E7D52), blurRadius: 12, offset: Offset(0, 4)),
+  ];
+  static const List<BoxShadow> level3 = [
+    BoxShadow(color: Color(0x242E7D52), blurRadius: 24, offset: Offset(0, 8)),
+  ];
+}

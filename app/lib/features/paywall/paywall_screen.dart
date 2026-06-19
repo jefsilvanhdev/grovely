@@ -40,15 +40,21 @@ class _PaywallScreenState extends State<PaywallScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            const Align(alignment: Alignment.topCenter, child: SymbolWatermark(size: 320)),
+            const Align(
+              alignment: Alignment.topCenter,
+              child: SymbolWatermark(size: 320),
+            ),
             ListView(
               padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
               children: [
                 Text(l10n.pwTitle, style: theme.textTheme.headlineMedium),
                 const SizedBox(height: 8),
-                Text(l10n.pwSub,
-                    style: theme.textTheme.bodyLarge
-                        ?.copyWith(color: scheme.onSurfaceVariant)),
+                Text(
+                  l10n.pwSub,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: scheme.onSurfaceVariant,
+                  ),
+                ),
                 const SizedBox(height: 24),
 
                 // Free vs Premium
@@ -79,8 +85,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 Text(
                   l10n.pwTrialSub(l10n.pwPriceTbd),
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: scheme.onSurfaceVariant),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: scheme.onSurfaceVariant,
+                  ),
                 ),
                 const SizedBox(height: 14),
                 Center(
@@ -92,8 +99,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 Center(
                   child: TextButton(
                     onPressed: () {},
-                    child: Text(l10n.pwRestore,
-                        style: TextStyle(color: scheme.onSurfaceVariant)),
+                    child: Text(
+                      l10n.pwRestore,
+                      style: TextStyle(color: scheme.onSurfaceVariant),
+                    ),
                   ),
                 ),
               ],
@@ -118,17 +127,25 @@ class _CompareHeader extends StatelessWidget {
         const Expanded(flex: 3, child: SizedBox()),
         Expanded(
           flex: 2,
-          child: Text(free,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontWeight: FontWeight.w600, color: scheme.onSurfaceVariant)),
+          child: Text(
+            free,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: scheme.onSurfaceVariant,
+            ),
+          ),
         ),
         Expanded(
           flex: 2,
-          child: Text(premium,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontWeight: FontWeight.w700, color: scheme.primary)),
+          child: Text(
+            premium,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              color: scheme.primary,
+            ),
+          ),
         ),
       ],
     );
@@ -144,15 +161,18 @@ class _CompareRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     Widget mark(bool on) => Icon(
-          on ? Icons.check_circle : Icons.remove,
-          size: 18,
-          color: on ? scheme.primary : scheme.outline,
-        );
+      on ? Icons.check_circle : Icons.remove,
+      size: 18,
+      color: on ? scheme.primary : scheme.outline,
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 9),
       child: Row(
         children: [
-          Expanded(flex: 3, child: Text(label, style: const TextStyle(fontSize: 14))),
+          Expanded(
+            flex: 3,
+            child: Text(label, style: const TextStyle(fontSize: 14)),
+          ),
           Expanded(flex: 2, child: Center(child: mark(free))),
           Expanded(flex: 2, child: Center(child: mark(true))),
         ],
@@ -194,23 +214,32 @@ class _PlanToggle extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(label,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: sel ? scheme.onPrimary : scheme.onSurfaceVariant)),
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: sel ? scheme.onPrimary : scheme.onSurfaceVariant,
+                  ),
+                ),
                 if (isAnnual) ...[
                   const SizedBox(width: 6),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       color: sel ? scheme.onPrimary : scheme.secondary,
                       borderRadius: BorderRadius.circular(6),
                     ),
-                    child: Text(saveLabel,
-                        style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700,
-                            color: sel ? scheme.primary : scheme.onSecondary)),
+                    child: Text(
+                      saveLabel,
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                        color: sel ? scheme.primary : scheme.onSecondary,
+                      ),
+                    ),
                   ),
                 ],
               ],

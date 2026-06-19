@@ -13,11 +13,11 @@ class Circle {
   final int maxMembers;
 
   factory Circle.fromJson(Map<String, dynamic> j) => Circle(
-        id: j['id'] as String,
-        name: (j['name'] as String?) ?? '',
-        inviteCode: (j['invite_code'] as String?) ?? '',
-        maxMembers: (j['max_members'] as int?) ?? 12,
-      );
+    id: j['id'] as String,
+    name: (j['name'] as String?) ?? '',
+    inviteCode: (j['invite_code'] as String?) ?? '',
+    maxMembers: (j['max_members'] as int?) ?? 12,
+  );
 }
 
 /// Estatística pública de um membro (nome + árvores na semana).
@@ -33,8 +33,8 @@ class MemberStat {
   final int weeklyTrees;
 
   factory MemberStat.fromJson(Map<String, dynamic> j) => MemberStat(
-        userId: j['user_id'] as String,
-        displayName: (j['display_name'] as String?) ?? 'Member',
-        weeklyTrees: (j['weekly_trees'] as int?) ?? 0,
-      );
+    userId: j['user_id'] as String,
+    displayName: (j['display_name'] as String?) ?? 'Member',
+    weeklyTrees: (j['weekly_trees'] as int?) ?? 0,
+  );
 }

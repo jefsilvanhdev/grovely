@@ -36,11 +36,9 @@ class _RecapScreenState extends ConsumerState<RecapScreen> {
       final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
       if (bytes == null) return;
       final file = await File(
-              '${Directory.systemTemp.path}/grovely-recap-${DateTime.now().millisecondsSinceEpoch}.png')
-          .writeAsBytes(bytes.buffer.asUint8List());
-      await SharePlus.instance.share(
-        ShareParams(files: [XFile(file.path)]),
-      );
+        '${Directory.systemTemp.path}/grovely-recap-${DateTime.now().millisecondsSinceEpoch}.png',
+      ).writeAsBytes(bytes.buffer.asUint8List());
+      await SharePlus.instance.share(ShareParams(files: [XFile(file.path)]));
     } catch (_) {
       // silencioso — share cancelado/falhou; card segue na tela.
     } finally {
@@ -54,10 +52,14 @@ class _RecapScreenState extends ConsumerState<RecapScreen> {
     final trees = ref.watch(gardenProvider).value ?? const <CompletedTree>[];
 
     final now = DateTime.now();
-    final weekStart = DateTime(now.year, now.month, now.day)
-        .subtract(Duration(days: now.weekday - 1));
-    final weekly =
-        trees.where((t) => !t.completedAt.isBefore(weekStart)).toList();
+    final weekStart = DateTime(
+      now.year,
+      now.month,
+      now.day,
+    ).subtract(Duration(days: now.weekday - 1));
+    final weekly = trees
+        .where((t) => !t.completedAt.isBefore(weekStart))
+        .toList();
     final minutes = weekly.fold<int>(0, (s, t) => s + t.durationMinutes);
 
     return Scaffold(
@@ -86,7 +88,8 @@ class _RecapScreenState extends ConsumerState<RecapScreen> {
                           ? const SizedBox(
                               width: 18,
                               height: 18,
-                              child: CircularProgressIndicator(strokeWidth: 2))
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
                           : const Icon(Icons.ios_share),
                       label: Text(l10n.recapShare),
                     ),
@@ -128,47 +131,68 @@ class _RecapCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Grovely',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800)),
+            const Text(
+              'Grovely',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
             const Spacer(),
-            Text('$count',
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 96,
-                    height: 1,
-                    fontWeight: FontWeight.w800)),
-            Text(l10n.recapHeroLabel(count),
-                style: const TextStyle(color: Colors.white, fontSize: 22)),
+            Text(
+              '$count',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 96,
+                height: 1,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            Text(
+              l10n.recapHeroLabel(count),
+              style: const TextStyle(color: Colors.white, fontSize: 22),
+            ),
             const SizedBox(height: 8),
-            Text(l10n.recapSub(minutes ~/ 60, minutes % 60),
-                style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.85), fontSize: 16)),
+            Text(
+              l10n.recapSub(minutes ~/ 60, minutes % 60),
+              style: TextStyle(
+                color: Colors.white.withValues(alpha: 0.85),
+                fontSize: 16,
+              ),
+            ),
             const SizedBox(height: 20),
             Row(
               children: [
                 for (final t in species.take(6))
                   SizedBox(
-                      width: 44,
-                      height: 56,
-                      child: TreeView(type: t, stage: TreeStage.elder, size: 44)),
+                    width: 44,
+                    height: 56,
+                    child: TreeView(type: t, stage: TreeStage.elder, size: 44),
+                  ),
               ],
             ),
             const Spacer(),
             Row(
               children: [
-                const Icon(Icons.local_fire_department,
-                    color: Color(0xFFF0B978), size: 18),
+                const Icon(
+                  Icons.local_fire_department,
+                  color: Color(0xFFF0B978),
+                  size: 18,
+                ),
                 const SizedBox(width: 6),
-                Text(l10n.streakDays(streak),
-                    style: const TextStyle(color: Colors.white, fontSize: 14)),
+                Text(
+                  l10n.streakDays(streak),
+                  style: const TextStyle(color: Colors.white, fontSize: 14),
+                ),
                 const Spacer(),
-                Text(l10n.recapFooter,
-                    style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.8),
-                        fontSize: 13)),
+                Text(
+                  l10n.recapFooter,
+                  style: TextStyle(
+                    color: Colors.white.withValues(alpha: 0.8),
+                    fontSize: 13,
+                  ),
+                ),
               ],
             ),
           ],
@@ -192,13 +216,19 @@ class _Empty extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(l10n.recapEmpty,
-                  textAlign: TextAlign.center, style: theme.textTheme.headlineSmall),
+              Text(
+                l10n.recapEmpty,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.headlineSmall,
+              ),
               const SizedBox(height: 8),
-              Text(l10n.recapEmptySub,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+              Text(
+                l10n.recapEmptySub,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
               const SizedBox(height: 20),
               FilledButton(
                 onPressed: () => context.go('/focus'),

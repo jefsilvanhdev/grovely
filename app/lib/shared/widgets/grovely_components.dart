@@ -1,21 +1,23 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show HapticFeedback;
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_theme.dart';
 import '../../data/models/tree.dart';
 import '../../l10n/app_localizations.dart';
 
 /// Nome localizado da espécie (preview de foco, detalhe da árvore).
 String speciesName(AppLocalizations l10n, TreeType type) => switch (type) {
-      TreeType.oak => l10n.speciesOak,
-      TreeType.pine => l10n.speciesPine,
-      TreeType.roundBush => l10n.speciesRoundBush,
-      TreeType.willow => l10n.speciesWillow,
-      TreeType.birch => l10n.speciesBirch,
-      TreeType.cherryBlossom => l10n.speciesCherryBlossom,
-    };
+  TreeType.oak => l10n.speciesOak,
+  TreeType.pine => l10n.speciesPine,
+  TreeType.roundBush => l10n.speciesRoundBush,
+  TreeType.willow => l10n.speciesWillow,
+  TreeType.birch => l10n.speciesBirch,
+  TreeType.cherryBlossom => l10n.speciesCherryBlossom,
+};
 
 /// Pill de sequência — chama o motivo do sol (chama/flame) em accent.
 class StreakBadge extends StatelessWidget {
@@ -73,11 +75,14 @@ class StatPill extends StatelessWidget {
         children: [
           Icon(icon, size: 15, color: scheme.onSurfaceVariant),
           const SizedBox(width: 6),
-          Text(label,
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12.5,
-                  color: scheme.onSurface)),
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 12.5,
+              color: scheme.onSurface,
+            ),
+          ),
         ],
       ),
     );
@@ -111,14 +116,19 @@ class DurationDial extends StatelessWidget {
           for (final min in options)
             Expanded(
               child: GestureDetector(
-                onTap: () => onSelected(min),
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  onSelected(min);
+                },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   curve: Curves.easeOut,
                   height: 44,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: selected == min ? scheme.primary : Colors.transparent,
+                    color: selected == min
+                        ? scheme.primary
+                        : Colors.transparent,
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Text(
@@ -156,17 +166,27 @@ class TimerRing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    // Sweep contínuo: interpola o progresso entre os ticks de 1s (não salta).
     return SizedBox(
       width: size,
       height: size,
-      child: CustomPaint(
-        painter: _RingPainter(
-          progress: progress.clamp(0, 1),
-          track: scheme.outline,
-          arc: scheme.primary,
-        ),
-        child: Center(
-          child: SizedBox(width: size * 0.62, height: size * 0.62, child: child),
+      child: TweenAnimationBuilder<double>(
+        tween: Tween<double>(end: progress.clamp(0, 1)),
+        duration: GrovelyMotion.dur(context, const Duration(seconds: 1)),
+        curve: Curves.linear,
+        builder: (context, value, _) => CustomPaint(
+          painter: _RingPainter(
+            progress: value,
+            track: scheme.outline,
+            arc: scheme.primary,
+          ),
+          child: Center(
+            child: SizedBox(
+              width: size * 0.62,
+              height: size * 0.62,
+              child: child,
+            ),
+          ),
         ),
       ),
     );
@@ -174,7 +194,11 @@ class TimerRing extends StatelessWidget {
 }
 
 class _RingPainter extends CustomPainter {
-  _RingPainter({required this.progress, required this.track, required this.arc});
+  _RingPainter({
+    required this.progress,
+    required this.track,
+    required this.arc,
+  });
   final double progress;
   final Color track;
   final Color arc;
@@ -194,13 +218,25 @@ class _RingPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..color = arc;
     canvas.drawCircle(center, radius, trackPaint);
+    final sweep = 2 * math.pi * progress;
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: radius),
       -math.pi / 2,
-      2 * math.pi * progress,
+      sweep,
       false,
       arcPaint,
     );
+    // Ponta viva: dot + glow na cabeça do arco.
+    if (progress > 0) {
+      final a = -math.pi / 2 + sweep;
+      final head = center + Offset(math.cos(a), math.sin(a)) * radius;
+      canvas.drawCircle(
+        head,
+        stroke * 1.6,
+        Paint()..color = arc.withValues(alpha: 0.25),
+      );
+      canvas.drawCircle(head, stroke * 0.8, Paint()..color = arc);
+    }
   }
 
   @override

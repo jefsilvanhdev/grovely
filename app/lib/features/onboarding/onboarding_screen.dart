@@ -49,16 +49,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: _step > 0
                         ? IconButton(
                             onPressed: _back,
-                            icon: const Icon(Icons.arrow_back))
+                            icon: const Icon(Icons.arrow_back),
+                          )
                         : null,
                   ),
-                  Expanded(child: _Dots(active: _step, total: _steps)),
+                  Expanded(
+                    child: _Dots(active: _step, total: _steps),
+                  ),
                   SizedBox(
                     width: 56,
                     child: canSkip
                         ? TextButton(
                             onPressed: _next,
-                            child: Text(AppLocalizations.of(context).commonSkip))
+                            child: Text(
+                              AppLocalizations.of(context).commonSkip,
+                            ),
+                          )
                         : null,
                   ),
                 ],
@@ -126,23 +132,33 @@ class _Welcome extends StatelessWidget {
               const Spacer(),
               const GrovelyLogo(height: 64),
               const SizedBox(height: 20),
-              Text(l10n.onboardingWelcome,
-                  textAlign: TextAlign.center, style: theme.textTheme.headlineMedium),
+              Text(
+                l10n.onboardingWelcome,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.headlineMedium,
+              ),
               const SizedBox(height: 10),
-              Text(l10n.onbWelcomeSub,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyLarge
-                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+              Text(
+                l10n.onbWelcomeSub,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
               const Spacer(),
               SizedBox(
                 width: double.infinity,
                 height: 56,
-                child: FilledButton(onPressed: onNext, child: Text(l10n.onbGetStarted)),
+                child: FilledButton(
+                  onPressed: onNext,
+                  child: Text(l10n.onbGetStarted),
+                ),
               ),
               const SizedBox(height: 4),
               TextButton(
-                  onPressed: () => context.go('/auth'),
-                  child: Text(l10n.onbHaveAccount)),
+                onPressed: () => context.go('/auth'),
+                child: Text(l10n.onbHaveAccount),
+              ),
             ],
           ),
         ),
@@ -159,23 +175,31 @@ class _Notif extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     Widget bullet(String t) => Padding(
-          padding: const EdgeInsets.symmetric(vertical: 7),
-          child: Row(children: [
-            Icon(Icons.check_circle, size: 18, color: theme.colorScheme.primary),
-            const SizedBox(width: 10),
-            Expanded(child: Text(t, style: theme.textTheme.bodyMedium)),
-          ]),
-        );
+      padding: const EdgeInsets.symmetric(vertical: 7),
+      child: Row(
+        children: [
+          Icon(Icons.check_circle, size: 18, color: theme.colorScheme.primary),
+          const SizedBox(width: 10),
+          Expanded(child: Text(t, style: theme.textTheme.bodyMedium)),
+        ],
+      ),
+    );
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
       child: Column(
         children: [
           const Spacer(),
-          Icon(Icons.notifications_active_outlined,
-              size: 56, color: theme.colorScheme.secondary),
+          Icon(
+            Icons.notifications_active_outlined,
+            size: 56,
+            color: theme.colorScheme.secondary,
+          ),
           const SizedBox(height: 16),
-          Text(l10n.onbNotifTitle,
-              textAlign: TextAlign.center, style: theme.textTheme.headlineSmall),
+          Text(
+            l10n.onbNotifTitle,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.headlineSmall,
+          ),
           const SizedBox(height: 16),
           bullet(l10n.onbNotifBullet1),
           bullet(l10n.onbNotifBullet2),
@@ -185,7 +209,10 @@ class _Notif extends StatelessWidget {
             width: double.infinity,
             height: 56,
             // TODO(Agente E): disparar prompt OS de notificação aqui.
-            child: FilledButton(onPressed: onNext, child: Text(l10n.onbNotifCta)),
+            child: FilledButton(
+              onPressed: onNext,
+              child: Text(l10n.onbNotifCta),
+            ),
           ),
           const SizedBox(height: 4),
           TextButton(onPressed: onNext, child: Text(l10n.onbNotNow)),
@@ -209,7 +236,12 @@ class _SocialState extends State<_Social> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    Widget choice(String title, String desc, bool isSolo, {bool recommended = false}) {
+    Widget choice(
+      String title,
+      String desc,
+      bool isSolo, {
+      bool recommended = false,
+    }) {
       final sel = solo == isSolo;
       return GestureDetector(
         onTap: () => setState(() => solo = isSolo),
@@ -218,36 +250,53 @@ class _SocialState extends State<_Social> {
           margin: const EdgeInsets.only(bottom: 12),
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            color: sel ? theme.colorScheme.primaryContainer : theme.colorScheme.surface,
+            color: sel
+                ? theme.colorScheme.primaryContainer
+                : theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-                color: sel ? theme.colorScheme.primary : theme.colorScheme.outline,
-                width: sel ? 2 : 1),
+              color: sel
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.outline,
+              width: sel ? 2 : 1,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(children: [
-                Text(title, style: theme.textTheme.titleMedium),
-                if (recommended) ...[
-                  const SizedBox(width: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(
+              Row(
+                children: [
+                  Text(title, style: theme.textTheme.titleMedium),
+                  if (recommended) ...[
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
                         color: theme.colorScheme.secondary,
-                        borderRadius: BorderRadius.circular(6)),
-                    child: Text(l10n.onbRecommended,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        l10n.onbRecommended,
                         style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700,
-                            color: theme.colorScheme.onSecondary)),
-                  ),
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: theme.colorScheme.onSecondary,
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
-              ]),
+              ),
               const SizedBox(height: 4),
-              Text(desc,
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+              Text(
+                desc,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
             ],
           ),
         ),
@@ -258,30 +307,54 @@ class _SocialState extends State<_Social> {
       padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
       child: Column(
         children: [
-          Text(l10n.onbSocialTitle,
-              textAlign: TextAlign.center, style: theme.textTheme.headlineSmall),
+          Text(
+            l10n.onbSocialTitle,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.headlineSmall,
+          ),
           const SizedBox(height: 6),
-          Text(l10n.onbSocialSub,
-              textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium
-                  ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+          Text(
+            l10n.onbSocialSub,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
           const Spacer(),
           choice(l10n.onbSoloTitle, l10n.onbSoloDesc, true),
-          choice(l10n.onbCircleTitle, l10n.onbCircleDesc, false, recommended: true),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Icon(Icons.lock_outline, size: 13, color: theme.colorScheme.onSurfaceVariant),
-            const SizedBox(width: 6),
-            Flexible(
-                child: Text(l10n.onbPrivacy,
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(color: theme.colorScheme.onSurfaceVariant))),
-          ]),
+          choice(
+            l10n.onbCircleTitle,
+            l10n.onbCircleDesc,
+            false,
+            recommended: true,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.lock_outline,
+                size: 13,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  l10n.onbPrivacy,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ),
+            ],
+          ),
           const Spacer(),
           SizedBox(
             width: double.infinity,
             height: 56,
             child: FilledButton(
-                onPressed: widget.onNext, child: Text(l10n.commonContinue)),
+              onPressed: widget.onNext,
+              child: Text(l10n.commonContinue),
+            ),
           ),
         ],
       ),
@@ -337,9 +410,11 @@ class _GuidedState extends State<_Guided> {
       padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
       child: Column(
         children: [
-          Text(_done ? l10n.onbGuidedDone : l10n.onbGuidedCoach,
-              textAlign: TextAlign.center,
-              style: theme.textTheme.titleMedium),
+          Text(
+            _done ? l10n.onbGuidedDone : l10n.onbGuidedCoach,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.titleMedium,
+          ),
           Expanded(
             child: Center(
               child: TimerRing(
@@ -350,16 +425,13 @@ class _GuidedState extends State<_Guided> {
             ),
           ),
           if (_started && !_done)
-            Text('$mm:$ss',
-                style: theme.textTheme.displaySmall),
+            Text('$mm:$ss', style: theme.textTheme.displaySmall),
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
             height: 56,
             child: FilledButton(
-              onPressed: _done
-                  ? widget.onDone
-                  : (_started ? null : _begin),
+              onPressed: _done ? widget.onDone : (_started ? null : _begin),
               child: Text(_done ? l10n.commonContinue : l10n.onbBegin),
             ),
           ),

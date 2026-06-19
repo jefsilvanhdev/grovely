@@ -24,7 +24,8 @@ class GardenScreen extends ConsumerWidget {
       body: SafeArea(
         child: garden.when(
           loading: () => const _GardenSkeleton(),
-          error: (_, _) => _GardenError(onRetry: () => ref.invalidate(gardenProvider)),
+          error: (_, _) =>
+              _GardenError(onRetry: () => ref.invalidate(gardenProvider)),
           data: (trees) =>
               trees.isEmpty ? const _GardenEmpty() : _GardenGrid(trees: trees),
         ),
@@ -60,8 +61,10 @@ class _GardenGrid extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(l10n.gardenTreeCount(stats.trees),
-                      style: theme.textTheme.headlineSmall),
+                  Text(
+                    l10n.gardenTreeCount(stats.trees),
+                    style: theme.textTheme.headlineSmall,
+                  ),
                   StreakBadge(count: stats.currentStreak),
                 ],
               ),
@@ -71,14 +74,17 @@ class _GardenGrid extends ConsumerWidget {
                 runSpacing: 8,
                 children: [
                   StatPill(
-                      icon: Icons.timer_outlined,
-                      label: l10n.statHoursFocused(stats.hours)),
+                    icon: Icons.timer_outlined,
+                    label: l10n.statHoursFocused(stats.hours),
+                  ),
                   StatPill(
-                      icon: Icons.emoji_events_outlined,
-                      label: l10n.statLongest(stats.longestStreak)),
+                    icon: Icons.emoji_events_outlined,
+                    label: l10n.statLongest(stats.longestStreak),
+                  ),
                   StatPill(
-                      icon: Icons.spa_outlined,
-                      label: l10n.statSpecies(stats.species)),
+                    icon: Icons.spa_outlined,
+                    label: l10n.statSpecies(stats.species),
+                  ),
                 ],
               ),
             ],
@@ -152,8 +158,9 @@ class _TreeDetailSheet extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             '$date · ${l10n.minutesShort(tree.durationMinutes)}',
-            style: theme.textTheme.bodyMedium
-                ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
       ),
@@ -177,14 +184,19 @@ class _GardenEmpty extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(l10n.gardenWaiting,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.headlineSmall),
+              Text(
+                l10n.gardenWaiting,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.headlineSmall,
+              ),
               const SizedBox(height: 8),
-              Text(l10n.gardenWaitingSub,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+              Text(
+                l10n.gardenWaitingSub,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
               const SizedBox(height: 20),
               FilledButton(
                 onPressed: () => context.go('/focus'),
@@ -205,9 +217,12 @@ class _GardenSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = Theme.of(context).colorScheme.surfaceContainerHighest;
     Widget box(double h, [double r = 14]) => Container(
-        height: h,
-        decoration:
-            BoxDecoration(color: c, borderRadius: BorderRadius.circular(r)));
+      height: h,
+      decoration: BoxDecoration(
+        color: c,
+        borderRadius: BorderRadius.circular(r),
+      ),
+    );
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
       children: [
