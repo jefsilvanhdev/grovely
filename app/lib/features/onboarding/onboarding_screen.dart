@@ -298,7 +298,7 @@ class _Guided extends StatefulWidget {
 }
 
 class _GuidedState extends State<_Guided> {
-  static const total = 300; // 5 min
+  static const total = 30; // 30s — recompensa rápida no onboarding
   Timer? _timer;
   int _remaining = total;
   bool _started = false;
@@ -306,7 +306,7 @@ class _GuidedState extends State<_Guided> {
 
   double get _progress => (total - _remaining) / total;
   TreeStage get _stage =>
-      _done ? TreeStage.young : TreeStage.fromProgress(_progress);
+      _done ? TreeStage.mature : TreeStage.fromProgress(_progress);
 
   void _begin() {
     setState(() => _started = true);

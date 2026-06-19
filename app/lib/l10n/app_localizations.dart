@@ -581,7 +581,7 @@ abstract class AppLocalizations {
   /// No description provided for @onbGuidedCoach.
   ///
   /// In en, this message translates to:
-  /// **'Let\'s plant your first tree. Stay here for 5 minutes — that\'s it.'**
+  /// **'Let\'s plant your first tree. Stay here for 30 seconds — that\'s it.'**
   String get onbGuidedCoach;
 
   /// No description provided for @onbBegin.

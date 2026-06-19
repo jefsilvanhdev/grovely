@@ -289,7 +289,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get onbGuidedCoach =>
-      'Vamos plantar sua primeira árvore. Fique aqui por 5 minutos — só isso.';
+      'Vamos plantar sua primeira árvore. Fique aqui por 30 segundos — só isso.';
 
   @override
   String get onbBegin => 'Começar';
