@@ -41,6 +41,30 @@ No app: `GrovelyLogo` (`shared/widgets/grovely_logo.dart`) renderiza o SVG via
 
 Radius: sm 8 · md 14 · lg 20 · xl 28 · pill 999 (`AppRadius`).
 
+## Motion · Spacing · Elevation (`app_theme.dart`)
+
+Tokens implementados — usar em vez de números/durações soltos.
+
+**`GrovelyMotion`** — durações `fast 120 · base 220 · slow 360 · grand 600`;
+curvas `standard · decelerate · emphasized`; springs `tree · settle · press`.
+Tudo honra reduce-motion via `GrovelyMotion.reduced(context)` / `.dur(context, d)`.
+Princípio: orgânico e calmo; rápido pra confirmar (≤120ms), lento pra encantar
+(colher/crescer 400–1000ms); coreografia (stagger 45ms), nunca tudo junto.
+
+**`GrovelySpacing`** — `xs 4 · sm 8 · md 12 · lg 16 · xl 20 · xxl 24 · xxxl 32`.
+
+**`GrovelyElevation`** — sombras verdes suaves `level1/2/3` (claro); no escuro
+usa-se borda `outline`. Helper `grovelyCard(context)` aplica o padrão.
+
+**Componentes de motion:** `TimerRing` (sweep contínuo + ponta viva),
+`TreeView(scale:)` (cresce com o progresso), `LeafConfetti` (colher),
+`PressableScale` (toque), `Widget.staggerIn(context, i)` (listas). Haptics:
+selection (dial/tab), medium (start), heavy (completed), light (wither).
+
+> Pendências de motion/visual (P2 + extração de componentes): ver
+> `plantio-coletivo-design/APP_REVIEW.md` (GrovelyEmpty/Error/Skeleton, Hero da
+> árvore entre telas, shimmer, count-up, pódio da liga, jardim coletivo visual).
+
 ## Biblioteca de árvores
 
 6 tipos × estágios em `app/assets/brand/trees/`:
