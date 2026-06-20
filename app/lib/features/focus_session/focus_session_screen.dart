@@ -95,12 +95,16 @@ class _Selecting extends ConsumerWidget {
               child: StreakBadge(count: stats.currentStreak),
             ),
             Expanded(
-              child: Center(
-                child: TreeView(
-                  type: state.treeType,
-                  // Pré-visualização: mostra a árvore madura (detalhe), não a semente.
-                  stage: TreeStage.mature,
-                  size: 300,
+              // Pré-visualização grande: árvore madura preenche a área (detalhe).
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: TreeView(
+                    type: state.treeType,
+                    stage: TreeStage.mature,
+                    size: 300,
+                  ),
                 ),
               ),
             ),
