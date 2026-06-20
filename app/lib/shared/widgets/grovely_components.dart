@@ -298,8 +298,8 @@ class TimerRing extends StatelessWidget {
           ),
           child: Center(
             child: SizedBox(
-              width: size * 0.62,
-              height: size * 0.62,
+              width: size * 0.78,
+              height: size * 0.78,
               child: child,
             ),
           ),

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart' show HapticFeedback;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../data/models/tree.dart';
 import '../../data/providers/garden_provider.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets/grovely_components.dart';
@@ -97,8 +98,9 @@ class _Selecting extends ConsumerWidget {
               child: Center(
                 child: TreeView(
                   type: state.treeType,
-                  stage: state.stage,
-                  size: 280,
+                  // Pré-visualização: mostra a árvore madura (detalhe), não a semente.
+                  stage: TreeStage.mature,
+                  size: 300,
                 ),
               ),
             ),
@@ -218,8 +220,8 @@ class _Running extends ConsumerWidget {
                   child: TreeView(
                     type: state.treeType,
                     stage: state.stage,
-                    size: 200,
-                    scale: 0.62 + 0.38 * state.progress,
+                    size: 240,
+                    scale: 0.9 + 0.1 * state.progress,
                   ),
                 ),
               ),
