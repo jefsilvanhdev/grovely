@@ -98,13 +98,21 @@ class _Selecting extends ConsumerWidget {
               // Pré-visualização grande: árvore madura preenche a área (detalhe).
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: TreeView(
-                    type: state.treeType,
-                    stage: TreeStage.mature,
-                    size: 300,
-                  ),
+                child: LayoutBuilder(
+                  builder: (context, c) {
+                    // SVG aspect = 100/120 (mais alto que largo) → limita pela
+                    // largura disponível para garantir tamanho máximo real.
+                    final side =
+                        (c.maxWidth < c.maxHeight ? c.maxWidth : c.maxHeight) *
+                        0.95;
+                    return Center(
+                      child: TreeView(
+                        type: state.treeType,
+                        stage: TreeStage.mature,
+                        size: side,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),

@@ -27,9 +27,15 @@ class TreeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final reduced = GrovelyMotion.reduced(context);
+    // width/height explícitos: AnimatedSwitcher usa um Stack com constraints
+    // loose, então sem dimensão o SVG colapsaria pro tamanho intrínseco
+    // (viewBox ~100x120) e ficaria minúsculo. Fixar em [size] garante que
+    // ele preencha de fato a área pedida.
     Widget tree = SvgPicture.asset(
       treeAsset(type, stage),
       key: ValueKey('${type.slug}-${stage.slug}'),
+      width: size,
+      height: size,
       fit: BoxFit.contain,
     );
     if (heroTag != null) tree = Hero(tag: heroTag!, child: tree);

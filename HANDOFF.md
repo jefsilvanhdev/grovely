@@ -63,16 +63,18 @@ Segue o briefing `briefing-plantio-coletivo-claude-code.md` (padrão "O Meu Salm
 
 ## 5. PRÓXIMOS PASSOS (começar por aqui)
 
-### 5.1 PRIMEIRO — VALIDAR árvore adulta na home (Jeff reclamou 2× que estava menor)
-Home (`_Selecting` em `app/lib/features/focus_session/focus_session_screen.dart`):
-árvore `TreeStage.mature` agora envolvida em `FittedBox(fit: BoxFit.contain)` dentro
-de `Expanded` pra **preencher** a área (size base 300 + FittedBox = enche o espaço).
-Timer (running): `TimerRing` fração do filho subiu pra 0.78; árvore size 240 / scale 0.9.
-**Status: COMMITADO mas NÃO verificado visualmente** (economia de token — sem rebuild).
-- **Ação:** rodar no emulador e confirmar que a árvore na home ficou **claramente
-  grande** (FittedBox deve encher a área). Se ainda parecer pequena, o gargalo é o
-  espaço vertical do `Expanded` (competindo com dial/botão) — dar mais altura à
-  ilustração ou reduzir paddings dos vizinhos.
+### 5.1 ✅ RESOLVIDO — árvore adulta na home agora grande (verificado no emulador)
+Causa raiz do "tamanho pequeno" NÃO era o `Expanded`/`FittedBox`: era o `TreeView`.
+`AnimatedSwitcher` usa um Stack interno com constraints **loose**, então o
+`SvgPicture.asset` (sem width/height) colapsava pro tamanho intrínseco do viewBox
+(~100×120 lógico) → árvore minúscula, independente do tamanho do box pai.
+**Fix:** `SvgPicture.asset` agora recebe `width: size, height: size` explícitos
+(`app/lib/features/focus_session/widgets/tree_view.dart`). Beneficia home, running
+(240) e todos os usos do TreeView.
+Home (`_Selecting`): `FittedBox` trocado por `LayoutBuilder` → size explícito =
+`min(maxWidth, maxHeight) * 0.95`.
+**Status: VERIFICADO no emulador-5554** — árvore ocupa ~65% da largura, elemento
+dominante da tela. Screenshot confere.
 
 ### 5.2 Resto do 2º passe de polish (designer — `plantio-coletivo-design/APP_REVIEW.md`)
 - ✅ **Jardim coletivo visual** (Circle): barra → mini-árvores enchendo + brotos
