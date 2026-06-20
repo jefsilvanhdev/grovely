@@ -37,7 +37,7 @@ Segue o briefing `briefing-plantio-coletivo-claude-code.md` (padrão "O Meu Salm
 - Estrutura git: raiz `plantio-coletivo/` (a pasta mantém esse nome) com `app/` dentro.
 - applicationId / bundle: `com.grovely.app`. Label: Grovely.
 
-## 4. O que está PRONTO (telas MVP + polish, ~20 commits, roda no emulador)
+## 4. O que está PRONTO (telas MVP + polish, ~23 commits, roda no emulador)
 
 - **Fase 0**: scaffold, i18n, nav (shell 5 abas), tema claro/escuro, Supabase schema+RLS.
 - **Identidade (Grovely)**: tokens, fontes Bricolage Grotesque + Hanken Grotesk,
@@ -63,26 +63,26 @@ Segue o briefing `briefing-plantio-coletivo-claude-code.md` (padrão "O Meu Salm
 
 ## 5. PRÓXIMOS PASSOS (começar por aqui)
 
-### 5.1 PRIMEIRO — árvore adulta na home com o DOBRO do tamanho
-Na home (`_Selecting` em `app/lib/features/focus_session/focus_session_screen.dart`)
-a árvore já mostra `TreeStage.mature` a `size: 300`. **Pedido do Jeff: dobrar o
-tamanho visual da árvore adulta na home.** Ações sugeridas:
-- Aumentar `size` (ex.: ~480–560) e garantir que o `Expanded`/`Center` comporte sem
-  estourar o layout (talvez reduzir paddings, dar mais espaço vertical à ilustração).
-- Conferir que o SVG da árvore madura preenche bem (o `viewBox` tem margem; pode
-  valer um leve `Transform.scale`/`FittedBox` pra encher).
-- Validar no emulador (home/Foco) que ficou **claramente maior** (Jeff já reclamou
-  2× que estava menor — confirmar com screenshot antes de fechar).
-- Rever também o tamanho no timer (running) se necessário pra manter proporção.
+### 5.1 PRIMEIRO — VALIDAR árvore adulta na home (Jeff reclamou 2× que estava menor)
+Home (`_Selecting` em `app/lib/features/focus_session/focus_session_screen.dart`):
+árvore `TreeStage.mature` agora envolvida em `FittedBox(fit: BoxFit.contain)` dentro
+de `Expanded` pra **preencher** a área (size base 300 + FittedBox = enche o espaço).
+Timer (running): `TimerRing` fração do filho subiu pra 0.78; árvore size 240 / scale 0.9.
+**Status: COMMITADO mas NÃO verificado visualmente** (economia de token — sem rebuild).
+- **Ação:** rodar no emulador e confirmar que a árvore na home ficou **claramente
+  grande** (FittedBox deve encher a área). Se ainda parecer pequena, o gargalo é o
+  espaço vertical do `Expanded` (competindo com dial/botão) — dar mais altura à
+  ilustração ou reduzir paddings dos vizinhos.
 
 ### 5.2 Resto do 2º passe de polish (designer — `plantio-coletivo-design/APP_REVIEW.md`)
-- **Hero da árvore** entre selecting → running → completed → tile do garden.
-- **Count-up** de stats (garden/profile/recap) — `AnimatedCounter`.
-- **Jardim coletivo visual**: no Circle, trocar a barra de progresso por mini-árvores
-  enchendo (diferencial do produto).
-- **Transição slide** do onboarding (hoje é fade).
-- **Splash screen animada** (broto/bosque crescendo + wordmark) — está no ROADMAP.
-- Extrair `GrovelyError`/`GrovelySkeleton` como componentes (hoje só garden tem padrão).
+- ✅ **Jardim coletivo visual** (Circle): barra → mini-árvores enchendo + brotos
+  esmaecidos nas vagas. FEITO (commit `4f62ee4`).
+- ✅ **Transição slide** do onboarding (slide+fade direcional). FEITO (`4f62ee4`).
+- ⏳ **Splash screen animada** (broto/bosque crescendo + wordmark) — no ROADMAP. PRÓXIMO.
+- ⏳ Extrair `GrovelyError`/`GrovelySkeleton` como componentes (hoje só garden tem padrão).
+- ❌ **Hero da árvore** entre selecting→running→completed→tile: PULADO (complexidade de
+  rota/Hero entre telas do shell — baixo ROI agora).
+- ❌ **Count-up** de stats (`AnimatedCounter`): PULADO (quebra plural i18n — baixo ROI).
 
 ### 5.3 Roadmap maior (ver `ROADMAP.md`)
 - **Agente C (social)** runtime: aplicar `app/supabase/migrations/0003_circle_functions.sql`
