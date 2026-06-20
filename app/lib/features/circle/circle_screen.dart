@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../data/models/circle.dart';
+import '../../data/models/tree.dart';
 import '../../data/providers/circle_provider.dart';
 import '../../data/repositories/circle_repository.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets/grovely_components.dart';
+import '../focus_session/widgets/tree_view.dart';
 
 /// Círculo (§4): vazio → criar/entrar; em círculo → detalhe (jardim coletivo,
 /// membros, meta). Presence ao vivo = follow-up (precisa realtime + 2 devices).
@@ -281,15 +283,31 @@ class _Detail extends ConsumerWidget {
                           l10n.circleGoal(planted, goal),
                           style: theme.textTheme.titleMedium,
                         ),
-                        const SizedBox(height: 10),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(999),
-                          child: LinearProgressIndicator(
-                            value: goal == 0 ? 0 : (planted / goal).clamp(0, 1),
-                            minHeight: 10,
-                            backgroundColor:
-                                theme.colorScheme.surfaceContainerHighest,
-                          ),
+                        const SizedBox(height: 12),
+                        // Jardim coletivo: cada árvore plantada na semana enche
+                        // o bosque; vagas restantes ficam como brotos esmaecidos.
+                        Wrap(
+                          spacing: 6,
+                          runSpacing: 4,
+                          children: [
+                            for (var i = 0; i < goal.clamp(0, 36); i++)
+                              SizedBox(
+                                width: 22,
+                                height: 28,
+                                child: i < planted
+                                    ? TreeView(
+                                        type: TreeType
+                                            .values[i % TreeType.values.length],
+                                        stage: TreeStage.young,
+                                        size: 22,
+                                      )
+                                    : Icon(
+                                        Icons.eco_outlined,
+                                        size: 16,
+                                        color: theme.colorScheme.outline,
+                                      ),
+                              ),
+                          ],
                         ),
                       ],
                     ),

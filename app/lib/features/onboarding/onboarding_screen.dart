@@ -72,7 +72,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
             Expanded(
               child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 250),
+                duration: const Duration(milliseconds: 280),
+                transitionBuilder: (child, anim) => FadeTransition(
+                  opacity: anim,
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0.08, 0),
+                      end: Offset.zero,
+                    ).animate(anim),
+                    child: child,
+                  ),
+                ),
                 child: switch (_step) {
                   0 => _Welcome(key: const ValueKey(0), onNext: _next),
                   1 => _Notif(key: const ValueKey(1), onNext: _next),
