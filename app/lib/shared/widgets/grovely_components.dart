@@ -10,6 +10,59 @@ import '../../core/theme/app_theme.dart';
 import '../../data/models/tree.dart';
 import '../../l10n/app_localizations.dart';
 
+/// Estado vazio unificado: ícone + título + corpo + ação opcional, centrado.
+/// Padrão único para garden/circle/league/recap (corrige alinhamentos soltos).
+class GrovelyEmpty extends StatelessWidget {
+  const GrovelyEmpty({
+    super.key,
+    required this.icon,
+    required this.title,
+    this.body,
+    this.action,
+  });
+
+  final IconData icon;
+  final String title;
+  final String? body;
+  final Widget? action;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(GrovelySpacing.xxxl),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 52, color: theme.colorScheme.primary),
+            const SizedBox(height: GrovelySpacing.lg),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.headlineSmall,
+            ),
+            if (body != null) ...[
+              const SizedBox(height: GrovelySpacing.sm),
+              Text(
+                body!,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+            if (action != null) ...[
+              const SizedBox(height: GrovelySpacing.xl),
+              action!,
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// Decoração padrão de card de superfície: sombra suave no claro, borda no
 /// escuro (DS §elevation). Usar em todo card, em vez de Container+border ad-hoc.
 BoxDecoration grovelyCard(BuildContext context, {double radius = 20}) {

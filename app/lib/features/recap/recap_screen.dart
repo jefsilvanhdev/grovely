@@ -206,38 +206,14 @@ class _Empty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        const SymbolWatermark(size: 300),
-        Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                l10n.recapEmpty,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.headlineSmall,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                l10n.recapEmptySub,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(height: 20),
-              FilledButton(
-                onPressed: () => context.go('/focus'),
-                child: Text(l10n.plantFirst),
-              ),
-            ],
-          ),
-        ),
-      ],
+    return GrovelyEmpty(
+      icon: Icons.wb_sunny_outlined,
+      title: l10n.recapEmpty,
+      body: l10n.recapEmptySub,
+      action: FilledButton(
+        onPressed: () => context.go('/focus'),
+        child: Text(l10n.plantFirst),
+      ),
     );
   }
 }

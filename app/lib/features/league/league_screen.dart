@@ -92,13 +92,7 @@ class _RankRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          SizedBox(
-            width: 26,
-            child: Text(
-              '$rank',
-              style: const TextStyle(fontWeight: FontWeight.w700),
-            ),
-          ),
+          _RankMedal(rank: rank),
           const SizedBox(width: 8),
           CircleAvatar(
             radius: 16,
@@ -125,37 +119,52 @@ class _RankRow extends StatelessWidget {
   }
 }
 
+class _RankMedal extends StatelessWidget {
+  const _RankMedal({required this.rank});
+  final int rank;
+
+  @override
+  Widget build(BuildContext context) {
+    const medals = {
+      1: Color(0xFFE0A458), // ouro (sol da marca)
+      2: Color(0xFFB8C0C8), // prata
+      3: Color(0xFFCB8E5A), // bronze
+    };
+    final medal = medals[rank];
+    if (medal == null) {
+      return SizedBox(
+        width: 26,
+        child: Text(
+          '$rank',
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontWeight: FontWeight.w700),
+        ),
+      );
+    }
+    return Container(
+      width: 26,
+      height: 26,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(color: medal, shape: BoxShape.circle),
+      child: Text(
+        '$rank',
+        style: const TextStyle(
+          fontWeight: FontWeight.w700,
+          fontSize: 13,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
 class _Solo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        const SymbolWatermark(size: 280),
-        Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.emoji_events_outlined,
-                size: 48,
-                color: theme.colorScheme.secondary,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                l10n.leagueSolo,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+    return GrovelyEmpty(
+      icon: Icons.emoji_events_outlined,
+      title: l10n.leagueSolo,
     );
   }
 }

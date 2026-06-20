@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -171,38 +172,14 @@ class _GardenEmpty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        const SymbolWatermark(size: 300),
-        Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                l10n.gardenWaiting,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.headlineSmall,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                l10n.gardenWaitingSub,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(height: 20),
-              FilledButton(
-                onPressed: () => context.go('/focus'),
-                child: Text(l10n.plantFirst),
-              ),
-            ],
-          ),
-        ),
-      ],
+    return GrovelyEmpty(
+      icon: Icons.park_outlined,
+      title: l10n.gardenWaiting,
+      body: l10n.gardenWaitingSub,
+      action: FilledButton(
+        onPressed: () => context.go('/focus'),
+        child: Text(l10n.plantFirst),
+      ),
     );
   }
 }
@@ -213,13 +190,19 @@ class _GardenSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = Theme.of(context).colorScheme.surfaceContainerHighest;
-    Widget box(double h, [double r = 14]) => Container(
-      height: h,
-      decoration: BoxDecoration(
-        color: c,
-        borderRadius: BorderRadius.circular(r),
-      ),
-    );
+    Widget box(double h, [double r = 14]) =>
+        Container(
+              height: h,
+              decoration: BoxDecoration(
+                color: c,
+                borderRadius: BorderRadius.circular(r),
+              ),
+            )
+            .animate(onPlay: (ctrl) => ctrl.repeat())
+            .shimmer(
+              duration: 1200.ms,
+              color: Theme.of(context).colorScheme.surface,
+            );
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
       children: [

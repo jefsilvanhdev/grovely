@@ -74,51 +74,63 @@ class _Selecting extends ConsumerWidget {
     final controller = ref.read(focusSessionProvider.notifier);
     final stats = ref.watch(gardenStatsProvider);
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
-      child: Column(
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: StreakBadge(count: stats.currentStreak),
-          ),
-          Expanded(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                const SymbolWatermark(size: 300),
-                TreeView(type: state.treeType, stage: state.stage, size: 200),
-              ],
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            theme.colorScheme.surface,
+            theme.colorScheme.surfaceContainerHighest,
+          ],
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: StreakBadge(count: stats.currentStreak),
             ),
-          ),
-          Text(
-            l10n.focusPreview(
-              speciesName(l10n, state.treeType),
-              state.durationMinutes,
+            Expanded(
+              child: Center(
+                child: TreeView(
+                  type: state.treeType,
+                  stage: state.stage,
+                  size: 280,
+                ),
+              ),
             ),
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
+            Text(
+              l10n.focusPreview(
+                speciesName(l10n, state.treeType),
+                state.durationMinutes,
+              ),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
             ),
-          ),
-          const SizedBox(height: 14),
-          DurationDial(
-            options: FocusSessionController.durationOptions,
-            selected: state.durationMinutes,
-            onSelected: controller.setDuration,
-          ),
-          const SizedBox(height: 18),
-          SizedBox(
-            width: double.infinity,
-            height: 56,
-            child: FilledButton(
-              onPressed: () {
-                HapticFeedback.mediumImpact();
-                controller.start();
-              },
-              child: Text(l10n.focusPlant),
+            const SizedBox(height: 14),
+            DurationDial(
+              options: FocusSessionController.durationOptions,
+              selected: state.durationMinutes,
+              onSelected: controller.setDuration,
             ),
-          ),
-        ],
+            const SizedBox(height: 18),
+            SizedBox(
+              width: double.infinity,
+              height: 56,
+              child: FilledButton(
+                onPressed: () {
+                  HapticFeedback.mediumImpact();
+                  controller.start();
+                },
+                child: Text(l10n.focusPlant),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -202,11 +214,11 @@ class _Running extends ConsumerWidget {
               child: Center(
                 child: TimerRing(
                   progress: state.progress,
-                  size: 280,
+                  size: 320,
                   child: TreeView(
                     type: state.treeType,
                     stage: state.stage,
-                    size: 170,
+                    size: 200,
                     scale: 0.62 + 0.38 * state.progress,
                   ),
                 ),

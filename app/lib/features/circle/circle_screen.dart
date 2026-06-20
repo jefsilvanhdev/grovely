@@ -47,70 +47,51 @@ class _Empty extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        const SymbolWatermark(size: 300),
-        Padding(
-          padding: const EdgeInsets.all(28),
-          child: Column(
+    return GrovelyEmpty(
+      icon: Icons.groups_outlined,
+      title: l10n.circleEmptyTitle,
+      body: l10n.circleEmptySub,
+      action: Column(
+        children: [
+          SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: FilledButton(
+              onPressed: () => _createSheet(context, ref),
+              child: Text(l10n.circleCreate),
+            ),
+          ),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            height: 52,
+            child: FilledButton.tonal(
+              onPressed: () => _joinSheet(context, ref),
+              child: Text(l10n.circleJoin),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                l10n.circleEmptyTitle,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.headlineMedium,
+              Icon(
+                Icons.lock_outline,
+                size: 13,
+                color: theme.colorScheme.onSurfaceVariant,
               ),
-              const SizedBox(height: 10),
-              Text(
-                l10n.circleEmptySub,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(height: 28),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: FilledButton(
-                  onPressed: () => _createSheet(context, ref),
-                  child: Text(l10n.circleCreate),
-                ),
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: FilledButton.tonal(
-                  onPressed: () => _joinSheet(context, ref),
-                  child: Text(l10n.circleJoin),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.lock_outline,
-                    size: 13,
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  l10n.circlePrivacy,
+                  style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
-                  const SizedBox(width: 6),
-                  Flexible(
-                    child: Text(
-                      l10n.circlePrivacy,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
