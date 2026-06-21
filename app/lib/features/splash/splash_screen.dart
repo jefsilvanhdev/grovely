@@ -6,11 +6,11 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/app_theme.dart';
-import '../../shared/widgets/grovely_logo.dart';
 
-/// Splash animada da marca — emenda na splash nativa (mesmo verde #2E7D52),
-/// o símbolo "nasce" num disco claro (sol/bosque) e o wordmark sobe.
-/// Depois encaminha pro app. Honra reduce-motion (sem movimento, espera curta).
+/// Splash animada da marca — emenda na splash nativa (mesmo verde #2E7D52 e a
+/// mesma arte: pinheiros brancos + sol). O símbolo "nasce" (scale+fade) e o
+/// wordmark "Grovely" sobe. Depois encaminha pro app. Honra reduce-motion
+/// (sem movimento, espera curta).
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -50,22 +50,13 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final reduced = GrovelyMotion.reduced(context);
 
-    Widget disc = Container(
-      width: 140,
-      height: 140,
-      decoration: const BoxDecoration(
-        color: Color(0xFFF6F4EC), // creme da marca — contraste pro símbolo
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x33000000),
-            blurRadius: 28,
-            offset: Offset(0, 10),
-          ),
-        ],
-      ),
-      alignment: Alignment.center,
-      child: const GrovelyLogo(symbolOnly: true, height: 84),
+    // Mesma arte da splash NATIVA (pinheiros brancos + sol), pra emendar sem
+    // "pulo" visual: reusa o foreground do ícone adaptive.
+    Widget symbol = Image.asset(
+      'assets/icon/grovely-adaptive-foreground-1024.png',
+      width: 220,
+      height: 220,
+      filterQuality: FilterQuality.medium,
     );
 
     Widget wordmark = Text(
@@ -79,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
 
     if (!reduced) {
-      disc = disc
+      symbol = symbol
           .animate()
           .scale(
             begin: const Offset(0.7, 0.7),
@@ -99,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [disc, const SizedBox(height: 28), wordmark],
+          children: [symbol, const SizedBox(height: 12), wordmark],
         ),
       ),
     );

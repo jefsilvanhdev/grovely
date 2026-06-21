@@ -29,7 +29,7 @@ class LeagueScreen extends ConsumerWidget {
             final uid = SupabaseService.instance.currentUserId;
             return members.when(
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (_, _) => Center(child: Text(l10n.commonError)),
+              error: (_, _) => const GrovelyError(),
               data: (list) => ListView(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
                 children: [

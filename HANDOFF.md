@@ -81,12 +81,21 @@ dominante da tela. Screenshot confere.
   esmaecidos nas vagas. FEITO (commit `4f62ee4`).
 - ✅ **Transição slide** do onboarding (slide+fade direcional). FEITO (`4f62ee4`).
 - ✅ **Splash screen animada** (`features/splash/splash_screen.dart`): emenda na
-  splash nativa (mesmo verde #2E7D52), símbolo num disco creme com scale+fade
-  (flutter_animate) + wordmark "Grovely" branco subindo, ~1.7s → `/onboarding`.
-  Honra reduce-motion (sem movimento, espera 600ms). Rota `/splash` é o
-  `initialLocation`. VERIFICADO no emulador. Nota: leve "pulo" entre o native
-  (pinheiros brancos, sem disco) e o Flutter (pinheiros verdes em disco creme) —
-  pra emendar 100%, trocar o PNG nativo pela mesma arte do disco depois.
+  splash nativa SEM pulo — usa a MESMA arte (pinheiros brancos + sol, reusa
+  `assets/icon/grovely-adaptive-foreground-1024.png`) no MESMO verde #2E7D52.
+  Símbolo nasce (scale+fade via flutter_animate) + wordmark "Grovely" branco
+  subindo, ~1.7s → `/onboarding`. Honra reduce-motion (600ms). Rota `/splash` é
+  o `initialLocation`. VERIFICADO no emulador (frame com wordmark confere).
+- ✅ **Extrair `GrovelyError`/`GrovelySkeleton`**: feito em
+  `shared/widgets/grovely_components.dart` (`GrovelyError{onRetry,message}` +
+  `GrovelySkeletonBox{height,radius}`). Garden/Circle/League agora usam o padrão
+  único (removidos `_GardenError` e o skeleton ad-hoc).
+- ⚠️ **Cold start lento (follow-up)**: `main()` faz `await SupabaseService.init()`
+  + `ensureSignedIn()` ANTES do `runApp`, então o primeiro frame (e a splash
+  Flutter) só aparece depois do signin anônimo — no emulador via `am start` a
+  splash NATIVA fica ~8-10s travada. Mover esses inits pra DEPOIS do `runApp`
+  (rodar em background, app não depende deles no boot) faz a splash animada
+  aparecer na hora.
 - ⏳ Extrair `GrovelyError`/`GrovelySkeleton` como componentes (hoje só garden tem padrão).
 - ❌ **Hero da árvore** entre selecting→running→completed→tile: PULADO (complexidade de
   rota/Hero entre telas do shell — baixo ROI agora).

@@ -63,6 +63,72 @@ class GrovelyEmpty extends StatelessWidget {
   }
 }
 
+/// Estado de erro unificado: mensagem + (opcional) botão "tentar de novo".
+/// Padrão único para garden/circle/league (corrige erros ad-hoc soltos).
+class GrovelyError extends StatelessWidget {
+  const GrovelyError({super.key, this.onRetry, this.message});
+
+  /// Callback de retry; se nulo, o botão some (ex.: erro dentro de um card).
+  final VoidCallback? onRetry;
+
+  /// Mensagem custom; default = `l10n.commonError`.
+  final String? message;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(GrovelySpacing.xxl),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              message ?? l10n.commonError,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            if (onRetry != null) ...[
+              const SizedBox(height: GrovelySpacing.md),
+              OutlinedButton(
+                onPressed: onRetry,
+                child: Text(l10n.commonRetry),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Bloco de carregamento com shimmer (DS §skeleton). Primitivo reutilizável
+/// para montar telas de loading consistentes (garden/circle/league).
+class GrovelySkeletonBox extends StatelessWidget {
+  const GrovelySkeletonBox({super.key, this.height, this.radius = 14});
+
+  /// Altura fixa; se nula, ocupa o espaço do pai (ex.: célula de grid).
+  final double? height;
+  final double radius;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Container(
+          height: height,
+          decoration: BoxDecoration(
+            color: scheme.surfaceContainerHighest,
+            borderRadius: BorderRadius.circular(radius),
+          ),
+        )
+        .animate(onPlay: (ctrl) => ctrl.repeat())
+        .shimmer(duration: 1200.ms, color: scheme.surface);
+  }
+}
+
 /// Decoração padrão de card de superfície: sombra suave no claro, borda no
 /// escuro (DS §elevation). Usar em todo card, em vez de Container+border ad-hoc.
 BoxDecoration grovelyCard(BuildContext context, {double radius = 20}) {

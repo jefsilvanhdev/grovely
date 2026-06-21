@@ -24,19 +24,8 @@ class CircleScreen extends ConsumerWidget {
       body: SafeArea(
         child: circle.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (_, _) => Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(l10n.commonError),
-                const SizedBox(height: 12),
-                OutlinedButton(
-                  onPressed: () => ref.invalidate(myCircleProvider),
-                  child: Text(l10n.commonRetry),
-                ),
-              ],
-            ),
-          ),
+          error: (_, _) =>
+              GrovelyError(onRetry: () => ref.invalidate(myCircleProvider)),
           data: (c) => c == null ? _Empty() : _Detail(circle: c),
         ),
       ),
@@ -265,7 +254,7 @@ class _Detail extends ConsumerWidget {
                 child: CircularProgressIndicator(),
               ),
             ),
-            error: (_, _) => Text(l10n.commonError),
+            error: (_, _) => const GrovelyError(),
             data: (list) {
               final planted = list.fold<int>(0, (s, m) => s + m.weeklyTrees);
               final goal = (list.length * 5).clamp(5, 999);
