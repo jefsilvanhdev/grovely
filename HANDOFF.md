@@ -80,22 +80,26 @@ dominante da tela. Screenshot confere.
 - ✅ **Jardim coletivo visual** (Circle): barra → mini-árvores enchendo + brotos
   esmaecidos nas vagas. FEITO (commit `4f62ee4`).
 - ✅ **Transição slide** do onboarding (slide+fade direcional). FEITO (`4f62ee4`).
-- ✅ **Splash screen animada** (`features/splash/splash_screen.dart`): emenda na
-  splash nativa SEM pulo — usa a MESMA arte (pinheiros brancos + sol, reusa
-  `assets/icon/grovely-adaptive-foreground-1024.png`) no MESMO verde #2E7D52.
-  Símbolo nasce (scale+fade via flutter_animate) + wordmark "Grovely" branco
-  subindo, ~1.7s → `/onboarding`. Honra reduce-motion (600ms). Rota `/splash` é
-  o `initialLocation`. VERIFICADO no emulador (frame com wordmark confere).
+- ✅ **Splash screen animada** (`features/splash/splash_screen.dart` +
+  `shared/widgets/grovely_mark.dart`): o bosque **CRESCE** replicando o motion do
+  design system (`gv-grow`: escala da base + fade; `gv-sway`: balanço leve). O
+  mark é pintado em Flutter (`GrovelyMark`, CustomPaint, geometria 1:1 com o
+  símbolo da marca) — cada pinheiro brota da base em sequência (baixo→médio→alto,
+  clímax no central, `Curves.easeOutBack` por `Interval`), o sol surge no fim e o
+  bosque balança ±1.2° depois de assentar. Wordmark "Grovely" sobe após o grow.
+  Emenda sem pulo com o native (mesma arte/verde). ~2.4s → `/onboarding`. Honra
+  reduce-motion (pinta estado final, 600ms). `GrovelyMark` é reutilizável
+  (`animate:false` = ícone estático). VERIFICADO no emulador.
 - ✅ **Extrair `GrovelyError`/`GrovelySkeleton`**: feito em
   `shared/widgets/grovely_components.dart` (`GrovelyError{onRetry,message}` +
   `GrovelySkeletonBox{height,radius}`). Garden/Circle/League agora usam o padrão
   único (removidos `_GardenError` e o skeleton ad-hoc).
-- ⚠️ **Cold start lento (follow-up)**: `main()` faz `await SupabaseService.init()`
-  + `ensureSignedIn()` ANTES do `runApp`, então o primeiro frame (e a splash
-  Flutter) só aparece depois do signin anônimo — no emulador via `am start` a
-  splash NATIVA fica ~8-10s travada. Mover esses inits pra DEPOIS do `runApp`
-  (rodar em background, app não depende deles no boot) faz a splash animada
-  aparecer na hora.
+- ✅ **Cold start corrigido**: `main()` agora chama `runApp` ANTES dos inits;
+  Supabase/Firebase sobem em background via `unawaited(_bootstrapServices())`.
+  São best-effort e ninguém no boot (splash→onboarding) depende deles, então o
+  primeiro frame (splash animada) aparece na hora — sem os ~8-10s de splash
+  nativa travada. Telas autenticadas só são alcançadas depois do onboarding,
+  quando o init já terminou.
 - ⏳ Extrair `GrovelyError`/`GrovelySkeleton` como componentes (hoje só garden tem padrão).
 - ❌ **Hero da árvore** entre selecting→running→completed→tile: PULADO (complexidade de
   rota/Hero entre telas do shell — baixo ROI agora).

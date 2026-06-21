@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,8 +18,17 @@ Future<void> main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  // Inits tolerantes a falha: o app sobe mesmo sem credenciais/config nativa.
-  // Credenciais reais entram via --dart-define; Firebase via google-services.
+  // Sobe a UI imediatamente: a splash animada aparece sem esperar rede. Os
+  // inits (Supabase/Firebase) rodam em background — são best-effort e ninguém
+  // no boot (splash → onboarding) depende deles; quando o usuário chega nas
+  // telas autenticadas já terminaram. Sem isso, a splash nativa travava ~8-10s.
+  unawaited(_bootstrapServices());
+
+  runApp(const ProviderScope(child: PlantioApp()));
+}
+
+/// Inits tolerantes a falha, fora do caminho crítico do primeiro frame.
+Future<void> _bootstrapServices() async {
   try {
     await SupabaseService.instance.init();
     await SupabaseService.instance.ensureSignedIn();
@@ -26,8 +37,6 @@ Future<void> main() async {
   try {
     await Firebase.initializeApp();
   } catch (_) {}
-
-  runApp(const ProviderScope(child: PlantioApp()));
 }
 
 class PlantioApp extends ConsumerWidget {

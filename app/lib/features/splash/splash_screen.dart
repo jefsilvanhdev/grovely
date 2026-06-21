@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/theme/app_theme.dart';
+import '../../shared/widgets/grovely_mark.dart';
 
 /// Splash animada da marca — emenda na splash nativa (mesmo verde #2E7D52 e a
 /// mesma arte: pinheiros brancos + sol). O símbolo "nasce" (scale+fade) e o
@@ -32,7 +33,9 @@ class _SplashScreenState extends State<SplashScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final reduced = GrovelyMotion.reduced(context);
       _timer = Timer(
-        reduced ? const Duration(milliseconds: 600) : const Duration(milliseconds: 1700),
+        reduced
+            ? const Duration(milliseconds: 600)
+            : const Duration(milliseconds: 2400),
         () {
           if (mounted) context.go('/onboarding');
         },
@@ -50,14 +53,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final reduced = GrovelyMotion.reduced(context);
 
-    // Mesma arte da splash NATIVA (pinheiros brancos + sol), pra emendar sem
-    // "pulo" visual: reusa o foreground do ícone adaptive.
-    Widget symbol = Image.asset(
-      'assets/icon/grovely-adaptive-foreground-1024.png',
-      width: 220,
-      height: 220,
-      filterQuality: FilterQuality.medium,
-    );
+    // Mesma arte da splash NATIVA (pinheiros brancos + sol), mas viva: o bosque
+    // CRESCE (gv-grow do design system) — cada pinheiro brota da base, o sol
+    // surge e o bosque balança de leve. Emenda sem "pulo" com o native.
+    final symbol = GrovelyMark(size: 200, animate: !reduced);
 
     Widget wordmark = Text(
       'Grovely',
@@ -70,19 +69,16 @@ class _SplashScreenState extends State<SplashScreen> {
     );
 
     if (!reduced) {
-      symbol = symbol
-          .animate()
-          .scale(
-            begin: const Offset(0.7, 0.7),
-            end: const Offset(1, 1),
-            duration: GrovelyMotion.grand,
-            curve: GrovelyMotion.decelerate,
-          )
-          .fadeIn(duration: GrovelyMotion.slow);
+      // Wordmark sobe depois que o bosque já cresceu (gv-grow no símbolo).
       wordmark = wordmark
           .animate()
-          .fadeIn(delay: 320.ms, duration: GrovelyMotion.slow)
-          .moveY(begin: 12, end: 0, delay: 320.ms, duration: GrovelyMotion.slow);
+          .fadeIn(delay: 900.ms, duration: GrovelyMotion.slow)
+          .moveY(
+            begin: 12,
+            end: 0,
+            delay: 900.ms,
+            duration: GrovelyMotion.slow,
+          );
     }
 
     return Scaffold(
