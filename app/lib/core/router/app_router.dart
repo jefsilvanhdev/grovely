@@ -10,6 +10,7 @@ import '../../features/onboarding/onboarding_screen.dart';
 import '../../features/paywall/paywall_screen.dart';
 import '../../features/profile/profile_screen.dart';
 import '../../features/recap/recap_screen.dart';
+import '../../features/splash/splash_screen.dart';
 import '../../shared/widgets/main_shell.dart';
 
 /// Esqueleto de navegação (Fase 0).
@@ -19,9 +20,10 @@ import '../../shared/widgets/main_shell.dart';
 /// O redirect inicial (onboarding vs. app) será ligado ao estado de auth/
 /// onboarding-concluído nas fases seguintes.
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/onboarding',
+  initialLocation: '/splash',
   debugLogDiagnostics: false,
   routes: [
+    GoRoute(path: '/splash', builder: (_, _) => const SplashScreen()),
     GoRoute(path: '/onboarding', builder: (_, _) => const OnboardingScreen()),
     GoRoute(path: '/auth', builder: (_, _) => const AuthScreen()),
     GoRoute(path: '/paywall', builder: (_, _) => const PaywallScreen()),

@@ -80,7 +80,13 @@ dominante da tela. Screenshot confere.
 - ✅ **Jardim coletivo visual** (Circle): barra → mini-árvores enchendo + brotos
   esmaecidos nas vagas. FEITO (commit `4f62ee4`).
 - ✅ **Transição slide** do onboarding (slide+fade direcional). FEITO (`4f62ee4`).
-- ⏳ **Splash screen animada** (broto/bosque crescendo + wordmark) — no ROADMAP. PRÓXIMO.
+- ✅ **Splash screen animada** (`features/splash/splash_screen.dart`): emenda na
+  splash nativa (mesmo verde #2E7D52), símbolo num disco creme com scale+fade
+  (flutter_animate) + wordmark "Grovely" branco subindo, ~1.7s → `/onboarding`.
+  Honra reduce-motion (sem movimento, espera 600ms). Rota `/splash` é o
+  `initialLocation`. VERIFICADO no emulador. Nota: leve "pulo" entre o native
+  (pinheiros brancos, sem disco) e o Flutter (pinheiros verdes em disco creme) —
+  pra emendar 100%, trocar o PNG nativo pela mesma arte do disco depois.
 - ⏳ Extrair `GrovelyError`/`GrovelySkeleton` como componentes (hoje só garden tem padrão).
 - ❌ **Hero da árvore** entre selecting→running→completed→tile: PULADO (complexidade de
   rota/Hero entre telas do shell — baixo ROI agora).
