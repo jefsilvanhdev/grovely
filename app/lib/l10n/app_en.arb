@@ -175,6 +175,8 @@
   "circleMembers": "Members",
   "circleGoal": "{planted} of {goal} trees this week",
   "@circleGoal": { "placeholders": { "planted": { "type": "int" }, "goal": { "type": "int" } } },
+  "circleGoalReached": "{planted} trees this week — goal reached! 🎉",
+  "@circleGoalReached": { "placeholders": { "planted": { "type": "int" } } },
   "circleLeave": "Leave circle",
   "circleLeaveConfirm": "Leave circle?",
   "circleLeaveBody": "You can come back anytime with the code.",

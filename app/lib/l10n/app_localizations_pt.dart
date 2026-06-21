@@ -493,6 +493,11 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String circleGoalReached(int planted) {
+    return '$planted árvores esta semana — meta batida! 🎉';
+  }
+
+  @override
   String get circleLeave => 'Sair do círculo';
 
   @override

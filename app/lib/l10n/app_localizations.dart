@@ -950,6 +950,12 @@ abstract class AppLocalizations {
   /// **'{planted} of {goal} trees this week'**
   String circleGoal(int planted, int goal);
 
+  /// No description provided for @circleGoalReached.
+  ///
+  /// In en, this message translates to:
+  /// **'{planted} trees this week — goal reached! 🎉'**
+  String circleGoalReached(int planted);
+
   /// No description provided for @circleLeave.
   ///
   /// In en, this message translates to:

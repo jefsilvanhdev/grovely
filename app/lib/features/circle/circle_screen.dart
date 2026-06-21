@@ -269,6 +269,7 @@ class _Detail extends ConsumerWidget {
             data: (list) {
               final planted = list.fold<int>(0, (s, m) => s + m.weeklyTrees);
               final goal = (list.length * 5).clamp(5, 999);
+              final goalReached = planted >= goal;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -280,7 +281,9 @@ class _Detail extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          l10n.circleGoal(planted, goal),
+                          goalReached
+                              ? l10n.circleGoalReached(planted)
+                              : l10n.circleGoal(planted, goal),
                           style: theme.textTheme.titleMedium,
                         ),
                         const SizedBox(height: 12),

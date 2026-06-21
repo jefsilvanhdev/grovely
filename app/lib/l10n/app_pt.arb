@@ -158,6 +158,7 @@
   "circleInvite": "Compartilhar convite",
   "circleMembers": "Membros",
   "circleGoal": "{planted} de {goal} árvores esta semana",
+  "circleGoalReached": "{planted} árvores esta semana — meta batida! 🎉",
   "circleLeave": "Sair do círculo",
   "circleLeaveConfirm": "Sair do círculo?",
   "circleLeaveBody": "Dá pra voltar quando quiser, é só o código.",

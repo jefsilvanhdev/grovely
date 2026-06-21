@@ -494,6 +494,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String circleGoalReached(int planted) {
+    return '$planted trees this week — goal reached! 🎉';
+  }
+
+  @override
   String get circleLeave => 'Leave circle';
 
   @override
