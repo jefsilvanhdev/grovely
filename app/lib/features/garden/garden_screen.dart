@@ -19,8 +19,21 @@ class GardenScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final garden = ref.watch(gardenProvider);
 
+    final hasTrees = (garden.value ?? const <CompletedTree>[]).isNotEmpty;
+
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.gardenTitle)),
+      appBar: AppBar(
+        title: Text(l10n.gardenTitle),
+        actions: [
+          // Recap semanal compartilhável — só faz sentido com árvores no jardim.
+          if (hasTrees)
+            IconButton(
+              icon: const Icon(Icons.ios_share),
+              tooltip: l10n.recapTitle,
+              onPressed: () => context.push('/recap'),
+            ),
+        ],
+      ),
       body: SafeArea(
         child: garden.when(
           loading: () => const _GardenSkeleton(),
