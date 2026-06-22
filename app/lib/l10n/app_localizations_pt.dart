@@ -376,6 +376,30 @@ class AppLocalizationsPt extends AppLocalizations {
   String get rowNotifications => 'Notificações';
 
   @override
+  String get notifStreakTitle => 'Hora de crescer 🌱';
+
+  @override
+  String get notifStreakBody =>
+      'Plante uma árvore hoje e mantenha sua sequência viva.';
+
+  @override
+  String get notifReminderSheetTitle => 'Lembrete diário';
+
+  @override
+  String get notifReminderSheetBody =>
+      'Um empurrãozinho diário pra focar e manter sua sequência.';
+
+  @override
+  String get notifReminderOn => 'Lembrete diário ativo';
+
+  @override
+  String get notifReminderOff => 'Lembretes desligados';
+
+  @override
+  String get notifPermissionDenied =>
+      'Notificações desligadas. Ative nas configurações do sistema.';
+
+  @override
   String get rowAppearance => 'Aparência';
 
   @override

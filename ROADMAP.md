@@ -25,7 +25,8 @@ Legenda: ✅ feito · 🟡 parcial · ❌ não começou · 🔒 bloqueado por a�
   - ❌ Círculos (invite) · jardim coletivo realtime/presence · liga semanal
 - **Agente E — Onboarding + Recap** 🟡
   - 🟡 Onboarding (1 tela placeholder — redesign pelo designer)
-  - ❌ Recap semanal compartilhável · notificações (streak, círculo, fim de trial)
+  - ✅ **Notificações locais**: `NotificationService` (lembrete diário de streak via `periodicallyShow`), prompt OS no onboarding, toggle no profile (persiste), manifest perms + boot receiver. VERIFICADO no emulador.
+  - ❌ Recap semanal compartilhável · notificações de círculo/fim-de-trial (dependem de social/monetização)
 - **QA Checkpoint 2** ❌
 
 ## Fase 3 — Lançamento

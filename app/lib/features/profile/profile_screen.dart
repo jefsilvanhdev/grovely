@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/theme_mode_provider.dart';
 import '../../data/providers/garden_provider.dart';
+import '../../data/services/notification_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets/grovely_components.dart';
 
@@ -113,7 +114,7 @@ class ProfileScreen extends ConsumerWidget {
             _Row(
               icon: Icons.notifications_outlined,
               label: l10n.rowNotifications,
-              onTap: () {},
+              onTap: () => _notifSheet(context),
             ),
             _Row(
               icon: Icons.palette_outlined,
@@ -180,6 +181,64 @@ class ProfileScreen extends ConsumerWidget {
               opt(ThemeMode.dark, l10n.themeDark),
             ],
           ),
+        );
+      },
+    );
+  }
+
+  void _notifSheet(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final notif = NotificationService.instance;
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheetCtx) {
+        bool? enabled; // null = carregando
+        return StatefulBuilder(
+          builder: (ctx, setSheet) {
+            if (enabled == null) {
+              notif.isStreakReminderEnabled().then((v) {
+                if (ctx.mounted) setSheet(() => enabled = v);
+              });
+            }
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 24),
+              child: SwitchListTile(
+                value: enabled ?? false,
+                title: Text(
+                  (enabled ?? false)
+                      ? l10n.notifReminderOn
+                      : l10n.notifReminderOff,
+                ),
+                subtitle: Text(l10n.notifReminderSheetBody),
+                secondary: const Icon(Icons.notifications_active_outlined),
+                onChanged: enabled == null
+                    ? null
+                    : (want) async {
+                        if (want) {
+                          final granted = await notif.requestPermission();
+                          if (!granted) {
+                            if (ctx.mounted) {
+                              ScaffoldMessenger.of(ctx).showSnackBar(
+                                SnackBar(
+                                  content: Text(l10n.notifPermissionDenied),
+                                ),
+                              );
+                            }
+                            return;
+                          }
+                          await notif.enableStreakReminder(
+                            title: l10n.notifStreakTitle,
+                            body: l10n.notifStreakBody,
+                          );
+                        } else {
+                          await notif.disableStreakReminder();
+                        }
+                        if (ctx.mounted) setSheet(() => enabled = want);
+                      },
+              ),
+            );
+          },
         );
       },
     );

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/models/tree.dart';
+import '../../data/services/notification_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets/grovely_components.dart';
 import '../../shared/widgets/grovely_logo.dart';
@@ -218,9 +219,19 @@ class _Notif extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             height: 56,
-            // TODO(Agente E): disparar prompt OS de notificação aqui.
             child: FilledButton(
-              onPressed: onNext,
+              onPressed: () async {
+                // Pede a permissão do SO; se concedida, já liga o lembrete diário.
+                final granted = await NotificationService.instance
+                    .requestPermission();
+                if (granted) {
+                  await NotificationService.instance.enableStreakReminder(
+                    title: l10n.notifStreakTitle,
+                    body: l10n.notifStreakBody,
+                  );
+                }
+                onNext();
+              },
               child: Text(l10n.onbNotifCta),
             ),
           ),

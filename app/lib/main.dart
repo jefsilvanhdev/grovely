@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_mode_provider.dart';
+import 'data/services/notification_service.dart';
 import 'data/services/supabase_service.dart';
 import 'l10n/app_localizations.dart';
 
@@ -36,6 +37,10 @@ Future<void> _bootstrapServices() async {
 
   try {
     await Firebase.initializeApp();
+  } catch (_) {}
+
+  try {
+    await NotificationService.instance.init();
   } catch (_) {}
 }
 

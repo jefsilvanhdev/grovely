@@ -758,6 +758,48 @@ abstract class AppLocalizations {
   /// **'Notifications'**
   String get rowNotifications;
 
+  /// No description provided for @notifStreakTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time to grow 🌱'**
+  String get notifStreakTitle;
+
+  /// No description provided for @notifStreakBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant a tree today and keep your streak alive.'**
+  String get notifStreakBody;
+
+  /// No description provided for @notifReminderSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder'**
+  String get notifReminderSheetTitle;
+
+  /// No description provided for @notifReminderSheetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A gentle daily nudge to focus and keep your streak.'**
+  String get notifReminderSheetBody;
+
+  /// No description provided for @notifReminderOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder on'**
+  String get notifReminderOn;
+
+  /// No description provided for @notifReminderOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders off'**
+  String get notifReminderOff;
+
+  /// No description provided for @notifPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are off. Enable them in system settings.'**
+  String get notifPermissionDenied;
+
   /// No description provided for @rowAppearance.
   ///
   /// In en, this message translates to:
