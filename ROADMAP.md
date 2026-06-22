@@ -32,13 +32,13 @@ Legenda: ✅ feito · 🟡 parcial · ❌ não começou · 🔒 bloqueado por a�
 - **Agente F — Marketing/Landing** 🟡
   - ✅ Nome + seeds de ASO + brand assets
   - ❌ Landing page · screenshots loja · política privacidade/termos
-- ❌ **Splash screen animada** (hoje é só `flutter_native_splash` estático verde + folhas; fazer o broto/bosque crescer + wordmark surgindo na transição pro app — Flutter splash sobre o native, honra reduce-motion)
+- ✅ **Splash screen animada** (`features/splash/splash_screen.dart` + `shared/widgets/grovely_mark.dart`): bosque cresce (gv-grow do DS: pinheiros brotam da base em sequência + sol + sway), wordmark sobe, emenda sem pulo com o native, honra reduce-motion. Cold start corrigido (init em background pós-runApp)
 - ❌ Polish + beta fechado (Internal Testing ~20 testadores)
 - ❌ QA final + build release assinado (keystore Grovely)
 - ❌ Publicação Play Store
 
-## Polish UI — 2º passe (em andamento)
-Lista do designer em `plantio-coletivo-design/APP_REVIEW.md`. Feito: motion P0 (sweep/árvore/confete/haptics), P1 (stagger/press/elevation), copy humanizado, GrovelyEmpty unificado, árvore maior na home/timer + bg neutro. Pendente: Hero da árvore entre telas, pódio da liga (ouro/prata/bronze), shimmer no skeleton, count-up de stats, jardim coletivo visual (mini-árvores), transição slide do onboarding.
+## Polish UI — 2º passe ✅ (essencial concluído)
+Lista do designer em `plantio-coletivo-design/APP_REVIEW.md`. Feito: motion P0 (sweep/árvore/confete/haptics), P1 (stagger/press/elevation), copy humanizado, GrovelyEmpty unificado, árvore maior na home/timer + bg neutro, **pódio da liga (ouro/prata/bronze)**, **jardim coletivo visual (mini-árvores)**, **transição slide do onboarding**, **shimmer no skeleton** (extraído `GrovelySkeletonBox`) + **`GrovelyError` unificado**, **árvore da home corrigida** (colapsava no AnimatedSwitcher), **círculo: copy de meta batida**. Pulados (baixo ROI): Hero da árvore entre telas, count-up de stats (quebra plural i18n).
 
 ## Em andamento (squad)
 - 🎨 Designer: revisão + design de todas as telas → `plantio-coletivo-design/screens/`
