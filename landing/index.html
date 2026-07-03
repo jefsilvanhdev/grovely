@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grovely — Foco que cresce. Juntos.</title>
+<meta name="description" content="Cada minuto de foco planta uma árvore. Cultive seu jardim, foque com seu círculo e veja o bosque de vocês crescer. Em breve no Android.">
+<meta property="og:title" content="Grovely — Foco que cresce. Juntos.">
+<meta property="og:description" content="Cada minuto de foco planta uma árvore. Foque com seu círculo e veja o bosque de vocês crescer.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="assets/grovely-symbol-v6.svg">
+<style>
+  :root{
+    --green:#2E7D52; --green-dark:#14361F; --green-deep:#0F1A15;
+    --mint:#6FD79B; --mint-soft:#C8E6CF; --amber:#E0A458;
+    --bg:#F3F6F1; --surface:#FFFFFF; --ink:#18241D; --ink-soft:#4A5A50;
+    --outline:#C2D0C5; --r-lg:20px; --r-xl:28px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;line-height:1.15}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* Header */
+  header{padding:20px 0}
+  .nav{display:flex;align-items:center;gap:10px}
+  .nav img{width:36px;height:36px}
+  .nav .brand{font-family:'Bricolage Grotesque';font-weight:700;font-size:1.35rem;color:var(--green-dark)}
+
+  /* Hero */
+  .hero{padding:56px 0 72px;text-align:center}
+  .hero .mark{width:120px;height:120px;margin:0 auto 24px;animation:pop .7s cubic-bezier(.34,1.56,.64,1) both}
+  @keyframes pop{from{transform:scale(.6) translateY(20px);opacity:0}}
+  .hero h1{font-size:clamp(2.2rem,6vw,3.6rem);font-weight:800;color:var(--green-dark);letter-spacing:-.02em}
+  .hero h1 em{font-style:normal;color:var(--green)}
+  .hero p.sub{font-size:clamp(1.05rem,2.5vw,1.3rem);color:var(--ink-soft);max-width:560px;margin:18px auto 0}
+  .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+  .btn{display:inline-block;padding:16px 32px;border-radius:999px;font-weight:700;font-size:1.05rem;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:var(--green);color:#fff;box-shadow:0 8px 24px rgba(46,125,82,.28)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(46,125,82,.34)}
+  .btn-ghost{border:1.5px solid var(--outline);color:var(--ink-soft)}
+  .soon{margin-top:14px;font-size:.9rem;color:var(--ink-soft)}
+  .soon b{color:var(--green)}
+
+  /* How */
+  .how{padding:64px 0}
+  .kicker{display:block;text-align:center;font-size:.82rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:10px}
+  .how h2,.social h2,.faq h2{font-size:clamp(1.7rem,4vw,2.4rem);text-align:center;color:var(--green-dark)}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:40px}
+  .step{background:var(--surface);border-radius:var(--r-xl);padding:28px;box-shadow:0 4px 12px rgba(46,125,82,.10)}
+  .step .n{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--mint-soft);color:var(--green-dark);font-family:'Bricolage Grotesque';font-weight:700;font-size:1.1rem;margin-bottom:14px}
+  .step h3{font-size:1.15rem;margin-bottom:8px;color:var(--green-dark)}
+  .step p{color:var(--ink-soft);font-size:.98rem}
+
+  /* Screens */
+  .screens{padding:56px 0}
+  .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:40px}
+  .shot{border-radius:var(--r-lg);overflow:hidden;box-shadow:0 12px 32px rgba(20,54,31,.16);transition:transform .2s ease}
+  .shot:hover{transform:translateY(-6px)}
+  .shot img{width:100%;height:100%;object-fit:cover}
+  .shot figcaption{background:var(--surface);padding:12px 16px;font-size:.9rem;font-weight:600;color:var(--ink-soft)}
+
+  /* Social band */
+  .social{background:var(--green-deep);color:#E7F0E9;padding:72px 0;margin-top:40px}
+  .social h2{color:#fff}
+  .social .kicker{color:var(--mint)}
+  .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:40px}
+  .pillar{background:#16221C;border:1px solid #3A4D42;border-radius:var(--r-xl);padding:28px}
+  .pillar .ico{font-size:1.8rem;margin-bottom:12px}
+  .pillar h3{color:var(--mint);font-size:1.1rem;margin-bottom:8px}
+  .pillar p{color:#A7B8AD;font-size:.96rem}
+
+  /* FAQ */
+  .faq{padding:72px 0}
+  .qa{max-width:680px;margin:36px auto 0;display:grid;gap:12px}
+  details{background:var(--surface);border-radius:var(--r-lg);padding:18px 22px;box-shadow:0 3px 10px rgba(46,125,82,.08)}
+  summary{font-weight:700;cursor:pointer;color:var(--green-dark);list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::after{content:'+';font-family:'Bricolage Grotesque';font-size:1.3rem;color:var(--green)}
+  details[open] summary::after{content:'–'}
+  details p{margin-top:10px;color:var(--ink-soft);font-size:.97rem}
+
+  /* Waitlist + footer */
+  .band{background:var(--green);color:#fff;text-align:center;padding:64px 24px;border-radius:var(--r-xl);margin:0 24px 72px}
+  .band h2{font-size:clamp(1.6rem,4vw,2.2rem)}
+  .band p{opacity:.92;margin:12px auto 26px;max-width:480px}
+  .band .btn{background:#fff;color:var(--green-dark)}
+  footer{padding:32px 0 48px;text-align:center;color:var(--ink-soft);font-size:.88rem}
+  footer a{color:var(--green);text-decoration:none}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="nav">
+    <img src="assets/grovely-symbol-v6.svg" alt="">
+    <span class="brand">Grovely</span>
+  </div>
+</header>
+
+<section class="hero wrap">
+  <img class="mark" src="assets/grovely-symbol-v6.svg" alt="Símbolo do Grovely: três árvores e um sol">
+  <h1>Foco que cresce.<br><em>Juntos.</em></h1>
+  <p class="sub">Cada minuto de foco planta uma árvore. Cultive seu jardim, foque com seu círculo e veja o bosque de vocês tomar forma — uma sessão por vez.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="#waitlist">Quero testar primeiro</a>
+    <a class="btn btn-ghost" href="#how">Como funciona</a>
+  </div>
+  <p class="soon">Em breve no <b>Google Play</b> · grátis para focar sozinho, para sempre</p>
+</section>
+
+<section class="how wrap" id="how">
+  <span class="kicker">Como funciona</span>
+  <h2>Plante foco. Colha um bosque.</h2>
+  <div class="steps">
+    <div class="step"><span class="n">1</span><h3>Escolha uma árvore</h3><p>Defina a duração da sessão — 15 a 60 minutos — e plante. Cada espécie cresce do broto à copa enquanto você trabalha.</p></div>
+    <div class="step"><span class="n">2</span><h3>Fique presente</h3><p>Sair do app antes da hora? A árvore murcha. Sem culpa, sem drama — mas o seu jardim lembra quem ficou.</p></div>
+    <div class="step"><span class="n">3</span><h3>Veja o jardim crescer</h3><p>Cada sessão vira uma árvore permanente no seu jardim, com streaks, espécies raras e um recap semanal pra compartilhar.</p></div>
+  </div>
+</section>
+
+<section class="screens wrap">
+  <span class="kicker">O app</span>
+  <h2 style="text-align:center;color:var(--green-dark);font-size:clamp(1.7rem,4vw,2.4rem)">Calmo por fora, vivo por dentro.</h2>
+  <div class="shots">
+    <figure class="shot"><img src="assets/01-focus-session.png" alt="Sessão de foco no modo escuro com anel de progresso e árvore crescendo"><figcaption>Sessão imersiva</figcaption></figure>
+    <figure class="shot"><img src="assets/02-personal-garden.png" alt="Jardim pessoal com grade de árvores conquistadas"><figcaption>Seu jardim</figcaption></figure>
+    <figure class="shot"><img src="assets/03-collective-garden.png" alt="Jardim coletivo do círculo com liga semanal"><figcaption>Bosque do círculo</figcaption></figure>
+    <figure class="shot"><img src="assets/04-paywall.png" alt="Grovely Plus com lista de benefícios"><figcaption>Grovely Plus</figcaption></figure>
+  </div>
+</section>
+
+<section class="social">
+  <div class="wrap">
+    <span class="kicker">O diferencial</span>
+    <h2>Foco é melhor em bando.</h2>
+    <div class="pillars">
+      <div class="pillar"><div class="ico">🌳</div><h3>Círculos de 6–12</h3><p>Convide amigos, colegas ou a turma de estudo. Todo mundo planta no mesmo bosque compartilhado da semana.</p></div>
+      <div class="pillar"><div class="ico">🔥</div><h3>Presença ao vivo</h3><p>Veja quem do círculo está focando agora — e entre junto. Nada motiva mais do que gente plantando do seu lado.</p></div>
+      <div class="pillar"><div class="ico">🏆</div><h3>Liga semanal</h3><p>Círculos competem por minutos de foco. Pódio novo toda segunda. Rivalidade saudável, raiz forte.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq wrap" id="faq">
+  <span class="kicker">Perguntas</span>
+  <h2>Direto ao ponto.</h2>
+  <div class="qa">
+    <details><summary>É grátis?</summary><p>Sim — o timer, o jardim completo e 1 círculo são grátis para sempre. O Grovely Plus desbloqueia círculos ilimitados, todas as espécies, durações personalizadas e estatísticas avançadas, com trial de 21 dias.</p></details>
+    <details><summary>O que acontece se eu sair no meio da sessão?</summary><p>A árvore murcha. Trocas rápidas de app (uma ligação, uma notificação) têm carência — só desistir de verdade murcha a árvore. E dá pra reviver assistindo um vídeo.</p></details>
+    <details><summary>Preciso criar conta?</summary><p>Não pra começar: você entra e planta na hora. Conta só é necessária pra entrar num círculo e sincronizar entre aparelhos.</p></details>
+    <details><summary>Meus dados?</summary><p>Compartilhamos com o seu círculo apenas primeiro nome e contagem de árvores. Sem feed, sem DM, sem exposição.</p></details>
+    <details><summary>iPhone?</summary><p>Android primeiro. iOS vem depois do lançamento — entre na lista pra saber na hora.</p></details>
+  </div>
+</section>
+
+<div class="band" id="waitlist">
+  <h2>Seja das primeiras pessoas a plantar.</h2>
+  <p>Beta fechado no Android em breve. Deixe seu e-mail e a gente te chama quando abrir uma vaga.</p>
+  <!-- TODO(Jeff): trocar mailto por form real (Tally/Formspark) quando o domínio existir -->
+  <a class="btn" href="mailto:oi@grovely.app?subject=Quero%20testar%20o%20Grovely">Entrar na lista de espera</a>
+</div>
+
+<footer class="wrap">
+  <p>© 2026 Grovely · Foco que cresce — juntos.</p>
+  <p style="margin-top:6px"><a href="#">Política de privacidade</a> · <a href="#">Termos de uso</a> <!-- TODO(Jeff): linkar quando publicados --></p>
+</footer>
+
+</body>
+</html>
