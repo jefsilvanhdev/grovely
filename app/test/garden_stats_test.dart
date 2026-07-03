@@ -10,7 +10,10 @@ CompletedTree _tree({
 }) => CompletedTree(type: type, durationMinutes: minutes, completedAt: at);
 
 void main() {
-  final today = DateTime.now();
+  // Meio-dia de hoje: somar horas nos testes nunca cruza a meia-noite
+  // (com DateTime.now() cru, rodar o teste depois das 22h virava outro dia).
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day, 12);
   DateTime daysAgo(int d) => today.subtract(Duration(days: d));
 
   group('computeGardenStats', () {
