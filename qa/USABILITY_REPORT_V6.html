@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grovely — Teste de Usabilidade (Synth Users) · v6</title>
+<style>
+  :root{--green:#2E7D52;--green-dark:#14361F;--deep:#0F1A15;--mint:#6FD79B;--mint-soft:#C8E6CF;
+    --amber:#E0A458;--bg:#F3F6F1;--surface:#fff;--ink:#18241D;--soft:#4A5A50;--outline:#C2D0C5;
+    --red:#C4453B;--yellow:#E0A458;--ok:#43A86B}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Hanken Grotesk',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  .wrap{max-width:920px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--deep);color:#E7F0E9;border-radius:20px;padding:36px 32px;margin-bottom:32px}
+  header.hero h1{font-size:1.9rem;line-height:1.2;color:#fff}
+  header.hero .tag{display:inline-block;background:var(--mint);color:var(--deep);font-weight:700;font-size:.75rem;
+    letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:999px;margin-bottom:14px}
+  header.hero p{color:#A7B8AD;margin-top:10px;max-width:640px}
+  h2{font-size:1.35rem;color:var(--green-dark);margin:40px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--mint-soft)}
+  h3{font-size:1.05rem;color:var(--green-dark);margin:20px 0 8px}
+  p,li{font-size:.96rem}
+  .card{background:var(--surface);border-radius:16px;padding:20px 22px;margin:14px 0;box-shadow:0 3px 12px rgba(46,125,82,.08)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0}
+  .kpi{background:var(--surface);border-radius:14px;padding:16px;text-align:center;box-shadow:0 3px 10px rgba(46,125,82,.08)}
+  .kpi b{display:block;font-size:1.7rem;color:var(--green)}
+  .kpi.bad b{color:var(--red)}.kpi.warn b{color:var(--amber)}
+  .kpi span{font-size:.8rem;color:var(--soft)}
+  .persona{border-left:4px solid var(--mint)}
+  .persona .meta{font-size:.82rem;color:var(--soft);margin-bottom:8px}
+  .persona h3{margin-top:0}
+  blockquote{border-left:3px solid var(--amber);padding:6px 14px;margin:10px 0;color:var(--soft);font-style:italic;background:#FBF6EC;border-radius:0 10px 10px 0}
+  .tablewrap{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;background:var(--surface);border-radius:14px;overflow:hidden;font-size:.88rem}
+  th,td{padding:10px 12px;text-align:center;border-bottom:1px solid #EDF2ED}
+  th{background:var(--green-dark);color:#fff;font-weight:600}
+  td:first-child,th:first-child{text-align:left;font-weight:600}
+  .s{font-weight:700}.s.ok{color:var(--ok)}.s.fric{color:var(--amber)}.s.fail{color:var(--red)}
+  .sev{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.05em;padding:3px 10px;border-radius:999px;color:#fff;vertical-align:middle;margin-right:8px}
+  .sev.p0{background:var(--red)}.sev.p1{background:var(--amber);color:var(--deep)}.sev.p2{background:var(--outline);color:var(--ink)}
+  .finding{margin:14px 0}
+  .finding .where{font-size:.8rem;color:var(--soft)}
+  .finding .fix{background:var(--mint-soft);border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.9rem}
+  .finding .fix b{color:var(--green-dark)}
+  .note{font-size:.82rem;color:var(--soft);background:#EDF2ED;border-radius:10px;padding:10px 14px;margin-top:24px}
+  .legend{font-size:.8rem;color:var(--soft);margin-top:8px}
+  footer{margin-top:48px;font-size:.8rem;color:var(--soft);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="tag">Usabilidade · usuários sintéticos</span>
+  <h1>Grovely v6 — 6 personas, 5 tarefas, 30 percursos</h1>
+  <p>Simulação estruturada sobre o build <code>2cf09da</code> (screenshots reais do emulador + leitura do código dos fluxos). Onboarding → paywall → home → sessão de foco → jardim → círculo/liga/perfil. Telas sem screenshot (círculo com dados, liga, perfil, recap) avaliadas por código.</p>
+</header>
+
+<h2>Sumário executivo</h2>
+<div class="kpis">
+  <div class="kpi"><b>21/30</b><span>tarefas com sucesso</span></div>
+  <div class="kpi warn"><b>6/30</b><span>com fricção relevante</span></div>
+  <div class="kpi bad"><b>3/30</b><span>falhas completas</span></div>
+  <div class="kpi bad"><b>3</b><span>achados P0</span></div>
+  <div class="kpi warn"><b>5</b><span>achados P1</span></div>
+</div>
+<div class="card">
+  <p><b>O core loop encanta e converte</b> — todas as personas entenderam "focar = plantar" em segundos, e o ritual de 30s do onboarding foi o momento mais elogiado do teste. <b>Mas o app quebra a própria promessa em três pontos:</b> (1) a árvore morre quando a tela apaga sozinha — a punição atinge exatamente quem obedeceu; (2) o onboarding + paywall reaparecem a cada abertura do app — no 2º dia, todas as personas reagiram com irritação; (3) o leitor de tela não alcança os controles centrais — a persona de acessibilidade não consegue nem escolher a duração. Nenhum dos três é problema de design visual: são lacunas de engenharia com impacto direto de usabilidade, já mapeadas no QA_REPORT_02 (C1, C2, I6).</p>
+</div>
+
+<h2>Personas</h2>
+<div class="grid">
+  <div class="card persona"><h3>Marina · 19</h3><div class="meta">Estudante de medicina · usuária de Forest há 2 anos · Android médio</div><p>Quer migrar se o social for melhor que o do Forest. Compara tudo com o que já conhece.</p></div>
+  <div class="card persona"><h3>Rafael · 32</h3><div class="meta">Dev sênior · cético de gamificação · dark mode sempre</div><p>Instala por curiosidade técnica. Desinstala ao primeiro dark pattern. Lê o paywall linha por linha.</p></div>
+  <div class="card persona"><h3>Denise · 45</h3><div class="meta">Mãe, professora · pouco fluente em apps · fonte do sistema em 120%</div><p>Baixou por indicação da filha. Precisa que cada tela tenha uma ação óbvia.</p></div>
+  <div class="card persona"><h3>Théo · 27</h3><div class="meta">Designer freelancer · TDAH diagnosticado · celular sempre na mão</div><p>Apps de foco são ferramenta de sobrevivência. Sensível a punição injusta — abandona no primeiro "roubo".</p></div>
+  <div class="card persona"><h3>Sônia · 38</h3><div class="meta">Analista · baixa visão · TalkBack + reduce-motion + fonte grande</div><p>Testa tudo com leitor de tela. Se o controle não anuncia, não existe.</p></div>
+  <div class="card persona"><h3>Gui · 16</h3><div class="meta">Ensino médio · hipercompetitivo · só entra se os amigos entrarem</div><p>Veio pela liga. Quer convidar a turma em menos de 1 minuto e compartilhar resultado.</p></div>
+</div>
+
+<h2>Matriz persona × tarefa</h2>
+<div class="tablewrap">
+<table>
+  <tr><th>Persona</th><th>Plantar 1ª árvore</th><th>Entender o wither</th><th>Convidar p/ círculo</th><th>Entender paywall/trial</th><th>Achar recap semanal</th></tr>
+  <tr><td>Marina</td><td class="s ok">✓</td><td class="s ok">✓ (veio do Forest)</td><td class="s fric">△ código ok, erro confuso</td><td class="s ok">✓</td><td class="s fric">△ achou por acaso</td></tr>
+  <tr><td>Rafael</td><td class="s ok">✓</td><td class="s ok">✓</td><td class="s ok">✓</td><td class="s fric">△ "price TBD" minou confiança</td><td class="s ok">✓</td></tr>
+  <tr><td>Denise</td><td class="s ok">✓ (ritual guiou)</td><td class="s fric">△ só entendeu ao perder árvore</td><td class="s fail">✗ desistiu no código</td><td class="s ok">✓ ("continuar grátis" claro)</td><td class="s fail">✗ nunca achou</td></tr>
+  <tr><td>Théo</td><td class="s ok">✓</td><td class="s fail">✗ tela apagou → árvore morta → raiva</td><td class="s ok">✓</td><td class="s ok">✓</td><td class="s ok">✓</td></tr>
+  <tr><td>Sônia</td><td class="s fail">✗ dial de duração invisível ao TalkBack</td><td class="s fric">△</td><td class="s fric">△ sheets ok, toggle não</td><td class="s fail">✗ toggle anual/mensal não anuncia</td><td class="s fric">△ ícone sem label lida "share"</td></tr>
+  <tr><td>Gui</td><td class="s ok">✓</td><td class="s ok">✓</td><td class="s ok">✓ (compartilhou código)</td><td class="s ok">✓</td><td class="s ok">✓ (procurava share)</td></tr>
+</table>
+</div>
+<p class="legend">✓ sucesso · △ sucesso com fricção · ✗ falha. Célula considera o percurso completo da tarefa, não um toque isolado.</p>
+<p class="legend">Contagem da matriz: 21 ✓ · 6 △ · <b>5 ✗</b> — as 3 “falhas completas” do sumário são as causas-raiz distintas (tela apagada, TalkBack, descoberta do recap/convite); Sônia falha 2× pela mesma causa.</p>
+
+<h2>Achados priorizados</h2>
+
+<div class="card finding"><span class="sev p0">P0</span><b>A árvore morre quando a tela apaga sozinha</b>
+  <div class="where">Sessão de foco · QA C1 · personas: Théo (falha), Marina (quase-falha)</div>
+  <blockquote>"Eu FIZ o que o app pediu. Larguei o celular. Voltei e a árvore tava morta. No Forest isso não acontece. Desinstalei." — Théo</blockquote>
+  <p>Sem wakelock, o screen-timeout do Android dispara <code>paused</code> e a carência de 5s mata a sessão. A punição cai sobre o comportamento que o produto quer ensinar. É o achado mais grave do teste: destrói a confiança na mecânica central na primeira sessão longa.</p>
+  <div class="fix"><b>Fix:</b> wakelock durante a sessão + carência de 30–60s + distinguir "tela apagou" de "usuário saiu". (QA C1)</div>
+</div>
+
+<div class="card finding"><span class="sev p0">P0</span><b>Onboarding + paywall reaparecem a cada abertura</b>
+  <div class="where">Boot · QA C2 · todas as personas no dia 2</div>
+  <blockquote>"De novo o tour? E de novo a tela de assinatura? No terceiro dia eu ia embora." — Denise</blockquote>
+  <p>Nada persiste "onboarding concluído"; a splash sempre manda para <code>/onboarding</code>. No 2º uso, todas as 6 personas passaram por welcome → notificações → modo → ritual → paywall de novo. Paywall diário não pedido lê como dark pattern (Rafael) e invalida qualquer métrica de retenção do beta.</p>
+  <div class="fix"><b>Fix:</b> flag <code>onboarding_done</code> em shared_preferences + redirect no router. (QA C2)</div>
+</div>
+
+<div class="card finding"><span class="sev p0">P0</span><b>Controles centrais invisíveis para TalkBack</b>
+  <div class="where">Duração (home) · toggle do paywall · cards solo/círculo · tiles do jardim · QA I6 · persona: Sônia (2 falhas)</div>
+  <blockquote>"O leitor pula direto do texto pro botão de plantar. Eu não sei nem que existe escolha de tempo." — Sônia</blockquote>
+  <p><code>GestureDetector</code> sem <code>Semantics</code> no DurationDial, no toggle anual/mensal e nos cards de modo. Sônia planta só com o default de 25 min e não consegue avaliar o plano anual. O timer da sessão também não anuncia progresso.</p>
+  <div class="fix"><b>Fix:</b> <code>Semantics(button, selected, label)</code> nos controles custom + <code>liveRegion</code> no countdown a cada minuto. (QA I6)</div>
+</div>
+
+<div class="card finding"><span class="sev p1">P1</span><b>Wither só é compreendido ao perder a primeira árvore</b>
+  <div class="where">Onboarding/1ª sessão · personas: Denise (fricção), Théo</div>
+  <p>O onboarding mostra o ritual de 30s (positivo), mas em nenhum momento diz a regra do jogo: <i>"sair do app murcha a árvore"</i>. Denise descobriu a regra da pior forma. Uma linha na tela de sessão pré-início (ou no ritual) resolve.</p>
+  <div class="fix"><b>Fix:</b> microcopy na home/ritual: "Sair do app antes do fim murcha a árvore — trocas rápidas têm carência."</div>
+</div>
+
+<div class="card finding"><span class="sev p1">P1</span><b>"Grátis por 21 dias, depois preço TBD" mina a confiança</b>
+  <div class="where">Paywall · persona: Rafael</div>
+  <blockquote>"TBD? Então vão decidir o preço depois que eu já estiver dentro. Não, obrigado." — Rafael</blockquote>
+  <div class="fix"><b>Fix:</b> até existir preço real (RevenueCat), omitir menção a preço: "21 dias grátis · cancele quando quiser, em dois toques".</div>
+</div>
+
+<div class="card finding"><span class="sev p1">P1</span><b>Erro de rede no convite vira "código inválido"</b>
+  <div class="where">Círculo · QA I5 · personas: Marina (fricção), Denise (falha)</div>
+  <p>Timeout/offline exibem a mesma mensagem de código errado. Denise conferiu o código 3 vezes, concluiu que "a filha mandou errado" e desistiu do social — exatamente o funil que diferencia o produto.</p>
+  <div class="fix"><b>Fix:</b> mapear erro de rede → mensagem própria + botão de tentar de novo. (QA I5)</div>
+</div>
+
+<div class="card finding"><span class="sev p1">P1</span><b>Recap semanal é indescobrível para quem não procura "share"</b>
+  <div class="where">Jardim (ícone share no AppBar) · personas: Denise (falha), Marina, Sônia</div>
+  <p>A única entrada é um ícone de compartilhar no canto do jardim. Gui (que queria compartilhar) achou; Denise nunca. O recap é o motor de aquisição orgânica — merece um card no jardim no fim da semana ("Seu recap está pronto 🌿") e/ou entrada no perfil.</p>
+  <div class="fix"><b>Fix:</b> card contextual de domingo no topo do jardim + row "Recap da semana" no perfil.</div>
+</div>
+
+<div class="card finding"><span class="sev p1">P1</span><b>"Já tenho uma conta" leva a um beco sem saída</b>
+  <div class="where">Onboarding p.1 → /auth placeholder · QA I7 · personas: Marina, Rafael</div>
+  <p>Tela placeholder sem ação e sem volta (rota top-level: back do sistema fecha o app). Enquanto auth real não existe, o link não deveria estar visível.</p>
+  <div class="fix"><b>Fix:</b> esconder o link no beta (ou <code>push</code> em vez de <code>go</code> quando auth existir).</div>
+</div>
+
+<div class="card finding"><span class="sev p2">P2</span><b>Miudezas que somam</b>
+  <div class="where">Várias telas</div>
+  <ul style="margin-left:18px">
+    <li>"bush · 1 min" minúsculo no header da sessão — capitalizar espécie.</li>
+    <li>Pills do jardim no dia 1 ("0h focused", "Best: 1 days") parecem debug — esconder até ter dado real; conferir plural EN de "1 days".</li>
+    <li>Sônia (reduce-motion): skeleton shimmer continua animando (QA M9).</li>
+    <li>Fonte 120% (Denise): paywall empurra CTA pra fora da dobra — testar com <code>textScaleFactor</code> 1.3.</li>
+    <li>Notificação diária dispara na hora em que foi ativada (23h50 → lembrete à meia-noite) — QA M11.</li>
+  </ul>
+</div>
+
+<h2>O que já funciona (não mexer)</h2>
+<div class="card">
+  <ul style="margin-left:18px">
+    <li><b>Ritual de 30s no onboarding</b> — 6/6 personas plantaram e entenderam o loop. Melhor momento do produto.</li>
+    <li><b>Sessão imersiva escura</b> — Rafael: "a tela de foco é a mais bonita da categoria". Théo: fundo que esquenta dá senso de progresso sem olhar o número.</li>
+    <li><b>Paywall honesto com tabela Free/Premium</b> — Marina e Gui entenderam em segundos o que é pago; "Continuar grátis" visível gerou confiança (manter!).</li>
+    <li><b>Slot "+" no jardim</b> — Denise usou como caminho de volta pra plantar. Navegação por convite, não por menu.</li>
+    <li><b>Ilustração v6</b> — todas as personas notaram as árvores ("parece Alto's Adventure", Théo). Identidade memorável.</li>
+  </ul>
+</div>
+
+<p class="note"><b>Método e limites:</b> usuários sintéticos são simulações de percurso baseadas em evidência (screenshots reais do build + leitura do código de cada fluxo), não pessoas reais. Servem para varrer fricções óbvias antes do beta — não substituem o teste com os ~20 testadores humanos do beta fechado. Recomendo repetir as 5 tarefas com 3–5 testadores reais na primeira semana do beta e comparar com esta matriz.</p>
+
+<footer>Grovely · relatório gerado em 2026-07-03 · par com <code>qa/QA_REPORT_02.md</code> e <code>plantio-coletivo-design/APP_REVIEW_V6.md</code></footer>
+</div>
+</body>
+</html>
