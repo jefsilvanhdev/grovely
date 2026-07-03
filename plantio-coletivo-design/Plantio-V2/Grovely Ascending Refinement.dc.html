@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesque:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; }
+  ::selection { background: #C8E6CF; }
+  .agrow { transform-box: fill-box; transform-origin: 50% 100%; animation: aGrow 4.8s cubic-bezier(.22,1,.36,1) infinite; }
+  .asun { transform-box: fill-box; transform-origin: 50% 50%; animation: aSun 4.8s ease-out infinite; }
+  @keyframes aGrow { 0% { transform: translateY(7px) scaleY(.08) scaleX(.55); opacity: 0; } 18% { opacity: 1; } 60% { transform: none; opacity: 1; } 100% { transform: none; opacity: 1; } }
+  @keyframes aSun { 0%, 40% { opacity: 0; transform: scale(0); } 60% { opacity: 1; transform: scale(1.16); } 72%, 100% { opacity: 1; transform: scale(1); } }
+</style>
+</helmet>
+
+<div style="font-family: 'Hanken Grotesque', system-ui, sans-serif; background: #F3F6F1; color: #18241D; min-height: 100vh; -webkit-font-smoothing: antialiased;">
+
+  <!-- ===== symbol definitions ===== -->
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
+
+    <!-- reference: current lollipop ascending -->
+    <symbol id="av-original" viewBox="0 0 100 100">
+      <path d="M14 81 Q50 75 86 81 Q50 85 14 81 Z" fill="currentColor" opacity="0.24"></path>
+      <rect x="23.5" y="56" width="5" height="25" rx="2.5" fill="currentColor"></rect><circle cx="26" cy="56" r="11" fill="currentColor"></circle>
+      <rect x="47" y="46" width="6" height="35" rx="3" fill="currentColor"></rect><circle cx="50" cy="45" r="13.5" fill="currentColor"></circle>
+      <rect x="70.75" y="36" width="6.5" height="45" rx="3.25" fill="currentColor"></rect><circle cx="74" cy="33" r="16" fill="currentColor"></circle>
+      <circle cx="90" cy="15" r="6" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <!-- A · leaf crowns (brand DNA) -->
+    <symbol id="av-leaves" viewBox="0 0 100 100">
+      <path d="M12 82 Q50 76 88 82 Q50 86 12 82 Z" fill="currentColor" opacity="0.22"></path>
+      <rect x="25" y="60" width="4" height="22" rx="2" fill="currentColor"></rect>
+      <rect x="47.75" y="54" width="4.5" height="28" rx="2.25" fill="currentColor"></rect>
+      <rect x="69.5" y="48" width="5" height="34" rx="2.5" fill="currentColor"></rect>
+      <path d="M27 42 C39 47.7 39 66.7 27 68 C15 66.7 15 47.7 27 42 Z" fill="currentColor"></path>
+      <path d="M50 32 C64 39 64 62.4 50 64 C36 62.4 36 39 50 32 Z" fill="currentColor"></path>
+      <path d="M72 22 C88 30.4 88 58.1 72 60 C56 58.1 56 30.4 72 22 Z" fill="currentColor"></path>
+      <circle cx="90" cy="13" r="5.5" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <!-- B · overlapping round crowns -->
+    <symbol id="av-circles" viewBox="0 0 100 100">
+      <path d="M12 82 Q50 76 88 82 Q50 86 12 82 Z" fill="currentColor" opacity="0.22"></path>
+      <rect x="24.75" y="56" width="4.5" height="26" rx="2.25" fill="currentColor"></rect>
+      <rect x="47.25" y="46" width="5.5" height="36" rx="2.75" fill="currentColor"></rect>
+      <rect x="69" y="34" width="6" height="48" rx="3" fill="currentColor"></rect>
+      <circle cx="27" cy="56" r="13" fill="currentColor"></circle>
+      <circle cx="50" cy="46" r="15" fill="currentColor"></circle>
+      <circle cx="72" cy="34" r="17" fill="currentColor"></circle>
+      <circle cx="90" cy="13" r="5.5" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <!-- C · conifer tiers -->
+    <symbol id="av-conifer" viewBox="0 0 100 100">
+      <path d="M12 82 Q50 76 88 82 Q50 86 12 82 Z" fill="currentColor" opacity="0.22"></path>
+      <rect x="25" y="62" width="4" height="20" rx="2" fill="currentColor"></rect>
+      <rect x="47.75" y="62" width="4.5" height="20" rx="2.25" fill="currentColor"></rect>
+      <rect x="69.75" y="62" width="5" height="20" rx="2.5" fill="currentColor"></rect>
+      <path d="M27 47 L16 64 L38 64 Z" fill="currentColor"></path>
+      <path d="M27 39 L19 53 L35 53 Z" fill="currentColor"></path>
+      <path d="M50 45 L35 65 L65 65 Z" fill="currentColor"></path>
+      <path d="M50 36 L39 52 L61 52 Z" fill="currentColor"></path>
+      <path d="M50 28 L42 42 L58 42 Z" fill="currentColor"></path>
+      <path d="M72 41 L55 65 L89 65 Z" fill="currentColor"></path>
+      <path d="M72 31 L60 50 L84 50 Z" fill="currentColor"></path>
+      <path d="M72 22 L63 38 L81 38 Z" fill="currentColor"></path>
+      <circle cx="91" cy="14" r="5.5" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <!-- D · layered foliage discs -->
+    <symbol id="av-layered" viewBox="0 0 100 100">
+      <path d="M12 82 Q50 76 88 82 Q50 86 12 82 Z" fill="currentColor" opacity="0.22"></path>
+      <rect x="25" y="58" width="4" height="24" rx="2" fill="currentColor"></rect>
+      <rect x="47.75" y="50" width="4.5" height="32" rx="2.25" fill="currentColor"></rect>
+      <rect x="69.5" y="40" width="5" height="42" rx="2.5" fill="currentColor"></rect>
+      <ellipse cx="27" cy="58" rx="12" ry="7" fill="currentColor"></ellipse>
+      <ellipse cx="27" cy="49" rx="9" ry="6" fill="currentColor"></ellipse>
+      <ellipse cx="50" cy="50" rx="14" ry="8" fill="currentColor"></ellipse>
+      <ellipse cx="50" cy="41" rx="11" ry="7" fill="currentColor"></ellipse>
+      <ellipse cx="50" cy="33" rx="7.5" ry="6" fill="currentColor"></ellipse>
+      <ellipse cx="72" cy="40" rx="16" ry="9" fill="currentColor"></ellipse>
+      <ellipse cx="72" cy="30" rx="12" ry="8" fill="currentColor"></ellipse>
+      <ellipse cx="72" cy="21" rx="8" ry="6" fill="currentColor"></ellipse>
+      <circle cx="91" cy="14" r="5.5" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <!-- E · cloud clusters (each crown irregular) -->
+    <symbol id="av-cloud" viewBox="0 0 100 100">
+      <path d="M12 82 Q50 76 88 82 Q50 86 12 82 Z" fill="currentColor" opacity="0.22"></path>
+      <rect x="25" y="58" width="4" height="24" rx="2" fill="currentColor"></rect>
+      <rect x="47.75" y="48" width="4.5" height="34" rx="2.25" fill="currentColor"></rect>
+      <rect x="69.5" y="38" width="5" height="44" rx="2.5" fill="currentColor"></rect>
+      <!-- tree 1 · leans left, low and round -->
+      <circle cx="20" cy="59" r="7.5" fill="currentColor"></circle><circle cx="31" cy="60" r="6" fill="currentColor"></circle><circle cx="25" cy="51" r="8.5" fill="currentColor"></circle><circle cx="34" cy="54" r="4.5" fill="currentColor"></circle>
+      <!-- tree 2 · taller right shoulder -->
+      <circle cx="42" cy="52" r="7.5" fill="currentColor"></circle><circle cx="58" cy="51" r="6.5" fill="currentColor"></circle><circle cx="49" cy="42" r="9.5" fill="currentColor"></circle><circle cx="59" cy="46" r="5" fill="currentColor"></circle><circle cx="40" cy="47" r="4.5" fill="currentColor"></circle><circle cx="52" cy="54" r="5.5" fill="currentColor"></circle>
+      <!-- tree 3 · tallest, fuller and lopsided -->
+      <circle cx="63" cy="43" r="9" fill="currentColor"></circle><circle cx="81" cy="42" r="7.5" fill="currentColor"></circle><circle cx="71" cy="30" r="10" fill="currentColor"></circle><circle cx="80" cy="33" r="5.5" fill="currentColor"></circle><circle cx="64" cy="34" r="5" fill="currentColor"></circle><circle cx="74" cy="45" r="6.5" fill="currentColor"></circle><circle cx="83" cy="47" r="4" fill="currentColor"></circle>
+      <circle cx="91" cy="13" r="5.5" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <!-- F · one continuous canopy -->
+    <symbol id="av-united" viewBox="0 0 100 100">
+      <path d="M12 82 Q50 76 88 82 Q50 86 12 82 Z" fill="currentColor" opacity="0.22"></path>
+      <rect x="25" y="55" width="4" height="27" rx="2" fill="currentColor"></rect>
+      <rect x="47.75" y="55" width="4.5" height="27" rx="2.25" fill="currentColor"></rect>
+      <rect x="69.5" y="55" width="5" height="27" rx="2.5" fill="currentColor"></rect>
+      <path d="M14 60 C14 51 20 49 27 49 C34 49 35 53 39 53 C43 53 44 41 50 40 C56 40 57 46 61 45 C66 44 66 28 72 28 C80 28 86 31 86 46 L86 59 C60 63 40 63 14 60 Z" fill="currentColor"></path>
+      <circle cx="91" cy="14" r="5.5" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+  </defs></svg>
+
+  <!-- ===== top bar ===== -->
+  <div style="display: flex; align-items: center; gap: 12px; padding: 14px 26px; border-bottom: 1px solid #DCE6DD; background: rgba(243,246,241,.85); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 30;">
+    <svg width="24" height="24" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#av-cloud"></use></svg>
+    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: -.01em;">Grovely</span>
+    <span style="font-size: 13px; color: #6E7E74; font-weight: 600;">· Refino do Bosque ascendente</span>
+    <div style="margin-left: auto; display: flex; gap: 8px;">
+      <a href="Grovely Icon Validation.dc.html" style="font-size: 13px; font-weight: 600; color: #2E7D52; text-decoration: none; padding: 7px 13px; border-radius: 9px; border: 1px solid #C8E0CF;" style-hover="background:#E7F1EA">← Validação</a>
+      <a href="Grovely Symbol Study.dc.html" style="font-size: 13px; font-weight: 600; color: #2E7D52; text-decoration: none; padding: 7px 13px; border-radius: 9px; border: 1px solid #C8E0CF;" style-hover="background:#E7F1EA">Symbol study</a>
+    </div>
+  </div>
+
+  <!-- ===== header ===== -->
+  <header style="max-width: 980px; margin: 0 auto; padding: 60px 26px 14px;">
+    <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #2E7D52;">Ajuste fino</span>
+    <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(34px, 6vw, 60px); letter-spacing: -.03em; line-height: 1; margin: 8px 0 0; color: #1E5238;">Fechando os vãos do bosque</h1>
+    <p style="font-size: 18px; line-height: 1.6; max-width: 640px; color: #3A4D42; margin: 20px 0 0; text-wrap: pretty;">A direção está escolhida. O problema apontado: as copas redondas viram "pirulitos" com <strong style="color:#18241D;">buracos entre as árvores</strong> e pouca cara de árvore. Aqui estão seis formas de copa que <strong style="color:#18241D;">se tocam e leem como folhagem</strong> — mantendo as alturas crescentes e o solo compartilhado.</p>
+  </header>
+
+  <!-- ===== before / after ===== -->
+  <section style="max-width: 980px; margin: 0 auto; padding: 26px 26px 8px;">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+      <div style="background:#fff; border:1px dashed #C9B3A0; border-radius:20px; padding:24px; text-align:center;">
+        <div style="font-size:11.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#B26A2E; margin-bottom:12px;">Antes · vãos visíveis</div>
+        <svg width="150" height="150" viewBox="0 0 100 100" style="color:#9AA69E;--sun:#D9B98A"><use href="#av-original"></use></svg>
+        <div style="font-size:13px; color:#8A9890; margin-top:8px;">Copas isoladas, "pirulito"</div>
+      </div>
+      <div style="background:#fff; border:1.5px solid #2E7D52; border-radius:20px; padding:24px; text-align:center; box-shadow:0 16px 36px rgba(46,125,82,.12);">
+        <div style="font-size:11.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#2E7D52; margin-bottom:12px;">Depois · copas integradas</div>
+        <svg width="150" height="150" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#av-cloud"></use></svg>
+        <div style="font-size:13px; color:#3A4D42; margin-top:8px; font-weight:600;">Copas em nuvem, cada uma irregular</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== hero recommended (animated) ===== -->
+  <section style="max-width: 980px; margin: 0 auto; padding: 28px 26px 8px;">
+    <div style="display: grid; grid-template-columns: minmax(240px, 1fr) 1.05fr; background: #fff; border: 1.5px solid #2E7D52; border-radius: 26px; overflow: hidden; box-shadow: 0 22px 50px rgba(46,125,82,.14);">
+      <div style="background: radial-gradient(120% 110% at 50% 120%, #DCEFE0 0%, #EFF6EF 70%); display: flex; align-items: center; justify-content: center; padding: 30px; position: relative;">
+        <div style="position: absolute; top: 16px; left: 16px; font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: #fff; background: #2E7D52; padding: 4px 10px; border-radius: 999px;">Recomendado</div>
+        <svg width="230" height="230" viewBox="0 0 100 100" style="max-width: 78%; color: #2E7D52;">
+          <path d="M12 82 Q50 76 88 82 Q50 86 12 82 Z" fill="currentColor" opacity="0.22"></path>
+          <g class="agrow" style="animation-delay: 0s"><rect x="25" y="58" width="4" height="24" rx="2" fill="currentColor"></rect><circle cx="20" cy="59" r="7.5" fill="currentColor"></circle><circle cx="31" cy="60" r="6" fill="currentColor"></circle><circle cx="25" cy="51" r="8.5" fill="currentColor"></circle><circle cx="34" cy="54" r="4.5" fill="currentColor"></circle></g>
+          <g class="agrow" style="animation-delay: .26s"><rect x="47.75" y="48" width="4.5" height="34" rx="2.25" fill="currentColor"></rect><circle cx="42" cy="52" r="7.5" fill="currentColor"></circle><circle cx="58" cy="51" r="6.5" fill="currentColor"></circle><circle cx="49" cy="42" r="9.5" fill="currentColor"></circle><circle cx="59" cy="46" r="5" fill="currentColor"></circle><circle cx="40" cy="47" r="4.5" fill="currentColor"></circle><circle cx="52" cy="54" r="5.5" fill="currentColor"></circle></g>
+          <g class="agrow" style="animation-delay: .52s"><rect x="69.5" y="38" width="5" height="44" rx="2.5" fill="currentColor"></rect><circle cx="63" cy="43" r="9" fill="currentColor"></circle><circle cx="81" cy="42" r="7.5" fill="currentColor"></circle><circle cx="71" cy="30" r="10" fill="currentColor"></circle><circle cx="80" cy="33" r="5.5" fill="currentColor"></circle><circle cx="64" cy="34" r="5" fill="currentColor"></circle><circle cx="74" cy="45" r="6.5" fill="currentColor"></circle><circle cx="83" cy="47" r="4" fill="currentColor"></circle></g>
+          <circle class="asun" cx="91" cy="13" r="5.5" fill="#E0A458"></circle>
+        </svg>
+      </div>
+      <div style="padding: 32px 34px; display: flex; flex-direction: column; justify-content: center;">
+        <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 27px; letter-spacing: -.02em; color: #1E5238;">E · Copas em nuvem</div>
+        <p style="font-size: 15.5px; line-height: 1.62; color: #3A4D42; margin: 12px 0 18px;">Cada árvore é uma <strong style="color:#18241D;">folhagem feita de bolhas sobrepostas</strong> — e cada copa tem o seu próprio recorte: a primeira é baixa e arredondada, a segunda puxa para o ombro direito, a terceira é mais cheia e torta. Essa <strong style="color:#18241D;">irregularidade proposital</strong> faz o bosque parecer vivo e natural, sem vão nenhum entre as árvores.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 7px;">
+          <span style="font-size: 12px; font-weight: 700; color: #2E7D52; background: #E7F1EA; padding: 5px 11px; border-radius: 999px;">Orgânico</span>
+          <span style="font-size: 12px; font-weight: 700; color: #2E7D52; background: #E7F1EA; padding: 5px 11px; border-radius: 999px;">Cada copa única</span>
+          <span style="font-size: 12px; font-weight: 700; color: #2E7D52; background: #E7F1EA; padding: 5px 11px; border-radius: 999px;">Sem vãos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== all six variations ===== -->
+  <section style="max-width: 980px; margin: 0 auto; padding: 32px 26px 8px;">
+    <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890; margin: 8px 0 16px;">Seis formatos de copa</div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+
+      <div style="background:#fff; border:1px solid #E2ECE2; border-radius:20px; padding:22px;">
+        <div style="display:flex; align-items:center; gap:18px;">
+          <svg width="84" height="84" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#av-leaves"></use></svg>
+          <div style="min-width:0;">
+            <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:17px; color:#1E5238;">A · Folhas ascendentes</div>
+            <div style="font-size:13.5px; color:#6E7E74; line-height:1.5; margin-top:4px;">Folhas pontudas sobrepostas. A silhueta da marca, agora em três alturas.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff; border:1px solid #E2ECE2; border-radius:20px; padding:22px;">
+        <div style="display:flex; align-items:center; gap:18px;">
+          <svg width="84" height="84" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#av-circles"></use></svg>
+          <div style="min-width:0;">
+            <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:17px; color:#1E5238;">B · Copas que se tocam</div>
+            <div style="font-size:13.5px; color:#6E7E74; line-height:1.5; margin-top:4px;">As mesmas redondas, mas maiores e sobrepostas — viram uma folhagem só.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff; border:1px solid #E2ECE2; border-radius:20px; padding:22px;">
+        <div style="display:flex; align-items:center; gap:18px;">
+          <svg width="84" height="84" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#av-conifer"></use></svg>
+          <div style="min-width:0;">
+            <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:17px; color:#1E5238;">C · Coníferas</div>
+            <div style="font-size:13.5px; color:#6E7E74; line-height:1.5; margin-top:4px;">Camadas triangulares de pinheiro. A leitura mais "árvore", porém menos macia.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff; border:1px solid #E2ECE2; border-radius:20px; padding:22px;">
+        <div style="display:flex; align-items:center; gap:18px;">
+          <svg width="84" height="84" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#av-layered"></use></svg>
+          <div style="min-width:0;">
+            <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:17px; color:#1E5238;">D · Folhagem em camadas</div>
+            <div style="font-size:13.5px; color:#6E7E74; line-height:1.5; margin-top:4px;">Discos empilhados, tipo cipreste. Rica, mas com muitos elementos no pequeno.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff; border:1.5px solid #2E7D52; border-radius:20px; padding:22px; box-shadow:0 10px 26px rgba(46,125,82,.1);">
+        <div style="display:flex; align-items:center; gap:18px;">
+          <svg width="84" height="84" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#av-cloud"></use></svg>
+          <div style="min-width:0;">
+            <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:17px; color:#1E5238;">E · Copas em nuvem <span style="font-size:10.5px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:#fff; background:#2E7D52; padding:2px 7px; border-radius:999px;">Rec</span></div>
+            <div style="font-size:13.5px; color:#6E7E74; line-height:1.5; margin-top:4px;">Bolhas sobrepostas, cada copa com recorte próprio. Orgânica e sem vãos.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff; border:1px solid #E2ECE2; border-radius:20px; padding:22px;">
+        <div style="display:flex; align-items:center; gap:18px;">
+          <svg width="84" height="84" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#av-united"></use></svg>
+          <div style="min-width:0;">
+            <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:17px; color:#1E5238;">F · Copa unida</div>
+            <div style="font-size:13.5px; color:#6E7E74; line-height:1.5; margin-top:4px;">Uma folhagem contínua sobre três troncos. Zero vãos, mas quase vira moita.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== small-size proof ===== -->
+  <section style="max-width: 980px; margin: 0 auto; padding: 26px 26px 20px;">
+    <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890; margin: 14px 0 16px;">Como cada uma se segura pequena</div>
+    <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 28px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px;">
+
+      <div style="text-align:center;"><div style="width:70px; height:70px; margin:0 auto; border-radius:18px; background:#2E7D52; display:flex; align-items:center; justify-content:center;"><svg width="46" height="46" viewBox="0 0 100 100" style="color:#fff;--sun:#F0C079"><use href="#av-leaves"></use></svg></div><svg width="24" height="24" viewBox="0 0 100 100" style="color:#18241D;--sun:#18241D; margin-top:12px;"><use href="#av-leaves"></use></svg><div style="font-size:11px; color:#8A9890; margin-top:6px; font-weight:600;">A · 24px</div></div>
+
+      <div style="text-align:center;"><div style="width:70px; height:70px; margin:0 auto; border-radius:18px; background:#2E7D52; display:flex; align-items:center; justify-content:center;"><svg width="46" height="46" viewBox="0 0 100 100" style="color:#fff;--sun:#F0C079"><use href="#av-circles"></use></svg></div><svg width="24" height="24" viewBox="0 0 100 100" style="color:#18241D;--sun:#18241D; margin-top:12px;"><use href="#av-circles"></use></svg><div style="font-size:11px; color:#8A9890; margin-top:6px; font-weight:600;">B · 24px</div></div>
+
+      <div style="text-align:center;"><div style="width:70px; height:70px; margin:0 auto; border-radius:18px; background:#2E7D52; display:flex; align-items:center; justify-content:center;"><svg width="46" height="46" viewBox="0 0 100 100" style="color:#fff;--sun:#F0C079"><use href="#av-conifer"></use></svg></div><svg width="24" height="24" viewBox="0 0 100 100" style="color:#18241D;--sun:#18241D; margin-top:12px;"><use href="#av-conifer"></use></svg><div style="font-size:11px; color:#8A9890; margin-top:6px; font-weight:600;">C · 24px</div></div>
+
+      <div style="text-align:center;"><div style="width:70px; height:70px; margin:0 auto; border-radius:18px; background:#2E7D52; display:flex; align-items:center; justify-content:center;"><svg width="46" height="46" viewBox="0 0 100 100" style="color:#fff;--sun:#F0C079"><use href="#av-layered"></use></svg></div><svg width="24" height="24" viewBox="0 0 100 100" style="color:#18241D;--sun:#18241D; margin-top:12px;"><use href="#av-layered"></use></svg><div style="font-size:11px; color:#8A9890; margin-top:6px; font-weight:600;">D · 24px</div></div>
+
+      <div style="text-align:center;"><div style="width:70px; height:70px; margin:0 auto; border-radius:18px; background:#2E7D52; display:flex; align-items:center; justify-content:center;"><svg width="46" height="46" viewBox="0 0 100 100" style="color:#fff;--sun:#F0C079"><use href="#av-cloud"></use></svg></div><svg width="24" height="24" viewBox="0 0 100 100" style="color:#18241D;--sun:#18241D; margin-top:12px;"><use href="#av-cloud"></use></svg><div style="font-size:11px; color:#8A9890; margin-top:6px; font-weight:600;">E · 24px</div></div>
+
+      <div style="text-align:center;"><div style="width:70px; height:70px; margin:0 auto; border-radius:18px; background:#2E7D52; display:flex; align-items:center; justify-content:center;"><svg width="46" height="46" viewBox="0 0 100 100" style="color:#fff;--sun:#F0C079"><use href="#av-united"></use></svg></div><svg width="24" height="24" viewBox="0 0 100 100" style="color:#18241D;--sun:#18241D; margin-top:12px;"><use href="#av-united"></use></svg><div style="font-size:11px; color:#8A9890; margin-top:6px; font-weight:600;">F · 24px</div></div>
+
+    </div>
+    <p style="font-size: 13px; line-height: 1.5; color: #6E7E74; margin: 16px 0 0; max-width: 660px;">Diga qual formato você prefere (ou peça um ajuste — copas mais cheias, troncos mais grossos, alturas diferentes) e eu travo a geometria, monto o lockup e o conjunto de app-icons, e troco a marca no brand book.</p>
+  </section>
+
+  <footer style="margin-top: 30px; border-top: 1px solid #DCE6DD; background: #EEF4EF;">
+    <div style="max-width: 980px; margin: 0 auto; padding: 30px 26px; display: flex; align-items: center; gap: 12px;">
+      <svg width="26" height="26" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#av-cloud"></use></svg>
+      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: #1E5238;">Grovely</span>
+      <span style="margin-left: auto; font-size: 13px; color: #6E7E74;">Refino do Bosque ascendente · formatos de copa</span>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+</body>
+</html>

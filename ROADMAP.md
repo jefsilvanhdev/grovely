@@ -39,6 +39,16 @@ Legenda: ✅ feito · 🟡 parcial · ❌ não começou · 🔒 bloqueado por a�
 - ❌ QA final + build release assinado (keystore Grovely)
 - ❌ Publicação Play Store
 
+## Rebrand v6 ✅ (2026-07-02)
+Fonte: `plantio-coletivo-design/Plantio-V2/brand/` (brand book v6, tokens, Illustration 2.0).
+- 40/44 árvores atualizadas (copa com profundidade + highlight + acento quente por espécie)
+- Símbolo v6 (bosque orgânico + sol) em assets; launcher icon e splash nativa regenerados
+- `GrovelyMark` refeito na geometria v6 (cores do foreground da splash)
+- **Corrida da splash corrigida**: `FlutterNativeSplash.preserve()/remove()` + navegação via `onSettled` (antes a animação rodava escondida sob a nativa)
+- Sessão de foco = ambiente imersivo escuro (header FOCO PROFUNDO, anel mint, timer branco, stop ghost)
+- Paywall escuro com a marca no topo · Garden com slot "+" · card do bosque do círculo com gradiente + overline
+- VERIFICADO no emulador ponta a ponta (splash, onboarding, foco, completed, garden, paywall)
+
 ## Polish UI — 2º passe ✅ (essencial concluído)
 Lista do designer em `plantio-coletivo-design/APP_REVIEW.md`. Feito: motion P0 (sweep/árvore/confete/haptics), P1 (stagger/press/elevation), copy humanizado, GrovelyEmpty unificado, árvore maior na home/timer + bg neutro, **pódio da liga (ouro/prata/bronze)**, **jardim coletivo visual (mini-árvores)**, **transição slide do onboarding**, **shimmer no skeleton** (extraído `GrovelySkeletonBox`) + **`GrovelyError` unificado**, **árvore da home corrigida** (colapsava no AnimatedSwitcher), **círculo: copy de meta batida**. Pulados (baixo ROI): Hero da árvore entre telas, count-up de stats (quebra plural i18n).
 

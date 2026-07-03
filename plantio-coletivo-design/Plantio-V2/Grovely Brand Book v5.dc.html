@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesque:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; }
+  ::selection { background: #C8E6CF; }
+  @keyframes gv-float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
+  @keyframes gv-pulse { 0%,100% { transform: scale(1); opacity:1 } 50% { transform: scale(1.6); opacity:.3 } }
+</style>
+</helmet>
+
+<div style="font-family: 'Hanken Grotesque', system-ui, sans-serif; background: #F3F6F1; color: #18241D; min-height: 100vh; -webkit-font-smoothing: antialiased;">
+  <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#1E5238"></rect><g transform="translate(50 52) scale(0.42) translate(-50 -47)"><circle cx="87" cy="16" r="5.5" fill="#E0A458"></circle><rect x="25" y="62" width="4" height="18" rx="2" fill="#fff"></rect><rect x="47.75" y="62" width="4.5" height="18" rx="2.25" fill="#fff"></rect><rect x="69.75" y="62" width="5" height="18" rx="2.5" fill="#fff"></rect><path d="M27 47 L16 64 L38 64 Z" fill="#fff"></path><path d="M27 39 L19 53 L35 53 Z" fill="#fff"></path><path d="M50 45 L35 65 L65 65 Z" fill="#fff"></path><path d="M50 36 L39 52 L61 52 Z" fill="#fff"></path><path d="M50 28 L42 42 L58 42 Z" fill="#fff"></path><path d="M72 41 L55 65 L89 65 Z" fill="#fff"></path><path d="M72 31 L60 50 L84 50 Z" fill="#fff"></path><path d="M72 22 L63 38 L81 38 Z" fill="#fff"></path></g></svg></template>
+
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
+    <symbol id="gv-mark" viewBox="0 0 100 100">
+      <circle cx="87" cy="16" r="5.5" fill="var(--gv-sun, #E0A458)"></circle>
+      <rect x="25" y="62" width="4" height="18" rx="2" fill="currentColor"></rect>
+      <rect x="47.75" y="62" width="4.5" height="18" rx="2.25" fill="currentColor"></rect>
+      <rect x="69.75" y="62" width="5" height="18" rx="2.5" fill="currentColor"></rect>
+      <path d="M27 47 L16 64 L38 64 Z" fill="currentColor"></path>
+      <path d="M27 39 L19 53 L35 53 Z" fill="currentColor"></path>
+      <path d="M50 45 L35 65 L65 65 Z" fill="currentColor"></path>
+      <path d="M50 36 L39 52 L61 52 Z" fill="currentColor"></path>
+      <path d="M50 28 L42 42 L58 42 Z" fill="currentColor"></path>
+      <path d="M72 41 L55 65 L89 65 Z" fill="currentColor"></path>
+      <path d="M72 31 L60 50 L84 50 Z" fill="currentColor"></path>
+      <path d="M72 22 L63 38 L81 38 Z" fill="currentColor"></path>
+    </symbol>
+  </defs></svg>
+
+  <!-- ===== NAV ===== -->
+  <nav style="position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 18px; padding: 13px 26px; background: rgba(243,246,241,.85); backdrop-filter: blur(14px); border-bottom: 1px solid #DCE6DD;">
+    <div style="display: flex; align-items: center; gap: 9px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -.01em;">
+      <svg width="24" height="24" viewBox="0 0 100 100" aria-hidden="true" style="color:#2E7D52;--gv-sun:#E0A458"><use href="#gv-mark"></use></svg>
+      <span>Grovely</span>
+      <span style="font-size: 11px; font-weight: 700; letter-spacing: .1em; color: #8A9890; background: #E7EEE7; border-radius: 999px; padding: 3px 9px;">V5</span>
+    </div>
+    <div style="margin-left: auto; display: flex; gap: 2px; flex-wrap: wrap; font-size: 13px; font-weight: 600;">
+      <a href="#essence" style="color: #4A5A50; text-decoration: none; padding: 7px 10px; border-radius: 9px;" style-hover="color:#18241D; background:#E7EEE7">Essence</a>
+      <a href="#product" style="color: #4A5A50; text-decoration: none; padding: 7px 10px; border-radius: 9px;" style-hover="color:#18241D; background:#E7EEE7">Product</a>
+      <a href="#logo" style="color: #4A5A50; text-decoration: none; padding: 7px 10px; border-radius: 9px;" style-hover="color:#18241D; background:#E7EEE7">Logo</a>
+      <a href="#icon" style="color: #4A5A50; text-decoration: none; padding: 7px 10px; border-radius: 9px;" style-hover="color:#18241D; background:#E7EEE7">Icon</a>
+      <a href="#color" style="color: #4A5A50; text-decoration: none; padding: 7px 10px; border-radius: 9px;" style-hover="color:#18241D; background:#E7EEE7">Color</a>
+      <a href="#type" style="color: #4A5A50; text-decoration: none; padding: 7px 10px; border-radius: 9px;" style-hover="color:#18241D; background:#E7EEE7">Type</a>
+      <a href="#plants" style="color: #4A5A50; text-decoration: none; padding: 7px 10px; border-radius: 9px;" style-hover="color:#18241D; background:#E7EEE7">Plants</a>
+      <a href="#voice" style="color: #4A5A50; text-decoration: none; padding: 7px 10px; border-radius: 9px;" style-hover="color:#18241D; background:#E7EEE7">Voice</a>
+      <a href="#screens" style="color: #4A5A50; text-decoration: none; padding: 7px 10px; border-radius: 9px;" style-hover="color:#18241D; background:#E7EEE7">Screens</a>
+      <a href="#handoff" style="color: #4A5A50; text-decoration: none; padding: 7px 10px; border-radius: 9px;" style-hover="color:#18241D; background:#E7EEE7">Handoff</a>
+    </div>
+  </nav>
+
+  <!-- ===== COVER ===== -->
+  <header style="position: relative; overflow: hidden; background: linear-gradient(175deg, #14361F 0%, #1E5238 62%, #2E7D52 130%); color: #F3F6F1; padding: 110px 26px 0; text-align: center;">
+    <div style="position: relative; max-width: 960px; margin: 0 auto;">
+      <div style="display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; border-radius: 999px; border: 1px solid rgba(243,246,241,.28); font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #C8E6CF;">Brand Book · v5 · July 2026</div>
+
+      <div style="display: flex; justify-content: center; margin: 40px 0 4px; animation: gv-float 7s ease-in-out infinite;">
+        <svg width="140" height="140" viewBox="0 0 100 100" aria-hidden="true" style="color:#F3F6F1;--gv-sun:#E0A458"><use href="#gv-mark"></use></svg>
+      </div>
+
+      <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(64px, 12vw, 148px); line-height: .92; letter-spacing: -.035em; margin: 8px 0 0; color: #FFFFFF;">Grovely</h1>
+      <p style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 500; font-size: clamp(19px, 2.8vw, 27px); line-height: 1.4; max-width: 640px; margin: 24px auto 0; color: #C8E6CF; text-wrap: balance;">{{ tagline }}</p>
+
+      <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 32px 0 72px;">
+        <span style="padding: 9px 17px; border-radius: 999px; background: #E0A458; color: #2A1C08; font-weight: 700; font-size: 14px;">Focus, together</span>
+        <span style="padding: 9px 17px; border-radius: 999px; border: 1px solid rgba(243,246,241,.3); color: #E7F0E9; font-weight: 600; font-size: 14px;">Calm · Encouraging · Alive</span>
+      </div>
+    </div>
+
+    <!-- shared-grove skyline -->
+    <div style="position: relative; display: flex; align-items: flex-end; justify-content: center; gap: clamp(6px, 2vw, 26px); height: 150px; opacity: .95;">
+      <img src="brand/trees/round-bush-young.svg" alt="" style="height: 62px;">
+      <img src="brand/trees/birch-mature.svg" alt="" style="height: 104px;">
+      <img src="brand/trees/pine-elder.svg" alt="" style="height: 138px;">
+      <img src="brand/trees/oak-mature.svg" alt="" style="height: 120px;">
+      <img src="brand/trees/cherry-blossom-mature.svg" alt="" style="height: 98px;">
+      <img src="brand/trees/willow-mature.svg" alt="" style="height: 112px;">
+      <img src="brand/trees/round-bush-sapling.svg" alt="" style="height: 46px;">
+    </div>
+    <div style="height: 14px; background: #F3F6F1; border-radius: 22px 22px 0 0; max-width: 1240px; margin: 0 auto;"></div>
+  </header>
+
+  <!-- ===== 01 ESSENCE ===== -->
+  <section id="essence" style="max-width: 1100px; margin: 0 auto; padding: 90px 26px 44px;">
+    <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #2E7D52;">01 · Essence</span>
+    <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(32px, 5vw, 50px); letter-spacing: -.02em; line-height: 1.04; margin: 4px 0 16px;">Why Grovely exists</h2>
+    <p style="font-size: 17.5px; line-height: 1.6; max-width: 660px; color: #3A4D42; margin: 0 0 36px;">Focus apps treat attention as a solo discipline. Grovely treats it as something you <strong style="color:#18241D;">cultivate with people you like</strong>. One tree grows while you stay present; a whole grove grows when your circle shows up together.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px;">
+      <div style="background: #1E5238; color: #E7F0E9; border-radius: 22px; padding: 30px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #9FD3B4; margin-bottom: 12px;">Purpose</div>
+        <p style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 500; font-size: 24px; line-height: 1.32; margin: 0; letter-spacing: -.01em;">Make deep focus feel less like discipline and more like tending a garden — with friends.</p>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #DCE6DD; border-radius: 22px; padding: 30px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #8A9890; margin-bottom: 12px;">Positioning</div>
+        <p style="font-size: 16px; line-height: 1.6; color: #3A4D42; margin: 0;">For students and knowledge workers (18–35) who focus better <em>together</em>. Where solo timers reward willpower, Grovely rewards <strong style="color:#2E7D52;">showing up for your circle</strong> — 6 to 12 people, one shared grove, a friendly weekly league.</p>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #DCE6DD; border-radius: 22px; padding: 30px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #8A9890; margin-bottom: 14px;">Personality</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <span style="padding: 8px 14px; border-radius: 999px; background: #C8E6CF; color: #14361F; font-weight: 700; font-size: 14px;">Calm</span>
+          <span style="padding: 8px 14px; border-radius: 999px; background: #C8E6CF; color: #14361F; font-weight: 700; font-size: 14px;">Encouraging</span>
+          <span style="padding: 8px 14px; border-radius: 999px; background: #C8E6CF; color: #14361F; font-weight: 700; font-size: 14px;">Alive</span>
+          <span style="padding: 8px 14px; border-radius: 999px; background: #FBEBD3; color: #2A1C08; font-weight: 700; font-size: 14px;">Together</span>
+        </div>
+        <p style="font-size: 14.5px; line-height: 1.6; color: #3A4D42; margin: 16px 0 0;">Nature with lightness. Never clinical, never a productivity drill sergeant.</p>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #DCE6DD; border-radius: 22px; padding: 30px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #8A9890; margin-bottom: 14px;">What we are not</div>
+        <div style="display: grid; gap: 10px; font-size: 14.5px; line-height: 1.55; color: #3A4D42;">
+          <div style="display: flex; gap: 10px;"><span style="color: #B4543E; font-weight: 800;">✕</span><span><strong style="color:#18241D;">Not Forest.</strong> Solo grind is the category default; our heart is the shared grove.</span></div>
+          <div style="display: flex; gap: 10px;"><span style="color: #B4543E; font-weight: 800;">✕</span><span><strong style="color:#18241D;">No guilt mechanics.</strong> A failed session withers one tree — never the garden, never your streak with friends.</span></div>
+          <div style="display: flex; gap: 10px;"><span style="color: #B4543E; font-weight: 800;">✕</span><span><strong style="color:#18241D;">No dark patterns.</strong> No shame notifications, no aggressive gamification, no corporate speak.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 02 PRODUCT ===== -->
+  <section id="product" style="max-width: 1100px; margin: 0 auto; padding: 64px 26px 44px;">
+    <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #2E7D52;">02 · The proposal</span>
+    <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(32px, 5vw, 50px); letter-spacing: -.02em; line-height: 1.04; margin: 4px 0 16px;">Plant. Grow. Grove.</h2>
+    <p style="font-size: 17.5px; line-height: 1.6; max-width: 640px; color: #3A4D42; margin: 0 0 36px;">Three verbs carry the whole product. Every screen, notification and marketing line should map to one of them.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-bottom: 18px;">
+      <div style="background: #FFFFFF; border: 1px solid #DCE6DD; border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -.01em; color: #1E5238;">1 · Plant</span>
+          <img src="brand/trees/oak-sprout.svg" alt="" style="height: 52px;">
+        </div>
+        <p style="font-size: 15px; line-height: 1.6; color: #3A4D42; margin: 0;">Pick a species, set the timer, put the phone down. Every session begins as a seed with a promise attached.</p>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #DCE6DD; border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -.01em; color: #1E5238;">2 · Grow</span>
+          <img src="brand/trees/oak-young.svg" alt="" style="height: 58px;">
+        </div>
+        <p style="font-size: 15px; line-height: 1.6; color: #3A4D42; margin: 0;">Stay present and the tree grows in real time. Leave early and it gently withers — a soft consequence, never a punishment. Finished trees join your personal garden.</p>
+      </div>
+      <div style="background: #1E5238; color: #E7F0E9; border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -.01em; color: #FFFFFF;">3 · Grove</span>
+          <img src="brand/trees/oak-mature.svg" alt="" style="height: 64px;">
+        </div>
+        <p style="font-size: 15px; line-height: 1.6; color: #C8E6CF; margin: 0;">The differentiator. Focus live with your circle of 6–12 and a <strong style="color:#fff;">shared grove</strong> blooms — one tree per person, growing side by side. A weekly league keeps it warm, not cutthroat.</p>
+      </div>
+    </div>
+
+    <div style="background: #ECF1EB; border: 1px solid #DCE6DD; border-radius: 22px; padding: 26px 28px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+      <div style="position: relative; width: 14px; height: 14px; flex-shrink: 0;">
+        <span style="position: absolute; inset: 0; border-radius: 999px; background: #43A86B;"></span>
+        <span style="position: absolute; inset: 0; border-radius: 999px; background: #43A86B; animation: gv-pulse 2.4s ease-in-out infinite;"></span>
+      </div>
+      <p style="flex: 1; min-width: 260px; font-size: 15.5px; line-height: 1.6; color: #3A4D42; margin: 0;"><strong style="color:#18241D;">"8 of 12 focusing now"</strong> is the most important sentence in the product. Presence — seeing your people focus in real time — is what no solo timer can copy. Design for that feeling first.</p>
+    </div>
+  </section>
+
+  <!-- ===== 03 LOGO ===== -->
+  <section id="logo" style="max-width: 1100px; margin: 0 auto; padding: 64px 26px 44px;">
+    <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #2E7D52;">03 · Logo</span>
+    <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(32px, 5vw, 50px); letter-spacing: -.02em; line-height: 1.04; margin: 4px 0 16px;">A little grove under the sun</h2>
+    <p style="font-size: 17px; line-height: 1.6; max-width: 660px; color: #3A4D42; margin: 0 0 32px;">Three pines of different heights sharing one ground — people at different stages, growing together — with a small sun keeping watch. The wordmark is Bricolage Grotesque 700, tightened.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px;">
+      <div style="grid-column: 1 / -1; position: relative; background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 56px 30px; display: flex; align-items: center; justify-content: center;">
+        <div style="position: relative; display: flex; align-items: center;">
+          <sc-if value="{{ showGuides }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; inset: -34px -34px -34px -34px; border: 1.5px dashed #E0A458; border-radius: 8px; pointer-events: none;"></div>
+            <div style="position: absolute; top: -30px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 700; letter-spacing: .1em; color: #E0A458; background: #fff; padding: 0 8px;">CLEAR SPACE = SYMBOL HEIGHT / 2</div>
+          </sc-if>
+          <svg width="84" height="84" viewBox="0 0 100 100" aria-hidden="true" style="margin-right: 14px; color:#2E7D52;--gv-sun:#E0A458"><use href="#gv-mark"></use></svg>
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 72px; letter-spacing: -.03em; color: #1E5238;">Grovely</span>
+        </div>
+        <div style="position: absolute; top: 18px; left: 22px; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890;">Primary lockup</div>
+      </div>
+
+      <div style="background: #14361F; border-radius: 22px; padding: 36px 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #7FA98E; align-self: flex-start;">On brand green</div>
+        <svg width="64" height="64" viewBox="0 0 100 100" aria-hidden="true" style="color:#F3F6F1;--gv-sun:#E0A458"><use href="#gv-mark"></use></svg>
+        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 34px; letter-spacing: -.02em; color: #F3F6F1;">Grovely</span>
+      </div>
+
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 36px 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890; align-self: flex-start;">Monochrome</div>
+        <svg width="64" height="64" viewBox="0 0 100 100" aria-hidden="true" style="color:#18241D;--gv-sun:#18241D"><use href="#gv-mark"></use></svg>
+        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 34px; letter-spacing: -.02em; color: #18241D;">Grovely</span>
+      </div>
+
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 30px; display: flex; flex-direction: column; gap: 18px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890;">Minimum sizes</div>
+        <div style="display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap;">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <svg width="24" height="24" viewBox="0 0 100 100" aria-hidden="true" style="color:#2E7D52;--gv-sun:#E0A458"><use href="#gv-mark"></use></svg>
+            <span style="font-size: 12.5px; color: #4A5A50; font-weight: 600;">Symbol · 24 px</span>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <svg width="22" height="22" viewBox="0 0 100 100" aria-hidden="true" style="color:#2E7D52;--gv-sun:#E0A458"><use href="#gv-mark"></use></svg>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: -.02em; color: #1E5238;">Grovely</span>
+            </div>
+            <span style="font-size: 12.5px; color: #4A5A50; font-weight: 600;">Lockup · 96 px wide</span>
+          </div>
+        </div>
+        <p style="font-size: 13.5px; line-height: 1.55; color: #4A5A50; margin: 0;">Below 24 px, drop the sun dot and use the trees alone. Toggle <strong>clear-space guides</strong> in Tweaks.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 22px; letter-spacing: -.01em; margin: 34px 0 14px;">Never do this</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        <div style="height: 56px; display: flex; align-items: center;"><svg width="76" height="44" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" style="color:#2E7D52;--gv-sun:#E0A458"><use href="#gv-mark"></use></svg></div>
+        <span style="font-size: 12.5px; font-weight: 700; color: #B4543E;">✕ Stretch</span>
+      </div>
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        <div style="height: 56px; display: flex; align-items: center;"><svg width="52" height="52" viewBox="0 0 100 100" aria-hidden="true" style="color:#B4543E;--gv-sun:#7A4ED9"><use href="#gv-mark"></use></svg></div>
+        <span style="font-size: 12.5px; font-weight: 700; color: #B4543E;">✕ Recolor</span>
+      </div>
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        <div style="height: 56px; display: flex; align-items: center;"><svg width="52" height="52" viewBox="0 0 100 100" aria-hidden="true" style="color:#2E7D52;--gv-sun:#E0A458; filter: drop-shadow(3px 5px 3px rgba(0,0,0,.45));"><use href="#gv-mark"></use></svg></div>
+        <span style="font-size: 12.5px; font-weight: 700; color: #B4543E;">✕ Add shadow</span>
+      </div>
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        <div style="height: 56px; display: flex; align-items: center;"><svg width="52" height="52" viewBox="0 0 100 100" aria-hidden="true" style="color:#2E7D52;--gv-sun:#E0A458; transform: rotate(-24deg);"><use href="#gv-mark"></use></svg></div>
+        <span style="font-size: 12.5px; font-weight: 700; color: #B4543E;">✕ Rotate</span>
+      </div>
+      <div style="background: repeating-linear-gradient(45deg, #C8E6CF 0 8px, #E0A458 8px 16px); border: 1px solid #DCE6DD; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        <div style="height: 56px; display: flex; align-items: center;"><svg width="52" height="52" viewBox="0 0 100 100" aria-hidden="true" style="color:#2E7D52;--gv-sun:#E0A458"><use href="#gv-mark"></use></svg></div>
+        <span style="font-size: 12.5px; font-weight: 700; color: #B4543E; background: #fff; padding: 2px 8px; border-radius: 999px;">✕ Busy background</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 04 ICON ===== -->
+  <section id="icon" style="max-width: 1100px; margin: 0 auto; padding: 64px 26px 44px;">
+    <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #2E7D52;">04 · App icon</span>
+    <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(32px, 5vw, 50px); letter-spacing: -.02em; line-height: 1.04; margin: 4px 0 32px;">On the home screen</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px;">
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+        <img src="brand/icon/grovely-icon-1024.png" alt="Grovely app icon" style="width: 116px; height: 116px; border-radius: 26px; box-shadow: 0 10px 26px rgba(24,36,29,.16);">
+        <div style="text-align: center;">
+          <div style="font-weight: 700; font-size: 14.5px;">Production icon</div>
+          <div style="font-size: 13px; color: #4A5A50;">1024 px · opaque · square source</div>
+        </div>
+      </div>
+      <div style="background: #0F1A15; border-radius: 22px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+        <img src="brand/icon/grovely-icon-1024.png" alt="Grovely app icon on dark" style="width: 116px; height: 116px; border-radius: 26px; box-shadow: 0 10px 26px rgba(0,0,0,.5);">
+        <div style="text-align: center;">
+          <div style="font-weight: 700; font-size: 14.5px; color: #E7F0E9;">On dark wallpaper</div>
+          <div style="font-size: 13px; color: #A7B8AD;">green field holds its own</div>
+        </div>
+      </div>
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+        <div style="position: relative; width: 116px; height: 116px; border-radius: 999px; background: #2E7D52; overflow: hidden; box-shadow: 0 10px 26px rgba(24,36,29,.16);">
+          <img src="brand/icon/grovely-adaptive-foreground-1024.png" alt="Adaptive icon foreground" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+        </div>
+        <div style="text-align: center;">
+          <div style="font-weight: 700; font-size: 14.5px;">Android adaptive</div>
+          <div style="font-size: 13px; color: #4A5A50;">foreground PNG · bg <code style="font-family: ui-monospace, monospace; font-size: 12px;">#2E7D52</code></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 05 COLOR ===== -->
+  <section id="color" style="max-width: 1100px; margin: 0 auto; padding: 64px 26px 44px;">
+    <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #2E7D52;">05 · Color</span>
+    <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(32px, 5vw, 50px); letter-spacing: -.02em; line-height: 1.04; margin: 4px 0 16px;">Leaf leads, sun accents</h2>
+    <p style="font-size: 17px; line-height: 1.6; max-width: 640px; color: #3A4D42; margin: 0 0 32px;">Light mode is the garden by day; dark mode is the focus session at night. Every text-on-fill pairing shown here clears <strong style="color:#18241D;">WCAG AA</strong> (4.5:1 body, 3:1 large type).</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px;">
+      <!-- light -->
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; overflow: hidden;">
+        <div style="padding: 18px 24px; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890; border-bottom: 1px solid #ECF1EB;">Light · garden</div>
+        <div style="padding: 18px 24px 24px; display: grid; gap: 10px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; background: #2E7D52; color: #fff; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 14px;"><span>primary</span><code style="font-family: ui-monospace, monospace; font-size: 12.5px;">#2E7D52</code></div>
+          <div style="display: flex; align-items: center; justify-content: space-between; background: #C8E6CF; color: #14361F; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 14px;"><span>primaryContainer</span><code style="font-family: ui-monospace, monospace; font-size: 12.5px;">#C8E6CF</code></div>
+          <div style="display: flex; align-items: center; justify-content: space-between; background: #E0A458; color: #2A1C08; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 14px;"><span>accent (sun)</span><code style="font-family: ui-monospace, monospace; font-size: 12.5px;">#E0A458</code></div>
+          <div style="display: flex; align-items: center; justify-content: space-between; background: #F3F6F1; color: #18241D; border: 1px solid #DCE6DD; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 14px;"><span>background</span><code style="font-family: ui-monospace, monospace; font-size: 12.5px;">#F3F6F1</code></div>
+          <div style="display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; color: #18241D; border: 1px solid #DCE6DD; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 14px;"><span>surface</span><code style="font-family: ui-monospace, monospace; font-size: 12.5px;">#FFFFFF</code></div>
+          <div style="display: flex; gap: 10px;">
+            <div style="flex: 1; display: flex; align-items: center; justify-content: space-between; background: #43A86B; color: #07120C; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 13px;"><span>healthy</span><code style="font-family: ui-monospace, monospace; font-size: 11.5px;">#43A86B</code></div>
+            <div style="flex: 1; display: flex; align-items: center; justify-content: space-between; background: #A89274; color: #2A1C08; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 13px;"><span>withered</span><code style="font-family: ui-monospace, monospace; font-size: 11.5px;">#A89274</code></div>
+          </div>
+        </div>
+      </div>
+      <!-- dark -->
+      <div style="background: #0F1A15; border-radius: 22px; overflow: hidden;">
+        <div style="padding: 18px 24px; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #7FA98E; border-bottom: 1px solid #213029;">Dark · night session</div>
+        <div style="padding: 18px 24px 24px; display: grid; gap: 10px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; background: #6FD79B; color: #07120C; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 14px;"><span>primary</span><code style="font-family: ui-monospace, monospace; font-size: 12.5px;">#6FD79B</code></div>
+          <div style="display: flex; align-items: center; justify-content: space-between; background: #1E5238; color: #C8E6CF; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 14px;"><span>primaryContainer</span><code style="font-family: ui-monospace, monospace; font-size: 12.5px;">#1E5238</code></div>
+          <div style="display: flex; align-items: center; justify-content: space-between; background: #F0B978; color: #2A1C08; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 14px;"><span>accent (sun)</span><code style="font-family: ui-monospace, monospace; font-size: 12.5px;">#F0B978</code></div>
+          <div style="display: flex; align-items: center; justify-content: space-between; background: #16221C; color: #E7F0E9; border: 1px solid #213029; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 14px;"><span>surface</span><code style="font-family: ui-monospace, monospace; font-size: 12.5px;">#16221C</code></div>
+          <div style="display: flex; align-items: center; justify-content: space-between; background: #213029; color: #E7F0E9; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 14px;"><span>surfaceVariant</span><code style="font-family: ui-monospace, monospace; font-size: 12.5px;">#213029</code></div>
+          <div style="display: flex; gap: 10px;">
+            <div style="flex: 1; display: flex; align-items: center; justify-content: space-between; background: #5FD394; color: #07120C; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 13px;"><span>healthy</span><code style="font-family: ui-monospace, monospace; font-size: 11.5px;">#5FD394</code></div>
+            <div style="flex: 1; display: flex; align-items: center; justify-content: space-between; background: #B9A488; color: #2A1C08; border-radius: 12px; padding: 14px 16px; font-weight: 600; font-size: 13px;"><span>withered</span><code style="font-family: ui-monospace, monospace; font-size: 11.5px;">#B9A488</code></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 18px; background: #ECF1EB; border: 1px solid #DCE6DD; border-radius: 16px; padding: 18px 24px; font-size: 14px; line-height: 1.6; color: #3A4D42;"><strong style="color:#18241D;">Usage ratio:</strong> ~70% neutrals (background/surface), ~25% greens, ~5% sun amber. Amber is reserved for moments of warmth — the sun, celebration, the live-presence dot. Never use it for errors.</div>
+  </section>
+
+  <!-- ===== 06 TYPE ===== -->
+  <section id="type" style="max-width: 1100px; margin: 0 auto; padding: 64px 26px 44px;">
+    <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #2E7D52;">06 · Typography</span>
+    <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(32px, 5vw, 50px); letter-spacing: -.02em; line-height: 1.04; margin: 4px 0 32px;">A voice with roots, a body that works</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-bottom: 18px;">
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 30px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890; margin-bottom: 16px;">Display · Bricolage Grotesque</div>
+        <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 78px; line-height: 1; letter-spacing: -.03em; color: #1E5238;">Aa</div>
+        <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 22px; letter-spacing: -.01em; margin-top: 14px; color: #18241D;">Headlines, timer, big moments</div>
+        <p style="font-size: 14.5px; line-height: 1.6; color: #4A5A50; margin: 10px 0 0;">Quirky enough to feel alive, sturdy enough to trust. Weights 500–800; tracking −2% to −3.5% at display sizes.</p>
+      </div>
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 30px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890; margin-bottom: 16px;">UI &amp; body · Hanken Grotesque</div>
+        <div style="font-weight: 400; font-size: 78px; line-height: 1; letter-spacing: -.02em; color: #18241D;">Aa</div>
+        <div style="font-weight: 600; font-size: 22px; margin-top: 14px; color: #18241D;">Buttons, labels, paragraphs</div>
+        <p style="font-size: 14.5px; line-height: 1.6; color: #4A5A50; margin: 10px 0 0;">Humanist, warm, quietly legible at 13–17 px. Weights 400–700; never tracked tighter than −1%.</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px;">
+      <div style="background: #0F1A15; border-radius: 22px; padding: 34px 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #7FA98E;">The timer — the brand's biggest type moment</div>
+        <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(72px, 10vw, 120px); letter-spacing: -.02em; color: #E7F0E9; font-variant-numeric: tabular-nums; line-height: 1.05;">18:42</div>
+        <div style="font-size: 14.5px; color: #A7B8AD;">tabular numerals · no jitter as digits tick</div>
+      </div>
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 30px; display: grid; gap: 14px; align-content: center;">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 32px; letter-spacing: -.02em;">Your grove is glowing</span><code style="font-family: ui-monospace, monospace; font-size: 11.5px; color: #8A9890;">H1 · 32/700</code></div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 23px; letter-spacing: -.01em;">Weekly league</span><code style="font-family: ui-monospace, monospace; font-size: 11.5px; color: #8A9890;">H2 · 23/600</code></div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;"><span style="font-weight: 600; font-size: 17px;">8 of 12 focusing now</span><code style="font-family: ui-monospace, monospace; font-size: 11.5px; color: #8A9890;">Title · 17/600</code></div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;"><span style="font-size: 15px; color: #3A4D42;">Stay present and your oak keeps growing.</span><code style="font-family: ui-monospace, monospace; font-size: 11.5px; color: #8A9890;">Body · 15/400</code></div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;"><span style="font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #4A5A50;">Shared grove · this week</span><code style="font-family: ui-monospace, monospace; font-size: 11.5px; color: #8A9890;">Label · 12.5/700</code></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 07 PLANTS ===== -->
+  <section id="plants" style="max-width: 1100px; margin: 0 auto; padding: 64px 26px 44px;">
+    <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #2E7D52;">07 · Illustration</span>
+    <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(32px, 5vw, 50px); letter-spacing: -.02em; line-height: 1.04; margin: 4px 0 16px;">A garden you can grow</h2>
+    <p style="font-size: 17px; line-height: 1.6; max-width: 660px; color: #3A4D42; margin: 0 0 32px;">One style — <strong style="color:#2E7D52;">organic soft</strong>: layered flat circles, no outlines, a shared sandy ground blob. Six species, each drawn across every growth stage, so a garden always reads as one hand.</p>
+
+    <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 30px; margin-bottom: 18px;">
+      <div style="font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890; margin-bottom: 22px;">Growth = session progress · oak</div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;"><img src="brand/trees/oak-seed.svg" alt="" style="height: 34px;"><span style="font-size: 12.5px; font-weight: 600; color: #4A5A50;">seed</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;"><img src="brand/trees/oak-sprout.svg" alt="" style="height: 52px;"><span style="font-size: 12.5px; font-weight: 600; color: #4A5A50;">sprout</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;"><img src="brand/trees/oak-sapling.svg" alt="" style="height: 72px;"><span style="font-size: 12.5px; font-weight: 600; color: #4A5A50;">sapling</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;"><img src="brand/trees/oak-young.svg" alt="" style="height: 92px;"><span style="font-size: 12.5px; font-weight: 600; color: #4A5A50;">young</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;"><img src="brand/trees/oak-mature.svg" alt="" style="height: 112px;"><span style="font-size: 12.5px; font-weight: 600; color: #4A5A50;">mature</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;"><img src="brand/trees/oak-elder.svg" alt="" style="height: 126px;"><span style="font-size: 12.5px; font-weight: 600; color: #4A5A50;">elder</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;"><img src="brand/trees/oak-centenarian.svg" alt="" style="height: 138px;"><span style="font-size: 12.5px; font-weight: 700; color: #E0A458;">centenarian ✦</span></div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 18px;">
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 16px; padding: 20px 14px; display: flex; flex-direction: column; align-items: center; gap: 12px;"><img src="brand/trees/oak-mature.svg" alt="" style="height: 84px;"><span style="font-size: 13px; font-weight: 700;">Oak</span></div>
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 16px; padding: 20px 14px; display: flex; flex-direction: column; align-items: center; gap: 12px;"><img src="brand/trees/pine-mature.svg" alt="" style="height: 84px;"><span style="font-size: 13px; font-weight: 700;">Pine</span></div>
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 16px; padding: 20px 14px; display: flex; flex-direction: column; align-items: center; gap: 12px;"><img src="brand/trees/birch-mature.svg" alt="" style="height: 84px;"><span style="font-size: 13px; font-weight: 700;">Birch</span></div>
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 16px; padding: 20px 14px; display: flex; flex-direction: column; align-items: center; gap: 12px;"><img src="brand/trees/willow-mature.svg" alt="" style="height: 84px;"><span style="font-size: 13px; font-weight: 700;">Willow</span></div>
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 16px; padding: 20px 14px; display: flex; flex-direction: column; align-items: center; gap: 12px;"><img src="brand/trees/round-bush-mature.svg" alt="" style="height: 84px;"><span style="font-size: 13px; font-weight: 700;">Round bush</span></div>
+      <div style="background: #FBEBD3; border: 1px solid #EED9B6; border-radius: 16px; padding: 20px 14px; display: flex; flex-direction: column; align-items: center; gap: 12px;"><img src="brand/trees/cherry-blossom-mature.svg" alt="" style="height: 84px;"><span style="font-size: 13px; font-weight: 700;">Cherry ✦ seasonal</span></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px;">
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 30px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890; margin-bottom: 18px;">Session outcome · try it in Tweaks</div>
+        <div style="display: flex; align-items: flex-end; justify-content: center; gap: 40px; min-height: 130px;">
+          <sc-if value="{{ isWithered }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;"><img src="brand/trees/oak-withered.svg" alt="Withered oak" style="height: 110px;"><span style="font-size: 13px; font-weight: 700; color: #A89274;">left early · withered</span></div>
+          </sc-if>
+          <sc-if value="{{ isHealthy }}" hint-placeholder-val="{{ true }}">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;"><img src="brand/trees/oak-mature.svg" alt="Healthy oak" style="height: 110px;"><span style="font-size: 13px; font-weight: 700; color: #2E7D52;">stayed present · thriving</span></div>
+          </sc-if>
+        </div>
+        <p style="font-size: 13.5px; line-height: 1.6; color: #4A5A50; margin: 16px 0 0;">Withered trees keep the same silhouette in muted earth tones — melancholy, not gruesome. They stay in the garden as honest history.</p>
+      </div>
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 30px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890; margin-bottom: 18px;">Style rules</div>
+        <div style="display: grid; gap: 11px; font-size: 14.5px; line-height: 1.55; color: #3A4D42;">
+          <div style="display: flex; gap: 10px;"><span style="color: #2E7D52; font-weight: 800;">✓</span><span>Canopies from 3–6 overlapping circles, light source top-left (lightest greens upper-left).</span></div>
+          <div style="display: flex; gap: 10px;"><span style="color: #2E7D52; font-weight: 800;">✓</span><span>Flat fills only — no gradients, outlines, filters or masks (SVGs must stay <code style="font-family: ui-monospace, monospace; font-size: 12.5px;">flutter_svg</code>-safe).</span></div>
+          <div style="display: flex; gap: 10px;"><span style="color: #2E7D52; font-weight: 800;">✓</span><span>Every plant sits on the shared sandy ground blob — the "same soil" that makes a grove read as one garden.</span></div>
+          <div style="display: flex; gap: 10px;"><span style="color: #B4543E; font-weight: 800;">✕</span><span>No faces, no cartoon eyes, no drop shadows, no photo textures.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 08 VOICE ===== -->
+  <section id="voice" style="background: #ECF1EB; border-top: 1px solid #DCE6DD; border-bottom: 1px solid #DCE6DD; padding: 72px 26px 64px;">
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #2E7D52;">08 · Voice &amp; tone</span>
+      <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(32px, 5vw, 50px); letter-spacing: -.02em; line-height: 1.04; margin: 4px 0 16px;">A gardener, not a coach</h2>
+      <p style="font-size: 17px; line-height: 1.6; max-width: 640px; color: #3A4D42; margin: 0 0 32px;">Grovely speaks like a friend who gardens: observant, warm, a little playful. We narrate growth, we never audit performance.</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+        <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 18px; padding: 24px; display: grid; gap: 14px;">
+          <div style="font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890;">Session complete</div>
+          <div style="display: flex; gap: 10px; align-items: flex-start;"><span style="flex-shrink:0; margin-top:2px; color: #2E7D52; font-weight: 800;">✓</span><p style="margin: 0; font-size: 15.5px; line-height: 1.5; color: #18241D; font-weight: 600;">"Your oak grew 25 minutes taller."</p></div>
+          <div style="display: flex; gap: 10px; align-items: flex-start;"><span style="flex-shrink:0; margin-top:2px; color: #B4543E; font-weight: 800;">✕</span><p style="margin: 0; font-size: 15.5px; line-height: 1.5; color: #8A9890; text-decoration: line-through;">"Session complete. +25 XP."</p></div>
+        </div>
+        <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 18px; padding: 24px; display: grid; gap: 14px;">
+          <div style="font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890;">Session abandoned</div>
+          <div style="display: flex; gap: 10px; align-items: flex-start;"><span style="flex-shrink:0; margin-top:2px; color: #2E7D52; font-weight: 800;">✓</span><p style="margin: 0; font-size: 15.5px; line-height: 1.5; color: #18241D; font-weight: 600;">"This one withered. The soil's still good — plant another?"</p></div>
+          <div style="display: flex; gap: 10px; align-items: flex-start;"><span style="flex-shrink:0; margin-top:2px; color: #B4543E; font-weight: 800;">✕</span><p style="margin: 0; font-size: 15.5px; line-height: 1.5; color: #8A9890; text-decoration: line-through;">"You killed your tree. Streak lost."</p></div>
+        </div>
+        <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 18px; padding: 24px; display: grid; gap: 14px;">
+          <div style="font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890;">Inviting to the circle</div>
+          <div style="display: flex; gap: 10px; align-items: flex-start;"><span style="flex-shrink:0; margin-top:2px; color: #2E7D52; font-weight: 800;">✓</span><p style="margin: 0; font-size: 15.5px; line-height: 1.5; color: #18241D; font-weight: 600;">"8 friends are focusing right now. Pull up a patch of soil."</p></div>
+          <div style="display: flex; gap: 10px; align-items: flex-start;"><span style="flex-shrink:0; margin-top:2px; color: #B4543E; font-weight: 800;">✕</span><p style="margin: 0; font-size: 15.5px; line-height: 1.5; color: #8A9890; text-decoration: line-through;">"You're falling behind your circle!"</p></div>
+        </div>
+        <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 18px; padding: 24px; display: grid; gap: 14px;">
+          <div style="font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890;">Weekly league result</div>
+          <div style="display: flex; gap: 10px; align-items: flex-start;"><span style="flex-shrink:0; margin-top:2px; color: #2E7D52; font-weight: 800;">✓</span><p style="margin: 0; font-size: 15.5px; line-height: 1.5; color: #18241D; font-weight: 600;">"Morning Sprinters grew 412 minutes of forest this week 🌱"</p></div>
+          <div style="display: flex; gap: 10px; align-items: flex-start;"><span style="flex-shrink:0; margin-top:2px; color: #B4543E; font-weight: 800;">✕</span><p style="margin: 0; font-size: 15.5px; line-height: 1.5; color: #8A9890; text-decoration: line-through;">"RANK UP! You crushed Library Owls."</p></div>
+        </div>
+      </div>
+
+      <div style="margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap;">
+        <span style="padding: 8px 15px; border-radius: 999px; background: #fff; border: 1px solid #DCE6DD; font-size: 13.5px; font-weight: 600; color: #3A4D42;">Growth verbs, not metrics</span>
+        <span style="padding: 8px 15px; border-radius: 999px; background: #fff; border: 1px solid #DCE6DD; font-size: 13.5px; font-weight: 600; color: #3A4D42;">"We / together" over "you should"</span>
+        <span style="padding: 8px 15px; border-radius: 999px; background: #fff; border: 1px solid #DCE6DD; font-size: 13.5px; font-weight: 600; color: #3A4D42;">Invitations, never ultimatums</span>
+        <span style="padding: 8px 15px; border-radius: 999px; background: #fff; border: 1px solid #DCE6DD; font-size: 13.5px; font-weight: 600; color: #3A4D42;">One 🌱 max — and only in social copy</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 09 SCREENS ===== -->
+  <section id="screens" style="max-width: 1180px; margin: 0 auto; padding: 72px 26px 44px;">
+    <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #2E7D52;">09 · In use</span>
+    <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(32px, 5vw, 50px); letter-spacing: -.02em; line-height: 1.04; margin: 4px 0 16px;">The identity in motion</h2>
+    <p style="font-size: 17px; line-height: 1.6; max-width: 640px; color: #3A4D42; margin: 0 0 36px;">Dark for the focus session, light for the gardens. Tokens map 1:1 to the palette above — nothing on these screens is off-book.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px;">
+      <figure style="margin: 0; display: flex; flex-direction: column; gap: 12px;">
+        <img src="brand/mockups/01-focus-session.png" alt="Focus session screen" style="width: 100%; border-radius: 20px; border: 1px solid #DCE6DD; display: block;">
+        <figcaption style="font-size: 13.5px; color: #4A5A50;"><strong style="color:#18241D;">Focus session</strong> — the tree is the timer; the timer is the hero type moment.</figcaption>
+      </figure>
+      <figure style="margin: 0; display: flex; flex-direction: column; gap: 12px;">
+        <img src="brand/mockups/02-personal-garden.png" alt="Personal garden screen" style="width: 100%; border-radius: 20px; border: 1px solid #DCE6DD; display: block;">
+        <figcaption style="font-size: 13.5px; color: #4A5A50;"><strong style="color:#18241D;">Personal garden</strong> — every finished session, planted. Withered trees stay.</figcaption>
+      </figure>
+      <figure style="margin: 0; display: flex; flex-direction: column; gap: 12px;">
+        <img src="brand/mockups/03-collective-garden.png" alt="Collective garden screen" style="width: 100%; border-radius: 20px; border: 1px solid #DCE6DD; display: block;">
+        <figcaption style="font-size: 13.5px; color: #4A5A50;"><strong style="color:#18241D;">Collective grove</strong> — live presence, shared grove, weekly league. The heart.</figcaption>
+      </figure>
+      <figure style="margin: 0; display: flex; flex-direction: column; gap: 12px;">
+        <img src="brand/mockups/04-paywall.png" alt="Paywall screen" style="width: 100%; border-radius: 20px; border: 1px solid #DCE6DD; display: block;">
+        <figcaption style="font-size: 13.5px; color: #4A5A50;"><strong style="color:#18241D;">Membership</strong> — sells more species and bigger circles, never removes the free grove.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 10 HANDOFF / FOOTER ===== -->
+  <section id="handoff" style="background: #14361F; color: #E7F0E9; padding: 72px 26px 56px; margin-top: 40px;">
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #9FD3B4;">10 · Handoff</span>
+      <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(28px, 4.2vw, 42px); letter-spacing: -.02em; line-height: 1.04; margin: 4px 0 28px; color: #fff;">Everything ships in <code style="font-family: ui-monospace, monospace; font-size: .8em; background: rgba(255,255,255,.1); padding: 2px 10px; border-radius: 8px;">brand/</code></h2>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px;">
+        <pre style="margin: 0; background: #0F1A15; border: 1px solid #1E5238; border-radius: 16px; padding: 22px 24px; font-family: ui-monospace, 'SF Mono', monospace; font-size: 13px; line-height: 1.75; color: #C8E6CF; overflow: auto;">brand/
+├── brand-book.html      ← this document
+├── tokens.json          ← light/dark + type + radius
+├── logo/                ← wordmark · symbol · mono (SVG)
+├── icon/                ← 1024 icon + adaptive fg (PNG)
+├── trees/               ← 6 species × all stages (SVG)
+└── mockups/             ← reference PNGs</pre>
+        <div style="display: grid; gap: 12px; align-content: start;">
+          <div style="background: rgba(255,255,255,.06); border-radius: 16px; padding: 18px 22px; font-size: 14.5px; line-height: 1.6; color: #C8E6CF;"><strong style="color:#fff;">Flutter-safe SVGs.</strong> No filters, masks, embedded CSS or <code style="font-family: ui-monospace, monospace; font-size: 12.5px;">&lt;use&gt;</code>; text in curves; direct fills; no fixed px dimensions.</div>
+          <div style="background: rgba(255,255,255,.06); border-radius: 16px; padding: 18px 22px; font-size: 14.5px; line-height: 1.6; color: #C8E6CF;"><strong style="color:#fff;">Fonts.</strong> Bricolage Grotesque + Hanken Grotesque, Google Fonts, open license.</div>
+          <div style="background: rgba(255,255,255,.06); border-radius: 16px; padding: 18px 22px; font-size: 14.5px; line-height: 1.6; color: #C8E6CF;"><strong style="color:#fff;">Radius scale.</strong> 8 · 14 · 20 · 28 · pill — cards use 20, sheets 28, chips pill.</div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 12px; margin-top: 44px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.12); flex-wrap: wrap;">
+        <svg width="22" height="22" viewBox="0 0 100 100" aria-hidden="true" style="color:#9FD3B4;--gv-sun:#E0A458"><use href="#gv-mark"></use></svg>
+        <span style="font-size: 13.5px; color: #9FD3B4; font-weight: 600;">Grovely Brand Book · v5 · July 2026</span>
+        <span style="margin-left: auto; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 15px; color: #C8E6CF;">Focus that grows — together.</span>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: {&quot;width&quot;: 1280, &quot;height&quot;: 940},
+  &quot;tagline&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;A focus timer where staying present grows a tree — and focusing with your circle grows a garden.&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Cover&quot;},
+  &quot;showGuides&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Logo&quot;},
+  &quot;gardenState&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;healthy&quot;, &quot;options&quot;: [&quot;healthy&quot;, &quot;withered&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Illustration&quot;}
+}">
+class Component extends DCLogic {
+  renderVals() {
+    const state = this.props.gardenState ?? "healthy";
+    return {
+      tagline: this.props.tagline ?? "A focus timer where staying present grows a tree — and focusing with your circle grows a garden.",
+      showGuides: !!(this.props.showGuides ?? false),
+      isWithered: state === "withered",
+      isHealthy: state !== "withered"
+    };
+  }
+}
+</script>
+</body>
+</html>

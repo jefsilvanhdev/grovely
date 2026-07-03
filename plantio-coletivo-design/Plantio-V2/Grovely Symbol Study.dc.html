@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesque:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; }
+  ::selection { background: #C8E6CF; }
+  .ccg { transform-box: fill-box; transform-origin: 50% 100%; animation: ccGrow 4.8s cubic-bezier(.22,1,.36,1) infinite; }
+  .ccsun { transform-box: fill-box; transform-origin: 50% 50%; animation: ccSun 4.8s ease-out infinite; }
+  @keyframes ccGrow { 0% { transform: translateY(7px) scaleY(.12) scaleX(.55); opacity: 0; } 20% { opacity: 1; } 64% { transform: none; opacity: 1; } 100% { transform: none; opacity: 1; } }
+  @keyframes ccSun { 0%, 38% { opacity: 0; transform: scale(0); } 58% { opacity: 1; transform: scale(1.18); } 70%, 100% { opacity: 1; transform: scale(1); } }
+</style>
+</helmet>
+
+<div style="font-family: 'Hanken Grotesque', system-ui, sans-serif; background: #F3F6F1; color: #18241D; min-height: 100vh; -webkit-font-smoothing: antialiased;">
+
+  <!-- ===== symbol definitions ===== -->
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
+
+    <symbol id="cc-ascending" viewBox="0 0 100 100">
+      <path d="M14 81 Q50 75 86 81 Q50 85 14 81 Z" fill="currentColor" opacity="0.26"></path>
+      <g stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.45"><path d="M26 80 Q40 85 50 87"></path><path d="M74 80 Q60 85 50 87"></path></g>
+      <rect x="23.5" y="56" width="5" height="25" rx="2.5" fill="currentColor"></rect><circle cx="26" cy="56" r="11" fill="currentColor"></circle>
+      <rect x="47" y="46" width="6" height="35" rx="3" fill="currentColor"></rect><circle cx="50" cy="45" r="13.5" fill="currentColor"></circle>
+      <rect x="70.75" y="36" width="6.5" height="45" rx="3.25" fill="currentColor"></rect><circle cx="74" cy="33" r="16" fill="currentColor"></circle>
+      <circle cx="90" cy="15" r="6" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <symbol id="cc-roots" viewBox="0 0 100 100">
+      <rect x="27.5" y="46" width="5" height="22" rx="2.5" fill="currentColor"></rect>
+      <rect x="67.5" y="46" width="5" height="22" rx="2.5" fill="currentColor"></rect>
+      <rect x="47" y="42" width="6" height="26" rx="3" fill="currentColor"></rect>
+      <circle cx="30" cy="44" r="12" fill="currentColor"></circle>
+      <circle cx="70" cy="44" r="12" fill="currentColor"></circle>
+      <circle cx="50" cy="35" r="14" fill="currentColor"></circle>
+      <circle cx="50" cy="30" r="5" fill="var(--sun,#E0A458)"></circle>
+      <g stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"><path d="M30 66 Q34 79 50 85"></path><path d="M70 66 Q66 79 50 85"></path><path d="M50 66 L50 85"></path><path d="M50 85 Q40 89 31 93"></path><path d="M50 85 Q60 89 69 93"></path></g>
+      <circle cx="50" cy="85" r="3.6" fill="currentColor"></circle>
+    </symbol>
+
+    <symbol id="cc-rings" viewBox="0 0 100 100">
+      <rect x="46.5" y="52" width="7" height="29" rx="3.5" fill="currentColor"></rect>
+      <circle cx="50" cy="39" r="23" fill="none" stroke="currentColor" stroke-width="5.2"></circle>
+      <circle cx="50" cy="39" r="14" fill="none" stroke="currentColor" stroke-width="5.2"></circle>
+      <circle cx="50" cy="39" r="5.5" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <symbol id="cc-canopy" viewBox="0 0 100 100">
+      <rect x="33.5" y="50" width="5" height="31" rx="2.5" fill="currentColor"></rect>
+      <rect x="61.5" y="50" width="5" height="31" rx="2.5" fill="currentColor"></rect>
+      <rect x="47.5" y="48" width="5" height="33" rx="2.5" fill="currentColor"></rect>
+      <circle cx="38" cy="45" r="16" fill="currentColor"></circle>
+      <circle cx="62" cy="45" r="16" fill="currentColor"></circle>
+      <circle cx="50" cy="32" r="18" fill="currentColor"></circle>
+      <circle cx="50" cy="43" r="5" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <symbol id="cc-sprout" viewBox="0 0 100 100">
+      <path d="M50 84 L50 38" stroke="currentColor" stroke-width="6" stroke-linecap="round"></path>
+      <path d="M50 64 C 40 62 33 54 32 44 C 43 44 50 52 50 64 Z" fill="currentColor"></path>
+      <path d="M50 53 C 60 51 67 43 68 33 C 57 33 50 41 50 53 Z" fill="currentColor"></path>
+      <path d="M50 42 C 42 41 37 35 36 27 C 45 27 50 34 50 42 Z" fill="currentColor"></path>
+      <circle cx="50" cy="17" r="6" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <symbol id="cc-arrow" viewBox="0 0 100 100">
+      <rect x="46.5" y="64" width="7" height="20" rx="3.5" fill="currentColor"></rect>
+      <path d="M50 56 L30 70 L40 70 L50 63 L60 70 L70 70 Z" fill="currentColor"></path>
+      <path d="M50 40 L33 53 L42 53 L50 47 L58 53 L67 53 Z" fill="currentColor"></path>
+      <path d="M50 24 L36 36 L44 36 L50 31 L56 36 L64 36 Z" fill="currentColor"></path>
+      <circle cx="50" cy="14" r="5" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <symbol id="cc-venn" viewBox="0 0 100 100">
+      <rect x="47" y="56" width="6" height="26" rx="3" fill="currentColor"></rect>
+      <circle cx="50" cy="38" r="18" fill="none" stroke="currentColor" stroke-width="4.4"></circle>
+      <circle cx="38" cy="56" r="18" fill="none" stroke="currentColor" stroke-width="4.4"></circle>
+      <circle cx="62" cy="56" r="18" fill="none" stroke="currentColor" stroke-width="4.4"></circle>
+      <circle cx="50" cy="50" r="5.5" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <symbol id="cc-constellation" viewBox="0 0 100 100">
+      <path d="M28 50 L54 38 L74 56" fill="none" stroke="currentColor" stroke-width="1.8" opacity="0.5"></path>
+      <rect x="26" y="50" width="4" height="22" rx="2" fill="currentColor"></rect><circle cx="28" cy="50" r="9" fill="currentColor"></circle>
+      <rect x="51.75" y="38" width="4.5" height="32" rx="2.25" fill="currentColor"></rect><circle cx="54" cy="38" r="11" fill="currentColor"></circle>
+      <rect x="72" y="56" width="4" height="16" rx="2" fill="currentColor"></rect><circle cx="74" cy="56" r="8" fill="currentColor"></circle>
+      <circle cx="85" cy="24" r="5" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <symbol id="cc-heart" viewBox="0 0 100 100">
+      <path d="M48 62 Q40 74 33 82" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"></path>
+      <path d="M52 62 Q60 74 67 82" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"></path>
+      <path d="M50 34 C 44 22 28 24 28 38 C 28 50 44 58 50 64 C 56 58 72 50 72 38 C 72 24 56 22 50 34 Z" fill="currentColor"></path>
+      <circle cx="50" cy="18" r="5" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <symbol id="cc-plus" viewBox="0 0 100 100">
+      <rect x="44" y="24" width="12" height="58" rx="6" fill="currentColor"></rect>
+      <rect x="26" y="44" width="48" height="12" rx="6" fill="currentColor"></rect>
+      <path d="M50 14 C 44 18 44 27 50 31 C 56 27 56 18 50 14 Z" fill="currentColor"></path>
+      <circle cx="50" cy="50" r="4.6" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+    <symbol id="cc-circle" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="4.4"></circle>
+      <rect x="36" y="58" width="4" height="14" rx="2" fill="currentColor"></rect><circle cx="38" cy="56" r="8" fill="currentColor"></circle>
+      <rect x="52" y="52" width="5" height="20" rx="2.5" fill="currentColor"></rect><circle cx="54.5" cy="49" r="10" fill="currentColor"></circle>
+      <rect x="66" y="60" width="4" height="12" rx="2" fill="currentColor"></rect><circle cx="68" cy="58" r="7" fill="currentColor"></circle>
+      <circle cx="68" cy="31" r="5" fill="var(--sun,#E0A458)"></circle>
+    </symbol>
+
+  </defs></svg>
+
+  <!-- ===== top bar ===== -->
+  <div style="display: flex; align-items: center; gap: 12px; padding: 14px 26px; border-bottom: 1px solid #DCE6DD; background: rgba(243,246,241,.85); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 30;">
+    <svg width="24" height="24" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-ascending"></use></svg>
+    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: -.01em;">Grovely</span>
+    <span style="font-size: 13px; color: #6E7E74; font-weight: 600;">· Symbol study</span>
+    <a href="Grovely Brand Book v3.dc.html" style="margin-left: auto; font-size: 13px; font-weight: 600; color: #2E7D52; text-decoration: none; padding: 7px 13px; border-radius: 9px; border: 1px solid #C8E0CF;" style-hover="background:#E7F1EA">← Brand book v3</a>
+  </div>
+
+  <!-- ===== header ===== -->
+  <header style="max-width: 980px; margin: 0 auto; padding: 64px 26px 18px;">
+    <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #2E7D52;">Mark exploration</span>
+    <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(34px, 6vw, 62px); letter-spacing: -.03em; line-height: 1; margin: 8px 0 0; color: #1E5238;">Growth, built into the mark</h1>
+    <p style="font-size: 18px; line-height: 1.6; max-width: 620px; color: #3A4D42; margin: 20px 0 0; text-wrap: balance;">The grove already says "many trees." These six directions push further — making the symbol itself express a <strong style="color:#18241D;">group growing together</strong>, not just standing together. Each is drawn in one 100×100 grid so it drops straight into the app icon.</p>
+  </header>
+
+  <!-- ===== hero: recommended ===== -->
+  <section style="max-width: 980px; margin: 0 auto; padding: 32px 26px 16px;">
+    <div style="display: grid; grid-template-columns: minmax(260px, 1fr) 1.05fr; background: #fff; border: 1.5px solid #2E7D52; border-radius: 26px; overflow: hidden; box-shadow: 0 22px 50px rgba(46,125,82,.14);">
+      <div style="background: radial-gradient(120% 110% at 50% 120%, #DCEFE0 0%, #EFF6EF 70%); display: flex; align-items: center; justify-content: center; padding: 30px; position: relative;">
+        <div style="position: absolute; top: 16px; left: 16px; font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: #fff; background: #2E7D52; padding: 4px 10px; border-radius: 999px;">Recommended</div>
+        <svg width="240" height="240" viewBox="0 0 100 100" style="max-width: 78%; color: #2E7D52;">
+          <path d="M14 81 Q50 75 86 81 Q50 85 14 81 Z" fill="currentColor" opacity="0.26"></path>
+          <g stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.45"><path d="M26 80 Q40 85 50 87"></path><path d="M74 80 Q60 85 50 87"></path></g>
+          <g class="ccg" style="animation-delay: 0s"><rect x="23.5" y="56" width="5" height="25" rx="2.5" fill="currentColor"></rect><circle cx="26" cy="56" r="11" fill="currentColor"></circle></g>
+          <g class="ccg" style="animation-delay: .28s"><rect x="47" y="46" width="6" height="35" rx="3" fill="currentColor"></rect><circle cx="50" cy="45" r="13.5" fill="currentColor"></circle></g>
+          <g class="ccg" style="animation-delay: .56s"><rect x="70.75" y="36" width="6.5" height="45" rx="3.25" fill="currentColor"></rect><circle cx="74" cy="33" r="16" fill="currentColor"></circle></g>
+          <circle class="ccsun" cx="90" cy="15" r="6" fill="#E0A458"></circle>
+        </svg>
+      </div>
+      <div style="padding: 34px 34px; display: flex; flex-direction: column; justify-content: center;">
+        <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -.02em; color: #1E5238;">Ascending grove</div>
+        <p style="font-size: 15.5px; line-height: 1.62; color: #3A4D42; margin: 12px 0 18px;">Three trees on a shared mound, each a little taller than the last — the group at different stages, all rooted in the same ground. It keeps the grove DNA but adds an unmistakable <strong style="color:#18241D;">upward, growing</strong> rhythm. The animation shows what it's really about: each member rises in turn, the sun arrives when they're grown.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 7px;">
+          <span style="font-size: 12px; font-weight: 700; color: #2E7D52; background: #E7F1EA; padding: 5px 11px; border-radius: 999px;">Keeps grove equity</span>
+          <span style="font-size: 12px; font-weight: 700; color: #2E7D52; background: #E7F1EA; padding: 5px 11px; border-radius: 999px;">Reads at 24px</span>
+          <span style="font-size: 12px; font-weight: 700; color: #2E7D52; background: #E7F1EA; padding: 5px 11px; border-radius: 999px;">Animatable</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== alternatives grid ===== -->
+  <section style="max-width: 980px; margin: 0 auto; padding: 22px 26px 20px;">
+    <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890; margin: 14px 0 16px;">The directions</div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+
+      <div style="background: #fff; border: 1.5px solid #2E7D52; border-radius: 20px; padding: 22px; display: flex; gap: 18px; align-items: center;">
+        <svg width="90" height="90" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#cc-ascending"></use></svg>
+        <div style="min-width:0;">
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; color: #1E5238;">Ascending grove <span style="font-size:11px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:#fff; background:#2E7D52; padding:2px 7px; border-radius:999px; vertical-align:middle;">Rec</span></div>
+          <div style="font-size: 13.5px; color: #6E7E74; line-height: 1.5; margin-top: 4px;">Trees of rising heights on a shared base. Growth + grove, in one glyph.</div>
+        </div>
+      </div>
+
+      <div style="background: #fff; border: 1px solid #E2ECE2; border-radius: 20px; padding: 22px; display: flex; gap: 18px; align-items: center;">
+        <svg width="90" height="90" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#cc-roots"></use></svg>
+        <div style="min-width:0;">
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; color: #1E5238;">Shared roots</div>
+          <div style="font-size: 13.5px; color: #6E7E74; line-height: 1.5; margin-top: 4px;">Three crowns, one interlocking root knot. The togetherness is literal and underground.</div>
+        </div>
+      </div>
+
+      <div style="background: #fff; border: 1px solid #E2ECE2; border-radius: 20px; padding: 22px; display: flex; gap: 18px; align-items: center;">
+        <svg width="90" height="90" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#cc-rings"></use></svg>
+        <div style="min-width:0;">
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; color: #1E5238;">Growth rings</div>
+          <div style="font-size: 13.5px; color: #6E7E74; line-height: 1.5; margin-top: 4px;">A trunk's cross-section — each ring a cycle the circle finished together. Abstract, ownable.</div>
+        </div>
+      </div>
+
+      <div style="background: #fff; border: 1px solid #E2ECE2; border-radius: 20px; padding: 22px; display: flex; gap: 18px; align-items: center;">
+        <svg width="90" height="90" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#cc-canopy"></use></svg>
+        <div style="min-width:0;">
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; color: #1E5238;">Unified canopy</div>
+          <div style="font-size: 13.5px; color: #6E7E74; line-height: 1.5; margin-top: 4px;">Three trunks rise into one shared crown. Individuals, a single canopy.</div>
+        </div>
+      </div>
+
+      <div style="background: #fff; border: 1px solid #E2ECE2; border-radius: 20px; padding: 22px; display: flex; gap: 18px; align-items: center;">
+        <svg width="90" height="90" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#cc-sprout"></use></svg>
+        <div style="min-width:0;">
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; color: #1E5238;">Rising sprout</div>
+          <div style="font-size: 13.5px; color: #6E7E74; line-height: 1.5; margin-top: 4px;">One stem, three leaves unfurling upward. Minimal and motion-ready, but reads as one plant.</div>
+        </div>
+      </div>
+
+      <div style="background: #fff; border: 1px solid #E2ECE2; border-radius: 20px; padding: 22px; display: flex; gap: 18px; align-items: center;">
+        <svg width="90" height="90" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#cc-arrow"></use></svg>
+        <div style="min-width:0;">
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; color: #1E5238;">Growth arrow</div>
+          <div style="font-size: 13.5px; color: #6E7E74; line-height: 1.5; margin-top: 4px;">Leaf chevrons stacking upward — pure ascent. Boldest, but the most abstract / least "grove".</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== legibility proofs ===== -->
+  <section style="max-width: 980px; margin: 0 auto; padding: 22px 26px 20px;">
+    <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A9890; margin: 14px 0 16px;">Holds up small &amp; in context</div>
+    <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 30px; display: flex; flex-wrap: wrap; gap: 34px; align-items: flex-end; justify-content: center;">
+      <div style="text-align:center;"><div style="width:96px; height:96px; border-radius:24px; background:#2E7D52; display:flex; align-items:center; justify-content:center; box-shadow:0 12px 26px rgba(46,125,82,.26);"><svg width="62" height="62" viewBox="0 0 100 100" style="color:#fff;--sun:#F0C079"><use href="#cc-ascending"></use></svg></div><div style="font-size:11px; color:#8A9890; margin-top:8px; font-weight:600;">app icon</div></div>
+      <div style="text-align:center;"><div style="width:56px; height:56px; border-radius:14px; background:#2E7D52; display:flex; align-items:center; justify-content:center;"><svg width="38" height="38" viewBox="0 0 100 100" style="color:#fff;--sun:#F0C079"><use href="#cc-ascending"></use></svg></div><div style="font-size:11px; color:#8A9890; margin-top:8px; font-weight:600;">56px</div></div>
+      <div style="text-align:center;"><svg width="40" height="40" viewBox="0 0 100 100" style="color:#18241D;--sun:#18241D"><use href="#cc-ascending"></use></svg><div style="font-size:11px; color:#8A9890; margin-top:8px; font-weight:600;">mono 40</div></div>
+      <div style="text-align:center;"><svg width="24" height="24" viewBox="0 0 100 100" style="color:#18241D;--sun:#18241D"><use href="#cc-ascending"></use></svg><div style="font-size:11px; color:#8A9890; margin-top:8px; font-weight:600;">mono 24</div></div>
+      <div style="display:flex; align-items:center; gap:10px; padding-bottom:18px;"><svg width="40" height="40" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-ascending"></use></svg><span style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:38px; letter-spacing:-.03em; color:#1E5238;">Grovely</span></div>
+    </div>
+    <p style="font-size: 13px; line-height: 1.5; color: #6E7E74; margin: 16px 0 0; max-width: 640px;">Want me to take one of these forward — refine the geometry, build the full lockup + app-icon set, and swap it through the brand book? Tell me which direction (or mix two) and I'll iterate.</p>
+  </section>
+
+  <!-- ===== BENCHMARKING ===== -->
+  <section style="background: #ECF1EB; border-top: 1px solid #DCE6DD; border-bottom: 1px solid #DCE6DD; margin-top: 30px;">
+    <div style="max-width: 980px; margin: 0 auto; padding: 56px 26px 24px;">
+      <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #2E7D52;">Benchmarking</span>
+      <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(28px, 4.4vw, 46px); letter-spacing: -.02em; line-height: 1.05; margin: 6px 0 14px;">How the category signs growth</h2>
+      <p style="font-size: 17px; line-height: 1.62; max-width: 660px; color: #3A4D42; margin: 0 0 30px;">The space is crowded with one idea: <strong style="color:#18241D;">a single tree that grows while you focus</strong>. <cite index="1-17,1-23">Forest gamifies productivity by growing a virtual tree as you stay on task, and the tree withers if you leave the app.</cite> <cite index="2-10,2-13">Flora uses the same grow-a-plant idea and adds a "grow trees with friends" feature for group focus.</cite> Almost everyone signs growth the same four ways:</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 26px;">
+
+        <div style="background: #fff; border: 1px solid #E2ECE2; border-radius: 18px; padding: 20px;">
+          <svg width="48" height="48" viewBox="0 0 60 60" style="margin-bottom: 12px;"><rect x="27" y="34" width="6" height="18" rx="3" fill="#8A9890"></rect><circle cx="22" cy="30" r="10" fill="#A6B3AB"></circle><circle cx="38" cy="30" r="10" fill="#A6B3AB"></circle><circle cx="30" cy="22" r="12" fill="#8A9890"></circle></svg>
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: #1E5238;">Single tree</div>
+          <div style="font-size: 11.5px; font-weight: 700; color: #8A9890; margin: 2px 0 8px;">Forest · Flora · Treecard</div>
+          <div style="font-size: 13px; line-height: 1.5; color: #3A4D42;">Literal &amp; warm, instantly understood. But it says <em>solo</em>, and the lane is bumper-to-bumper.</div>
+        </div>
+
+        <div style="background: #fff; border: 1px solid #E2ECE2; border-radius: 18px; padding: 20px;">
+          <svg width="48" height="48" viewBox="0 0 60 60" style="margin-bottom: 12px;"><rect x="14" y="20" width="32" height="30" rx="13" fill="#A6B3AB"></rect><circle cx="24" cy="32" r="3" fill="#fff"></circle><circle cx="36" cy="32" r="3" fill="#fff"></circle><path d="M25 41 Q30 45 35 41" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"></path><circle cx="20" cy="16" r="3.4" fill="#8A9890"></circle><circle cx="40" cy="16" r="3.4" fill="#8A9890"></circle></svg>
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: #1E5238;">Mascot / character</div>
+          <div style="font-size: 11.5px; font-weight: 700; color: #8A9890; margin: 2px 0 8px;">Habitica · Finch · Study Bunny</div>
+          <div style="font-size: 13px; line-height: 1.5; color: #3A4D42;"><cite index="9-1,9-3">Habitica turns life into a game where a character progresses as your routines improve.</cite> Charming, but costly to build and off-tone for calm focus.</div>
+        </div>
+
+        <div style="background: #fff; border: 1px solid #E2ECE2; border-radius: 18px; padding: 20px;">
+          <svg width="48" height="48" viewBox="0 0 60 60" style="margin-bottom: 12px;"><circle cx="30" cy="30" r="20" fill="none" stroke="#A6B3AB" stroke-width="5"></circle><path d="M30 10 A20 20 0 0 1 47 38" fill="none" stroke="#8A9890" stroke-width="5" stroke-linecap="round"></path><circle cx="30" cy="30" r="6" fill="#A6B3AB"></circle></svg>
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: #1E5238;">Streak rings</div>
+          <div style="font-size: 11.5px; font-weight: 700; color: #8A9890; margin: 2px 0 8px;">Loop · minimalist trackers</div>
+          <div style="font-size: 13px; line-height: 1.5; color: #3A4D42;"><cite index="12-2">Simple circles fill as streaks grow.</cite> Clean and calm, but generic and emotionally cold — could be any tracker.</div>
+        </div>
+
+        <div style="background: #fff; border: 1px solid #E2ECE2; border-radius: 18px; padding: 20px;">
+          <svg width="48" height="48" viewBox="0 0 60 60" style="margin-bottom: 12px;"><circle cx="20" cy="24" r="7" fill="#8A9890"></circle><circle cx="40" cy="24" r="7" fill="#8A9890"></circle><circle cx="30" cy="20" r="8" fill="#A6B3AB"></circle><path d="M10 48 Q20 36 30 44 Q40 36 50 48 Z" fill="#A6B3AB"></path></svg>
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: #1E5238;">People cluster</div>
+          <div style="font-size: 11.5px; font-weight: 700; color: #8A9890; margin: 2px 0 8px;">Cohorty · HabitShare</div>
+          <div style="font-size: 13px; line-height: 1.5; color: #3A4D42;"><cite index="16-1,16-5">Cohorty centers small cohorts of 5–15 people doing a challenge together.</cite> Says "group" — but as abstract dots, with no growth and no warmth.</div>
+        </div>
+
+      </div>
+
+      <!-- positioning map -->
+      <div style="background: #fff; border: 1px solid #DCE6DD; border-radius: 22px; padding: 26px 26px 18px;">
+        <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; color: #1E5238; margin-bottom: 4px;">Where the white space is</div>
+        <div style="font-size: 13.5px; color: #6E7E74; margin-bottom: 14px;">Nobody owns <strong style="color:#2E7D52;">collective + living growth</strong> — many plants read as one warm, growing system. That's Grovely's lane.</div>
+        <svg width="100%" viewBox="0 0 600 380" style="display:block; max-width: 640px; margin: 0 auto;" font-family="'Hanken Grotesque', sans-serif">
+          <!-- white-space highlight -->
+          <rect x="312" y="200" width="270" height="158" rx="16" fill="#EAF4EC"></rect>
+          <text x="447" y="350" text-anchor="middle" font-size="12" font-weight="700" fill="#5BA178" letter-spacing=".04em">OPEN SPACE</text>
+          <!-- axes -->
+          <line x1="40" y1="190" x2="560" y2="190" stroke="#D8E2DA" stroke-width="2"></line>
+          <line x1="300" y1="30" x2="300" y2="358" stroke="#D8E2DA" stroke-width="2"></line>
+          <text x="50" y="178" font-size="13" font-weight="700" fill="#8A9890">Solo</text>
+          <text x="550" y="178" font-size="13" font-weight="700" fill="#8A9890" text-anchor="end">Collective</text>
+          <text x="308" y="42" font-size="13" font-weight="700" fill="#8A9890">Abstract</text>
+          <text x="308" y="352" font-size="13" font-weight="700" fill="#8A9890">Literal</text>
+          <!-- competitor points -->
+          <g>
+            <circle cx="150" cy="295" r="8" fill="#B6C2BA"></circle>
+            <text x="150" y="320" text-anchor="middle" font-size="12" font-weight="600" fill="#5E6E64">Single tree</text>
+          </g>
+          <g>
+            <circle cx="215" cy="262" r="8" fill="#B6C2BA"></circle>
+            <text x="215" y="245" text-anchor="middle" font-size="12" font-weight="600" fill="#5E6E64">Mascot</text>
+          </g>
+          <g>
+            <circle cx="158" cy="110" r="8" fill="#B6C2BA"></circle>
+            <text x="158" y="98" text-anchor="middle" font-size="12" font-weight="600" fill="#5E6E64">Streak rings</text>
+          </g>
+          <g>
+            <circle cx="445" cy="120" r="8" fill="#B6C2BA"></circle>
+            <text x="445" y="108" text-anchor="middle" font-size="12" font-weight="600" fill="#5E6E64">People dots</text>
+          </g>
+          <!-- grovely -->
+          <g>
+            <circle cx="447" cy="282" r="22" fill="#2E7D52"></circle>
+            <svg x="431" y="266" width="32" height="32" viewBox="0 0 100 100" style="color:#fff"><use href="#cc-ascending"></use></svg>
+            <text x="447" y="326" text-anchor="middle" font-size="13.5" font-weight="800" fill="#1E5238">Grovely</text>
+          </g>
+        </svg>
+      </div>
+
+      <p style="font-size: 14px; line-height: 1.6; color: #3A4D42; margin: 22px 0 0; max-width: 660px;"><strong style="color:#18241D;">The read:</strong> stay botanical and warm (unlike rings &amp; dots), but make the mark inherently plural and growing (unlike the single tree). Every direction below is engineered to live in that lower-right corner.</p>
+    </div>
+  </section>
+
+  <!-- ===== MORE SUGGESTIONS ===== -->
+  <section style="max-width: 980px; margin: 0 auto; padding: 50px 26px 20px;">
+    <span style="font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #2E7D52;">More suggestions</span>
+    <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(26px, 4vw, 40px); letter-spacing: -.02em; line-height: 1.06; margin: 6px 0 12px;">Five more, aimed at the open corner</h2>
+    <p style="font-size: 16px; line-height: 1.6; max-width: 640px; color: #3A4D42; margin: 0 0 26px;">Each takes a different route to "collective + living." My new favorite is <strong style="color:#2E7D52;">Constellation grove</strong> — it says <em>connected group</em> out loud while staying a grove, a clean complement to the Ascending grove.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+
+      <div style="background: #fff; border: 1.5px solid #2E7D52; border-radius: 20px; padding: 22px; display: flex; gap: 18px; align-items: center; box-shadow: 0 10px 26px rgba(46,125,82,.1);">
+        <svg width="92" height="92" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#cc-constellation"></use></svg>
+        <div style="min-width:0;">
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; color: #1E5238;">Constellation grove <span style="font-size:10.5px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:#fff; background:#2E7D52; padding:2px 7px; border-radius:999px; vertical-align:middle;">New pick</span></div>
+          <div style="font-size: 13.5px; color: #6E7E74; line-height: 1.5; margin-top: 4px;">Trees linked like a constellation. The line <em>is</em> the relationship — group, said warmly.</div>
+        </div>
+      </div>
+
+      <div style="background: #fff; border: 1px solid #E2ECE2; border-radius: 20px; padding: 22px; display: flex; gap: 18px; align-items: center;">
+        <svg width="92" height="92" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#cc-venn"></use></svg>
+        <div style="min-width:0;">
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; color: #1E5238;">Venn grove</div>
+          <div style="font-size: 13.5px; color: #6E7E74; line-height: 1.5; margin-top: 4px;">Three canopies overlapping into a shared core. The most ownable, abstract take on "what we grow together".</div>
+        </div>
+      </div>
+
+      <div style="background: #fff; border: 1px solid #E2ECE2; border-radius: 20px; padding: 22px; display: flex; gap: 18px; align-items: center;">
+        <svg width="92" height="92" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#cc-heart"></use></svg>
+        <div style="min-width:0;">
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; color: #1E5238;">Heart canopy</div>
+          <div style="font-size: 13.5px; color: #6E7E74; line-height: 1.5; margin-top: 4px;">Two trees lean in; their crowns form a green heart. Warmest of all — watch it doesn't get too sweet.</div>
+        </div>
+      </div>
+
+      <div style="background: #fff; border: 1px solid #E2ECE2; border-radius: 20px; padding: 22px; display: flex; gap: 18px; align-items: center;">
+        <svg width="92" height="92" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#cc-plus"></use></svg>
+        <div style="min-width:0;">
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; color: #1E5238;">Plus-leaf</div>
+          <div style="font-size: 13.5px; color: #6E7E74; line-height: 1.5; margin-top: 4px;">A leaf built on a plus — "add a friend, grow." The most productivity-forward; least obviously a grove.</div>
+        </div>
+      </div>
+
+      <div style="background: #fff; border: 1px solid #E2ECE2; border-radius: 20px; padding: 22px; display: flex; gap: 18px; align-items: center;">
+        <svg width="92" height="92" viewBox="0 0 100 100" style="flex:0 0 auto; color:#2E7D52;--sun:#E0A458"><use href="#cc-circle"></use></svg>
+        <div style="min-width:0;">
+          <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; color: #1E5238;">Garden badge</div>
+          <div style="font-size: 13.5px; color: #6E7E74; line-height: 1.5; margin-top: 4px;">A ring holds a little grove — "our shared plot". Fills an app tile beautifully; reads as a community emblem.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 22px; background: #F6FAF5; border: 1px solid #E2ECE2; border-radius: 18px; padding: 20px 22px; display: flex; flex-wrap: wrap; gap: 18px; align-items: center;">
+      <div style="font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #8A9890;">All eleven, at icon size</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; flex: 1; justify-content: flex-end;">
+        <svg width="34" height="34" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-ascending"></use></svg>
+        <svg width="34" height="34" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-roots"></use></svg>
+        <svg width="34" height="34" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-rings"></use></svg>
+        <svg width="34" height="34" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-canopy"></use></svg>
+        <svg width="34" height="34" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-sprout"></use></svg>
+        <svg width="34" height="34" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-arrow"></use></svg>
+        <svg width="34" height="34" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-constellation"></use></svg>
+        <svg width="34" height="34" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-venn"></use></svg>
+        <svg width="34" height="34" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-heart"></use></svg>
+        <svg width="34" height="34" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-plus"></use></svg>
+        <svg width="34" height="34" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-circle"></use></svg>
+      </div>
+    </div>
+  </section>
+
+  <footer style="margin-top: 24px; border-top: 1px solid #DCE6DD; background: #EEF4EF;">
+    <div style="max-width: 980px; margin: 0 auto; padding: 30px 26px; display: flex; align-items: center; gap: 12px;">
+      <svg width="26" height="26" viewBox="0 0 100 100" style="color:#2E7D52;--sun:#E0A458"><use href="#cc-ascending"></use></svg>
+      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: #1E5238;">Grovely</span>
+      <span style="margin-left: auto; font-size: 13px; color: #6E7E74;">Symbol study · growing together</span>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+</body>
+</html>
