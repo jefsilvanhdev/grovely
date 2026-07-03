@@ -49,6 +49,16 @@ class _FocusSessionScreenState extends ConsumerState<FocusSessionScreen>
 
   @override
   Widget build(BuildContext context) {
+    // Sessão terminou com a sheet "desistir?" aberta → fecha a sheet; sem
+    // isso ela sobrevive sobre a tela de conclusão (QA M8).
+    ref.listen(focusSessionProvider.select((s) => s.phase), (prev, next) {
+      if (prev == FocusPhase.running && next != FocusPhase.running) {
+        Navigator.of(
+          context,
+        ).popUntil((route) => route is! ModalBottomSheetRoute);
+      }
+    });
+
     final state = ref.watch(focusSessionProvider);
     final running = state.phase == FocusPhase.running;
     // Sessão rodando é sempre imersiva/escura (mockup v6 "focus session — dark"),
@@ -130,6 +140,18 @@ class _Selecting extends ConsumerWidget {
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
+            const SizedBox(height: 4),
+            // Regra do jogo ANTES da primeira perda — descobrir o wither
+            // perdendo uma árvore era a pior fricção do teste de usabilidade.
+            Text(
+              l10n.focusRule,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant.withValues(
+                  alpha: 0.8,
+                ),
+              ),
+            ),
             const SizedBox(height: 14),
             DurationDial(
               options: FocusSessionController.durationOptions,
@@ -154,6 +176,9 @@ class _Selecting extends ConsumerWidget {
     );
   }
 }
+
+String _capitalize(String s) =>
+    s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
 
 // ── Running (imersivo) ───────────────────────────────────────────────────────
 class _Running extends ConsumerWidget {
@@ -238,7 +263,7 @@ class _Running extends ConsumerWidget {
                 ),
                 Text(
                   l10n.focusSessionMeta(
-                    speciesName(l10n, state.treeType),
+                    _capitalize(speciesName(l10n, state.treeType)),
                     state.durationMinutes,
                   ),
                   style: theme.textTheme.labelMedium?.copyWith(color: dim),
@@ -264,11 +289,18 @@ class _Running extends ConsumerWidget {
                 ),
               ),
             ),
-            Text(
-              fmt(state.secondsRemaining),
-              style: theme.textTheme.displayLarge?.copyWith(
-                color: Colors.white,
-                fontFeatures: const [FontFeature.tabularFigures()],
+            // liveRegion: TalkBack anuncia o tempo restante quando ele muda de
+            // minuto (anunciar todo segundo seria spam) — QA I6.
+            Semantics(
+              liveRegion: state.secondsRemaining % 60 == 0,
+              label: fmt(state.secondsRemaining),
+              excludeSemantics: true,
+              child: Text(
+                fmt(state.secondsRemaining),
+                style: theme.textTheme.displayLarge?.copyWith(
+                  color: Colors.white,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
               ),
             ),
             const SizedBox(height: 6),

@@ -87,35 +87,118 @@ class _Empty extends ConsumerWidget {
   }
 }
 
-Future<void> _createSheet(BuildContext context, WidgetRef ref) async {
-  final l10n = AppLocalizations.of(context);
-  final ctrl = TextEditingController();
-  await showModalBottomSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    showDragHandle: true,
-    builder: (sheetCtx) => Padding(
+Future<void> _createSheet(BuildContext context, WidgetRef ref) =>
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (_) => _CircleFormSheet.create(ref: ref),
+    );
+
+Future<void> _joinSheet(BuildContext context, WidgetRef ref) =>
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (_) => _CircleFormSheet.join(ref: ref),
+    );
+
+/// Sheet de criar/entrar num círculo: controller com dispose, botão trava
+/// durante o await (sem double-tap = dois círculos) e erro de rede aparece
+/// como offline, não como "código inválido" (QA C3/I5/M2).
+class _CircleFormSheet extends StatefulWidget {
+  const _CircleFormSheet.create({required this.ref}) : isJoin = false;
+  const _CircleFormSheet.join({required this.ref}) : isJoin = true;
+
+  final WidgetRef ref;
+  final bool isJoin;
+
+  @override
+  State<_CircleFormSheet> createState() => _CircleFormSheetState();
+}
+
+class _CircleFormSheetState extends State<_CircleFormSheet> {
+  final _ctrl = TextEditingController();
+  String? _error;
+  bool _busy = false;
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    final l10n = AppLocalizations.of(context);
+    final value = _ctrl.text.trim();
+    if (value.isEmpty || _busy) return;
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      final repo = widget.ref.read(circleRepositoryProvider);
+      if (widget.isJoin) {
+        await repo.joinByCode(value);
+      } else {
+        await repo.create(value);
+      }
+      widget.ref.invalidate(myCircleProvider);
+      if (mounted) Navigator.pop(context);
+    } on CircleException catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _busy = false;
+        _error = switch (e.kind) {
+          CircleError.full => l10n.circleFull,
+          CircleError.offline => l10n.circleOffline,
+          CircleError.notFound => l10n.circleInvalidCode,
+          CircleError.unknown =>
+            widget.isJoin ? l10n.circleInvalidCode : l10n.commonError,
+        };
+      });
+    } on Object {
+      if (!mounted) return;
+      setState(() {
+        _busy = false;
+        _error = l10n.commonError;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Padding(
       padding: EdgeInsets.fromLTRB(
         24,
         4,
         24,
-        MediaQuery.of(sheetCtx).viewInsets.bottom + 28,
+        MediaQuery.of(context).viewInsets.bottom + 28,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            l10n.circleCreate,
-            style: Theme.of(sheetCtx).textTheme.titleLarge,
+            widget.isJoin ? l10n.circleJoinTitle : l10n.circleCreate,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
           TextField(
-            controller: ctrl,
+            controller: _ctrl,
             autofocus: true,
+            enabled: !_busy,
+            textCapitalization: widget.isJoin
+                ? TextCapitalization.characters
+                : TextCapitalization.sentences,
+            onSubmitted: (_) => _submit(),
             decoration: InputDecoration(
-              labelText: l10n.circleNameLabel,
-              hintText: l10n.circleNameHint,
+              labelText: widget.isJoin
+                  ? l10n.circleCodeLabel
+                  : l10n.circleNameLabel,
+              hintText: widget.isJoin ? null : l10n.circleNameHint,
               border: const OutlineInputBorder(),
+              errorText: _error,
             ),
           ),
           const SizedBox(height: 16),
@@ -123,84 +206,22 @@ Future<void> _createSheet(BuildContext context, WidgetRef ref) async {
             width: double.infinity,
             height: 52,
             child: FilledButton(
-              onPressed: () async {
-                final name = ctrl.text.trim();
-                if (name.isEmpty) return;
-                await ref.read(circleRepositoryProvider).create(name);
-                ref.invalidate(myCircleProvider);
-                if (sheetCtx.mounted) Navigator.pop(sheetCtx);
-              },
-              child: Text(l10n.circleCreateCta),
+              onPressed: _busy ? null : _submit,
+              child: _busy
+                  ? const SizedBox(
+                      width: 22,
+                      height: 22,
+                      child: CircularProgressIndicator(strokeWidth: 2.5),
+                    )
+                  : Text(
+                      widget.isJoin ? l10n.circleJoinCta : l10n.circleCreateCta,
+                    ),
             ),
           ),
         ],
       ),
-    ),
-  );
-}
-
-Future<void> _joinSheet(BuildContext context, WidgetRef ref) async {
-  final l10n = AppLocalizations.of(context);
-  final ctrl = TextEditingController();
-  String? error;
-  await showModalBottomSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    showDragHandle: true,
-    builder: (sheetCtx) => StatefulBuilder(
-      builder: (sheetCtx, setSheet) => Padding(
-        padding: EdgeInsets.fromLTRB(
-          24,
-          4,
-          24,
-          MediaQuery.of(sheetCtx).viewInsets.bottom + 28,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              l10n.circleJoinTitle,
-              style: Theme.of(sheetCtx).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: ctrl,
-              autofocus: true,
-              textCapitalization: TextCapitalization.characters,
-              decoration: InputDecoration(
-                labelText: l10n.circleCodeLabel,
-                border: const OutlineInputBorder(),
-                errorText: error,
-              ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              height: 52,
-              child: FilledButton(
-                onPressed: () async {
-                  final code = ctrl.text.trim();
-                  if (code.isEmpty) return;
-                  try {
-                    await ref.read(circleRepositoryProvider).joinByCode(code);
-                    ref.invalidate(myCircleProvider);
-                    if (sheetCtx.mounted) Navigator.pop(sheetCtx);
-                  } on CircleException catch (e) {
-                    setSheet(
-                      () => error = e.kind == CircleError.full
-                          ? l10n.circleFull
-                          : l10n.circleInvalidCode,
-                    );
-                  }
-                },
-                child: Text(l10n.circleJoinCta),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
+    );
+  }
 }
 
 class _Detail extends ConsumerWidget {
@@ -392,9 +413,17 @@ class _Detail extends ConsumerWidget {
             const SizedBox(height: 8),
             TextButton(
               onPressed: () async {
-                await ref.read(circleRepositoryProvider).leave(circle.id);
-                ref.invalidate(myCircleProvider);
-                if (sheetCtx.mounted) Navigator.pop(sheetCtx);
+                try {
+                  await ref.read(circleRepositoryProvider).leave(circle.id);
+                  ref.invalidate(myCircleProvider);
+                  if (sheetCtx.mounted) Navigator.pop(sheetCtx);
+                } on Object {
+                  if (!sheetCtx.mounted) return;
+                  Navigator.pop(sheetCtx);
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(l10n.commonError)));
+                }
               },
               child: Text(l10n.circleLeave),
             ),

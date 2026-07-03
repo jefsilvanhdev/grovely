@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../core/theme/theme_mode_provider.dart';
 import '../../data/providers/garden_provider.dart';
@@ -55,10 +56,8 @@ class ProfileScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                TextButton(
-                  onPressed: () => context.go('/auth'),
-                  child: Text(l10n.profileSaveProgress),
-                ),
+                // "Salvar progresso" volta quando o auth real existir —
+                // hoje /auth é placeholder sem saída (QA I7).
               ],
             ),
             const SizedBox(height: 20),
@@ -122,23 +121,20 @@ class ProfileScreen extends ConsumerWidget {
               value: _themeLabel(l10n, ref.watch(themeModeProvider)),
               onTap: () => _themeSheet(context, ref),
             ),
-            _Row(
-              icon: Icons.lock_outline,
-              label: l10n.rowPrivacy,
-              onTap: () {},
-            ),
-            _Row(
-              icon: Icons.description_outlined,
-              label: l10n.rowTerms,
-              onTap: () {},
-            ),
-            _Row(icon: Icons.logout, label: l10n.rowSignOut, onTap: () {}),
+            // Privacidade/Termos entram quando as URLs existirem (gate do
+            // Play Console — Jeff); Sair, quando houver auth real. Rows mortas
+            // no beta minam a confiança (QA I7).
             const SizedBox(height: 12),
             Center(
-              child: Text(
-                '${l10n.appName} · v1.0.0',
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: scheme.onSurfaceVariant,
+              child: FutureBuilder(
+                future: PackageInfo.fromPlatform(),
+                builder: (context, snap) => Text(
+                  snap.hasData
+                      ? '${l10n.appName} · v${snap.data!.version}'
+                      : l10n.appName,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: scheme.onSurfaceVariant,
+                  ),
                 ),
               ),
             ),
@@ -230,6 +226,8 @@ class ProfileScreen extends ConsumerWidget {
                           await notif.enableStreakReminder(
                             title: l10n.notifStreakTitle,
                             body: l10n.notifStreakBody,
+                            channelName: l10n.notifChannelName,
+                            channelDescription: l10n.notifChannelDesc,
                           );
                         } else {
                           await notif.disableStreakReminder();

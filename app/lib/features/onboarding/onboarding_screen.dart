@@ -135,7 +135,12 @@ class _Welcome extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        const SymbolWatermark(size: 320),
+        // Deslocada pra baixo: watermark e título disputavam o mesmo centro e
+        // a copy passava por cima das árvores (design review P1).
+        const Align(
+          alignment: Alignment(0, 0.72),
+          child: SymbolWatermark(size: 300),
+        ),
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
           child: Column(
@@ -165,11 +170,9 @@ class _Welcome extends StatelessWidget {
                   child: Text(l10n.onbGetStarted),
                 ),
               ),
+              // "Já tenho uma conta" volta quando o auth real existir —
+              // hoje /auth é placeholder sem saída (QA I7, usability P1).
               const SizedBox(height: 4),
-              TextButton(
-                onPressed: () => context.go('/auth'),
-                child: Text(l10n.onbHaveAccount),
-              ),
             ],
           ),
         ),
@@ -228,6 +231,8 @@ class _Notif extends StatelessWidget {
                   await NotificationService.instance.enableStreakReminder(
                     title: l10n.notifStreakTitle,
                     body: l10n.notifStreakBody,
+                    channelName: l10n.notifChannelName,
+                    channelDescription: l10n.notifChannelDesc,
                   );
                 }
                 onNext();

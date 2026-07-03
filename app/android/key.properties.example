@@ -1,0 +1,13 @@
+# Assinatura de release do Grovely.
+#
+# 1. Gerar o keystore (uma vez, guardar com backup — perder = nunca mais
+#    atualizar o app no Play):
+#      keytool -genkey -v -keystore ~/keystores/grovely-release.jks \
+#        -keyalg RSA -keysize 2048 -validity 10000 -alias grovely
+#
+# 2. Copiar este arquivo para android/key.properties e preencher.
+#    key.properties está no .gitignore — NUNCA commitar senhas/keystore.
+storeFile=/Users/SEU_USUARIO/keystores/grovely-release.jks
+storePassword=TROCAR
+keyAlias=grovely
+keyPassword=TROCAR

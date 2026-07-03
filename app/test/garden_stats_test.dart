@@ -51,10 +51,7 @@ void main() {
     });
 
     test('streak atual vale quando termina ontem (hoje ainda sem sessão)', () {
-      final trees = [
-        _tree(at: daysAgo(1)),
-        _tree(at: daysAgo(2)),
-      ];
+      final trees = [_tree(at: daysAgo(1)), _tree(at: daysAgo(2))];
       final s = computeGardenStats(trees);
       expect(s.currentStreak, 2);
     });
@@ -85,10 +82,7 @@ void main() {
     });
 
     test('streak atual = 0 quando a sessão mais recente é antiga', () {
-      final trees = [
-        _tree(at: daysAgo(5)),
-        _tree(at: daysAgo(6)),
-      ];
+      final trees = [_tree(at: daysAgo(5)), _tree(at: daysAgo(6))];
       final s = computeGardenStats(trees);
       expect(s.currentStreak, 0);
       expect(s.longestStreak, 2);

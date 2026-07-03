@@ -5,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/theme/app_theme.dart';
 import '../../shared/widgets/grovely_mark.dart';
@@ -31,9 +32,17 @@ class _SplashScreenState extends State<SplashScreen> {
   // primeiro frame. Sem isso a animação corre por baixo da nativa.
   bool _revealed = false;
 
+  // Quem já passou pelo funil de boas-vindas vai direto pro app (QA C2:
+  // onboarding + paywall repetiam a cada cold start). Prefs resolve em ms,
+  // muito antes de a animação assentar; default = onboarding.
+  bool _onboardingDone = false;
+
   @override
   void initState() {
     super.initState();
+    SharedPreferences.getInstance().then((p) {
+      _onboardingDone = p.getBool('onboarding_done') ?? false;
+    });
     // Rede de segurança: se a animação nunca "assentar" (edge case), segue em
     // frente mesmo assim. A navegação normal vem do onSettled da marca.
     _timer = Timer(const Duration(seconds: 8), _leave);
@@ -44,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _leave() {
-    if (mounted) context.go('/onboarding');
+    if (mounted) context.go(_onboardingDone ? '/focus' : '/onboarding');
   }
 
   void _onSettled() {

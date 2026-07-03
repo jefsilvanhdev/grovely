@@ -47,23 +47,31 @@ class NotificationService {
           IOSFlutterLocalNotificationsPlugin
         >();
     if (ios != null) {
-      return await ios.requestPermissions(alert: true, badge: true, sound: true) ??
+      return await ios.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          ) ??
           false;
     }
     return false;
   }
 
   /// Liga o lembrete diário de streak com a copy passada (já localizada).
+  /// [channelName]/[channelDescription] aparecem nas configurações do sistema
+  /// — também localizados (QA M4: eram PT fixo pra usuários EN).
   Future<void> enableStreakReminder({
     required String title,
     required String body,
+    required String channelName,
+    required String channelDescription,
   }) async {
     await init();
-    const details = NotificationDetails(
+    final details = NotificationDetails(
       android: AndroidNotificationDetails(
         _channelId,
-        'Lembretes de streak',
-        channelDescription: 'Lembra de focar para manter sua sequência.',
+        channelName,
+        channelDescription: channelDescription,
         importance: Importance.defaultImportance,
         priority: Priority.defaultPriority,
       ),

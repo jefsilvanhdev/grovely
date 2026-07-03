@@ -78,18 +78,22 @@ class _GardenGrid extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 14),
+              // Pills só quando dizem algo: "0h" e "recorde = streak atual"
+              // no primeiro uso parecem debug (usability P1).
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  StatPill(
-                    icon: Icons.timer_outlined,
-                    label: l10n.statHoursFocused(stats.hours),
-                  ),
-                  StatPill(
-                    icon: Icons.emoji_events_outlined,
-                    label: l10n.statLongest(stats.longestStreak),
-                  ),
+                  if (stats.hours > 0)
+                    StatPill(
+                      icon: Icons.timer_outlined,
+                      label: l10n.statHoursFocused(stats.hours),
+                    ),
+                  if (stats.longestStreak > stats.currentStreak)
+                    StatPill(
+                      icon: Icons.emoji_events_outlined,
+                      label: l10n.statLongest(stats.longestStreak),
+                    ),
                   StatPill(
                     icon: Icons.spa_outlined,
                     label: l10n.statSpecies(stats.species),
@@ -127,6 +131,7 @@ class _TreeTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return PressableScale(
+      semanticLabel: speciesName(AppLocalizations.of(context), tree.type),
       onTap: () => showModalBottomSheet<void>(
         context: context,
         showDragHandle: true,

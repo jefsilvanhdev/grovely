@@ -74,6 +74,9 @@ dependencies:
   # Splash nativa — runtime preserve/remove: segura a splash nativa até o
   # Flutter estar pronto, pra animação da marca começar visível (sem corrida)
   flutter_native_splash: ^2.4.8
+  wakelock_plus: ^1.6.1
+  clock: ^1.1.2
+  package_info_plus: ^10.2.0
 
 dev_dependencies:
   flutter_test:

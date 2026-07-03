@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../features/auth/auth_screen.dart';
 import '../../features/circle/circle_screen.dart';
 import '../../features/focus_session/focus_session_screen.dart';
@@ -63,6 +64,13 @@ final GoRouter appRouter = GoRouter(
       ],
     ),
   ],
-  errorBuilder: (_, state) =>
-      Scaffold(body: Center(child: Text('Rota não encontrada: ${state.uri}'))),
+  errorBuilder: (context, state) => Scaffold(
+    body: Center(
+      child: Text(
+        // Localizado (QA M4 — era PT fixo).
+        '${AppLocalizations.of(context).commonError}\n${state.uri}',
+        textAlign: TextAlign.center,
+      ),
+    ),
+  ),
 );

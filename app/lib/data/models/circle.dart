@@ -34,7 +34,9 @@ class MemberStat {
 
   factory MemberStat.fromJson(Map<String, dynamic> j) => MemberStat(
     userId: j['user_id'] as String,
-    displayName: (j['display_name'] as String?) ?? 'Member',
+    // Vazio (não "Member" EN fixo): a UI já trata nome vazio com '?' no
+    // avatar; texto de fallback localizado fica na camada de UI (QA M4).
+    displayName: (j['display_name'] as String?) ?? '',
     weeklyTrees: (j['weekly_trees'] as int?) ?? 0,
   );
 }

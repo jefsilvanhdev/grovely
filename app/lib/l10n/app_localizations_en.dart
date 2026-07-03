@@ -128,7 +128,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String streakDays(int count) {
-    return '$count-day streak';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count-day streak',
+      one: '1-day streak',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -167,7 +173,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String statLongest(int count) {
-    return 'Best: $count days';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return 'Best: $_temp0';
   }
 
   @override
@@ -310,9 +322,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pwTrialCta => 'Try free for 21 days';
 
   @override
-  String pwTrialSub(String price) {
-    return 'Free for 21 days, then $price. Cancel anytime, two taps.';
-  }
+  String get pwTrialSub => 'Free for 21 days. Cancel anytime, two taps.';
+
+  @override
+  String get focusRule =>
+      'Leaving the app before time\'s up withers the tree — quick switches get a grace period.';
 
   @override
   String get pwAnnual => 'Annual';
@@ -358,9 +372,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pwRowRecap => 'Recap themes';
-
-  @override
-  String get pwPriceTbd => 'price TBD';
 
   @override
   String get profileGuest => 'Guest';
@@ -522,6 +533,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get circleGroveOverline => 'Shared grove · this week';
+
+  @override
+  String get circleOffline =>
+      'No connection right now — check your internet and try again.';
+
+  @override
+  String get notifChannelName => 'Streak reminders';
+
+  @override
+  String get notifChannelDesc =>
+      'Reminds you to focus and keep your streak alive.';
 
   @override
   String circleGoal(int planted, int goal) {

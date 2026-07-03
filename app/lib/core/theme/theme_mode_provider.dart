@@ -1,15 +1,35 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Controla o [ThemeMode] do app. Padrão: segue o sistema.
-///
-/// Persistência (shared_preferences) entra quando o Agente A/perfil definir
-/// o seletor de tema; por ora vive só em memória.
+/// Escolha persiste em shared_preferences (QA M10 — antes evaporava no boot).
 class ThemeModeNotifier extends Notifier<ThemeMode> {
-  @override
-  ThemeMode build() => ThemeMode.system;
+  static const _pref = 'theme_mode';
 
-  void set(ThemeMode mode) => state = mode;
+  @override
+  ThemeMode build() {
+    // Restore assíncrono: primeiro frame segue o sistema, prefs resolve em ms.
+    unawaited(
+      SharedPreferences.getInstance().then((p) {
+        final saved = p.getString(_pref);
+        final mode = ThemeMode.values.asNameMap()[saved];
+        if (mode != null && mode != state) state = mode;
+      }),
+    );
+    return ThemeMode.system;
+  }
+
+  void set(ThemeMode mode) {
+    state = mode;
+    unawaited(
+      SharedPreferences.getInstance().then(
+        (p) => p.setString(_pref, mode.name),
+      ),
+    );
+  }
 }
 
 final themeModeProvider = NotifierProvider<ThemeModeNotifier, ThemeMode>(

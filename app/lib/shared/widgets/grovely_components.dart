@@ -93,10 +93,7 @@ class GrovelyError extends StatelessWidget {
             ),
             if (onRetry != null) ...[
               const SizedBox(height: GrovelySpacing.md),
-              OutlinedButton(
-                onPressed: onRetry,
-                child: Text(l10n.commonRetry),
-              ),
+              OutlinedButton(onPressed: onRetry, child: Text(l10n.commonRetry)),
             ],
           ],
         ),
@@ -117,13 +114,16 @@ class GrovelySkeletonBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return Container(
-          height: height,
-          decoration: BoxDecoration(
-            color: scheme.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(radius),
-          ),
-        )
+    final box = Container(
+      height: height,
+      decoration: BoxDecoration(
+        color: scheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(radius),
+      ),
+    );
+    // Reduce-motion: bloco estático, sem shimmer perpétuo (QA M9).
+    if (GrovelyMotion.reduced(context)) return box;
+    return box
         .animate(onPlay: (ctrl) => ctrl.repeat())
         .shimmer(duration: 1200.ms, color: scheme.surface);
   }
@@ -143,10 +143,18 @@ BoxDecoration grovelyCard(BuildContext context, {double radius = 20}) {
 }
 
 /// Feedback de toque: leve scale-down + haptic. Honra reduce-motion.
+/// [semanticLabel] expõe o toque como botão pro leitor de tela — sem ele,
+/// GestureDetector puro é invisível pro TalkBack (QA I6).
 class PressableScale extends StatefulWidget {
-  const PressableScale({super.key, required this.child, this.onTap});
+  const PressableScale({
+    super.key,
+    required this.child,
+    this.onTap,
+    this.semanticLabel,
+  });
   final Widget child;
   final VoidCallback? onTap;
+  final String? semanticLabel;
 
   @override
   State<PressableScale> createState() => _PressableScaleState();
@@ -158,7 +166,7 @@ class _PressableScaleState extends State<PressableScale> {
   @override
   Widget build(BuildContext context) {
     final reduced = GrovelyMotion.reduced(context);
-    return GestureDetector(
+    final child = GestureDetector(
       onTapDown: (_) {
         setState(() => _down = true);
         HapticFeedback.selectionClick();
@@ -172,6 +180,12 @@ class _PressableScaleState extends State<PressableScale> {
         curve: Curves.easeOut,
         child: widget.child,
       ),
+    );
+    if (widget.semanticLabel == null) return child;
+    return Semantics(
+      button: widget.onTap != null,
+      label: widget.semanticLabel,
+      child: child,
     );
   }
 }
@@ -297,30 +311,37 @@ class DurationDial extends StatelessWidget {
         children: [
           for (final min in options)
             Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  HapticFeedback.selectionClick();
-                  onSelected(min);
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeOut,
-                  height: 44,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: selected == min
-                        ? scheme.primary
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: Text(
-                    '$min',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
+              // TalkBack: sem isto o dial é invisível pro leitor de tela e o
+              // usuário nem descobre que existe escolha de duração (QA I6).
+              child: Semantics(
+                button: true,
+                selected: selected == min,
+                label: AppLocalizations.of(context).minutesShort(min),
+                child: GestureDetector(
+                  onTap: () {
+                    HapticFeedback.selectionClick();
+                    onSelected(min);
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeOut,
+                    height: 44,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
                       color: selected == min
-                          ? scheme.onPrimary
-                          : scheme.onSurfaceVariant,
+                          ? scheme.primary
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Text(
+                      '$min',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                        color: selected == min
+                            ? scheme.onPrimary
+                            : scheme.onSurfaceVariant,
+                      ),
                     ),
                   ),
                 ),

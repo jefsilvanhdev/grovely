@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/theme/app_theme.dart';
 import '../../l10n/app_localizations.dart';
@@ -17,7 +20,17 @@ class PaywallScreen extends StatefulWidget {
 class _PaywallScreenState extends State<PaywallScreen> {
   bool annual = true;
 
-  void _enterApp() => context.go('/focus');
+  void _enterApp() {
+    // Fim do funil de boas-vindas: cold starts seguintes pulam onboarding e
+    // paywall (a splash lê esta flag). Fire-and-forget: prefs local não pode
+    // segurar a navegação.
+    unawaited(
+      SharedPreferences.getInstance().then(
+        (p) => p.setBool('onboarding_done', true),
+      ),
+    );
+    context.go('/focus');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +109,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  l10n.pwTrialSub(l10n.pwPriceTbd),
+                  // Preço só volta aqui quando o RevenueCat trouxer o real —
+                  // "preço a definir" na cara do usuário minava a confiança
+                  // (usability P1, persona cética).
+                  l10n.pwTrialSub,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: scheme.onSurfaceVariant,
@@ -214,48 +230,54 @@ class _PlanToggle extends StatelessWidget {
     Widget seg(String label, bool isAnnual) {
       final sel = annual == isAnnual;
       return Expanded(
-        child: GestureDetector(
-          onTap: () => onChanged(isAnnual),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            height: 48,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: sel ? scheme.primary : Colors.transparent,
-              borderRadius: BorderRadius.circular(999),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    color: sel ? scheme.onPrimary : scheme.onSurfaceVariant,
+        // TalkBack: toggle anual/mensal precisa anunciar e ativar (QA I6).
+        child: Semantics(
+          button: true,
+          selected: sel,
+          label: label,
+          child: GestureDetector(
+            onTap: () => onChanged(isAnnual),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              height: 48,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: sel ? scheme.primary : Colors.transparent,
+                borderRadius: BorderRadius.circular(999),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: sel ? scheme.onPrimary : scheme.onSurfaceVariant,
+                    ),
                   ),
-                ),
-                if (isAnnual) ...[
-                  const SizedBox(width: 6),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 6,
-                      vertical: 2,
-                    ),
-                    decoration: BoxDecoration(
-                      color: sel ? scheme.onPrimary : scheme.secondary,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Text(
-                      saveLabel,
-                      style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w700,
-                        color: sel ? scheme.primary : scheme.onSecondary,
+                  if (isAnnual) ...[
+                    const SizedBox(width: 6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: sel ? scheme.onPrimary : scheme.secondary,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        saveLabel,
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: sel ? scheme.primary : scheme.onSecondary,
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),

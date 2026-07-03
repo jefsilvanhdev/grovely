@@ -305,7 +305,7 @@ abstract class AppLocalizations {
   /// No description provided for @streakDays.
   ///
   /// In en, this message translates to:
-  /// **'{count}-day streak'**
+  /// **'{count, plural, =1{1-day streak} other{{count}-day streak}}'**
   String streakDays(int count);
 
   /// No description provided for @focusLiveNow.
@@ -359,7 +359,7 @@ abstract class AppLocalizations {
   /// No description provided for @statLongest.
   ///
   /// In en, this message translates to:
-  /// **'Best: {count} days'**
+  /// **'Best: {count, plural, =1{1 day} other{{count} days}}'**
   String statLongest(int count);
 
   /// No description provided for @statSpecies.
@@ -629,8 +629,14 @@ abstract class AppLocalizations {
   /// No description provided for @pwTrialSub.
   ///
   /// In en, this message translates to:
-  /// **'Free for 21 days, then {price}. Cancel anytime, two taps.'**
-  String pwTrialSub(String price);
+  /// **'Free for 21 days. Cancel anytime, two taps.'**
+  String get pwTrialSub;
+
+  /// No description provided for @focusRule.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaving the app before time\'s up withers the tree — quick switches get a grace period.'**
+  String get focusRule;
 
   /// No description provided for @pwAnnual.
   ///
@@ -721,12 +727,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recap themes'**
   String get pwRowRecap;
-
-  /// No description provided for @pwPriceTbd.
-  ///
-  /// In en, this message translates to:
-  /// **'price TBD'**
-  String get pwPriceTbd;
 
   /// No description provided for @profileGuest.
   ///
@@ -1003,6 +1003,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Shared grove · this week'**
   String get circleGroveOverline;
+
+  /// No description provided for @circleOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'No connection right now — check your internet and try again.'**
+  String get circleOffline;
+
+  /// No description provided for @notifChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak reminders'**
+  String get notifChannelName;
+
+  /// No description provided for @notifChannelDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminds you to focus and keep your streak alive.'**
+  String get notifChannelDesc;
 
   /// No description provided for @circleGoal.
   ///

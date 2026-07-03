@@ -36,7 +36,11 @@ Future<void> main() async {
 Future<void> _bootstrapServices() async {
   try {
     await SupabaseService.instance.init();
-    await SupabaseService.instance.ensureSignedIn();
+    // Locale real do device — o default 'pt' subia pro profiles de todo
+    // mundo, inclusive usuários EN (QA I9).
+    await SupabaseService.instance.ensureSignedIn(
+      locale: WidgetsBinding.instance.platformDispatcher.locale.languageCode,
+    );
   } catch (_) {}
 
   try {

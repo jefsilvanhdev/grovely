@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import '../models/circle.dart';
@@ -35,21 +36,54 @@ class CircleRepository {
     return c == null ? null : Circle.fromJson(c);
   }
 
+  /// Sem Supabase inicializado/autenticado, `instance.client` lança
+  /// StateError cru — aqui vira erro de negócio que a UI sabe mostrar.
+  void _requireReady() {
+    if (!_ready) throw CircleException(CircleError.offline);
+  }
+
+  /// Timeout/DNS/auth não podem virar "código inválido" na UI (QA I5).
+  Never _mapError(Object e) {
+    final msg = e.toString();
+    if (msg.contains('circle_not_found')) {
+      throw CircleException(CircleError.notFound);
+    }
+    if (msg.contains('circle_full')) {
+      throw CircleException(CircleError.full);
+    }
+    if (e is SocketException ||
+        msg.contains('SocketException') ||
+        msg.contains('Failed host lookup') ||
+        msg.contains('Connection') ||
+        msg.contains('AuthException')) {
+      throw CircleException(CircleError.offline);
+    }
+    throw CircleException(CircleError.unknown);
+  }
+
   Future<Circle> create(String name) async {
-    final client = SupabaseService.instance.client;
-    final row = await client
-        .from('circles')
-        .insert({'name': name, 'invite_code': _genCode(), 'created_by': _uid})
-        .select()
-        .single();
-    await client.from('circle_members').insert({
-      'circle_id': row['id'],
-      'user_id': _uid,
-    });
-    return Circle.fromJson(row);
+    _requireReady();
+    try {
+      final client = SupabaseService.instance.client;
+      final row = await client
+          .from('circles')
+          .insert({'name': name, 'invite_code': _genCode(), 'created_by': _uid})
+          .select()
+          .single();
+      await client.from('circle_members').insert({
+        'circle_id': row['id'],
+        'user_id': _uid,
+      });
+      return Circle.fromJson(row);
+    } on CircleException {
+      rethrow;
+    } on Object catch (e) {
+      _mapError(e);
+    }
   }
 
   Future<Circle> joinByCode(String code) async {
+    _requireReady();
     try {
       final id =
           await SupabaseService.instance.client.rpc(
@@ -63,15 +97,10 @@ class CircleRepository {
           .eq('id', id)
           .single();
       return Circle.fromJson(row);
+    } on CircleException {
+      rethrow;
     } on Object catch (e) {
-      final msg = e.toString();
-      if (msg.contains('circle_not_found')) {
-        throw CircleException(CircleError.notFound);
-      }
-      if (msg.contains('circle_full')) {
-        throw CircleException(CircleError.full);
-      }
-      throw CircleException(CircleError.unknown);
+      _mapError(e);
     }
   }
 
@@ -88,10 +117,15 @@ class CircleRepository {
   }
 
   Future<void> leave(String circleId) async {
-    await SupabaseService.instance.client
-        .from('circle_members')
-        .delete()
-        .eq('circle_id', circleId)
-        .eq('user_id', _uid!);
+    _requireReady();
+    try {
+      await SupabaseService.instance.client
+          .from('circle_members')
+          .delete()
+          .eq('circle_id', circleId)
+          .eq('user_id', _uid!);
+    } on Object catch (e) {
+      _mapError(e);
+    }
   }
 }

@@ -290,7 +290,8 @@ class _MarkPainter extends CustomPainter {
 
   void _paintTree(Canvas canvas, _Tree tree, double grow) {
     if (grow <= 0) return;
-    final paint = Paint()..color = tree.color.withValues(alpha: grow.clamp(0, 1));
+    final paint = Paint()
+      ..color = tree.color.withValues(alpha: grow.clamp(0, 1));
     canvas.save();
     // Cresce da base: escala em torno do pé do tronco.
     canvas.translate(tree.base.dx, tree.base.dy);

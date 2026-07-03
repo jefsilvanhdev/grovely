@@ -129,7 +129,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String streakDays(int count) {
-    return 'sequência de $count dias';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'sequência de $count dias',
+      one: 'sequência de 1 dia',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -168,7 +174,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String statLongest(int count) {
-    return 'Recorde: $count dias';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count dias',
+      one: '1 dia',
+    );
+    return 'Recorde: $_temp0';
   }
 
   @override
@@ -310,9 +322,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pwTrialCta => 'Testar grátis por 21 dias';
 
   @override
-  String pwTrialSub(String price) {
-    return 'Grátis por 21 dias, depois $price. Cancela quando quiser, em dois toques.';
-  }
+  String get pwTrialSub =>
+      'Grátis por 21 dias. Cancela quando quiser, em dois toques.';
+
+  @override
+  String get focusRule =>
+      'Sair do app antes do fim murcha a árvore — trocas rápidas têm carência.';
 
   @override
   String get pwAnnual => 'Anual';
@@ -358,9 +373,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get pwRowRecap => 'Temas de recap';
-
-  @override
-  String get pwPriceTbd => 'preço a definir';
 
   @override
   String get profileGuest => 'Visitante';
@@ -521,6 +533,16 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get circleGroveOverline => 'Bosque do círculo · esta semana';
+
+  @override
+  String get circleOffline =>
+      'Sem conexão agora — confira sua internet e tente de novo.';
+
+  @override
+  String get notifChannelName => 'Lembretes de streak';
+
+  @override
+  String get notifChannelDesc => 'Lembra de focar para manter sua sequência.';
 
   @override
   String circleGoal(int planted, int goal) {
