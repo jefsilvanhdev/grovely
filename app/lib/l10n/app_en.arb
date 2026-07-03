@@ -25,6 +25,7 @@
   "commonContinue": "Continue",
   "commonCancel": "Cancel",
   "commonRetry": "Try again",
+  "commonSave": "Save",
   "commonLoading": "Loading…",
   "commonError": "That didn't work — let's try again.",
 
@@ -198,5 +199,41 @@
   "@memberWeekly": { "placeholders": { "count": { "type": "int" } } },
   "leagueSolo": "Join a circle and the league opens up.",
   "leagueTitleWeek": "This week",
-  "leagueYou": "You"
+  "leagueYou": "You",
+
+  "leagueScore": "{n, plural, =1{1 tree} other{{n} trees}}",
+  "@leagueScore": { "placeholders": { "n": { "type": "int" } } },
+  "leagueEndsIn": "ends in {time}",
+  "@leagueEndsIn": { "placeholders": { "time": { "type": "String" } } },
+  "leagueYourPlace": "{rank} place · {n, plural, =1{1 tree} other{{n} trees}}",
+  "@leagueYourPlace": { "placeholders": { "rank": { "type": "String" }, "n": { "type": "int" } } },
+  "leagueDeltaAhead": "{name} is {n, plural, =1{1 tree} other{{n} trees}} behind you 🔥",
+  "@leagueDeltaAhead": { "placeholders": { "name": { "type": "String" }, "n": { "type": "int" } } },
+  "leagueDeltaBehind": "{n, plural, =1{1 tree} other{{n} trees}} to pass {name}",
+  "@leagueDeltaBehind": { "placeholders": { "n": { "type": "int" }, "name": { "type": "String" } } },
+
+  "circleWhoPlanted": "Who planted this week",
+  "circleCopyCode": "Copy code",
+  "circleCodeCopied": "Code copied!",
+
+  "planPlusOverline": "GROVELY PLUS",
+  "planActiveBadge": "Active",
+  "planTrialBadge": "Trial",
+  "planMemberSince": "Member since {date}",
+  "@planMemberSince": { "placeholders": { "date": { "type": "String" } } },
+  "planRenews": "Renews {date}",
+  "@planRenews": { "placeholders": { "date": { "type": "String" } } },
+  "planTrialDaysLeft": "{n, plural, =1{1 day left in your trial} other{{n} days left in your trial}}",
+  "@planTrialDaysLeft": { "placeholders": { "n": { "type": "int" } } },
+  "planManage": "Manage subscription",
+  "planBenefitCircles": "All circles",
+  "planBenefitSpecies": "Every species",
+  "planBenefitThemes": "Garden themes",
+  "planBenefitStats": "Deep-focus stats",
+  "planFreeUpsell": "Meet Grovely Plus",
+  "pwAlreadyPlus": "You're already Plus — everything's unlocked.",
+
+  "profileNameLabel": "Your name",
+  "profileNameHint": "How your circle sees you",
+  "profileEditName": "Edit name"
 }

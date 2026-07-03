@@ -112,11 +112,19 @@ class _GardenGrid extends ConsumerWidget {
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
           ),
-          // Último slot é o convite pra plantar a próxima (mockup v6).
+          // Slot "+" convida a próxima árvore. Jardim cheio (3+ fileiras): o
+          // "+" vem PRIMEIRO — no fim, ficava abaixo da dobra e o CTA de
+          // plantar sumia (review populado P1-2). Jardim novo: match do mockup.
           itemCount: trees.length + 1,
-          itemBuilder: (context, i) => i == trees.length
-              ? const _PlantMoreTile().staggerIn(context, i)
-              : _TreeTile(tree: trees[i]).staggerIn(context, i),
+          itemBuilder: (context, i) {
+            final plusFirst = trees.length >= 9;
+            final plusIndex = plusFirst ? 0 : trees.length;
+            if (i == plusIndex) {
+              return const _PlantMoreTile().staggerIn(context, i);
+            }
+            final tree = trees[plusFirst ? i - 1 : i];
+            return _TreeTile(tree: tree).staggerIn(context, i);
+          },
         ),
       ],
     );

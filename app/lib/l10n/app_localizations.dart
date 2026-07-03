@@ -212,6 +212,12 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get commonRetry;
 
+  /// No description provided for @commonSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get commonSave;
+
   /// No description provided for @commonLoading.
   ///
   /// In en, this message translates to:
@@ -1081,6 +1087,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You'**
   String get leagueYou;
+
+  /// No description provided for @leagueScore.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 tree} other{{n} trees}}'**
+  String leagueScore(int n);
+
+  /// No description provided for @leagueEndsIn.
+  ///
+  /// In en, this message translates to:
+  /// **'ends in {time}'**
+  String leagueEndsIn(String time);
+
+  /// No description provided for @leagueYourPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'{rank} place · {n, plural, =1{1 tree} other{{n} trees}}'**
+  String leagueYourPlace(String rank, int n);
+
+  /// No description provided for @leagueDeltaAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is {n, plural, =1{1 tree} other{{n} trees}} behind you 🔥'**
+  String leagueDeltaAhead(String name, int n);
+
+  /// No description provided for @leagueDeltaBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 tree} other{{n} trees}} to pass {name}'**
+  String leagueDeltaBehind(int n, String name);
+
+  /// No description provided for @circleWhoPlanted.
+  ///
+  /// In en, this message translates to:
+  /// **'Who planted this week'**
+  String get circleWhoPlanted;
+
+  /// No description provided for @circleCopyCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy code'**
+  String get circleCopyCode;
+
+  /// No description provided for @circleCodeCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Code copied!'**
+  String get circleCodeCopied;
+
+  /// No description provided for @planPlusOverline.
+  ///
+  /// In en, this message translates to:
+  /// **'GROVELY PLUS'**
+  String get planPlusOverline;
+
+  /// No description provided for @planActiveBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get planActiveBadge;
+
+  /// No description provided for @planTrialBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Trial'**
+  String get planTrialBadge;
+
+  /// No description provided for @planMemberSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Member since {date}'**
+  String planMemberSince(String date);
+
+  /// No description provided for @planRenews.
+  ///
+  /// In en, this message translates to:
+  /// **'Renews {date}'**
+  String planRenews(String date);
+
+  /// No description provided for @planTrialDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 day left in your trial} other{{n} days left in your trial}}'**
+  String planTrialDaysLeft(int n);
+
+  /// No description provided for @planManage.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage subscription'**
+  String get planManage;
+
+  /// No description provided for @planBenefitCircles.
+  ///
+  /// In en, this message translates to:
+  /// **'All circles'**
+  String get planBenefitCircles;
+
+  /// No description provided for @planBenefitSpecies.
+  ///
+  /// In en, this message translates to:
+  /// **'Every species'**
+  String get planBenefitSpecies;
+
+  /// No description provided for @planBenefitThemes.
+  ///
+  /// In en, this message translates to:
+  /// **'Garden themes'**
+  String get planBenefitThemes;
+
+  /// No description provided for @planBenefitStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Deep-focus stats'**
+  String get planBenefitStats;
+
+  /// No description provided for @planFreeUpsell.
+  ///
+  /// In en, this message translates to:
+  /// **'Meet Grovely Plus'**
+  String get planFreeUpsell;
+
+  /// No description provided for @pwAlreadyPlus.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re already Plus — everything\'s unlocked.'**
+  String get pwAlreadyPlus;
+
+  /// No description provided for @profileNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get profileNameLabel;
+
+  /// No description provided for @profileNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'How your circle sees you'**
+  String get profileNameHint;
+
+  /// No description provided for @profileEditName.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit name'**
+  String get profileEditName;
 }
 
 class _AppLocalizationsDelegate

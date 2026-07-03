@@ -66,6 +66,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonRetry => 'Try again';
 
   @override
+  String get commonSave => 'Save';
+
+  @override
   String get commonLoading => 'Loading…';
 
   @override
@@ -580,4 +583,122 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get leagueYou => 'You';
+
+  @override
+  String leagueScore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n trees',
+      one: '1 tree',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String leagueEndsIn(String time) {
+    return 'ends in $time';
+  }
+
+  @override
+  String leagueYourPlace(String rank, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n trees',
+      one: '1 tree',
+    );
+    return '$rank place · $_temp0';
+  }
+
+  @override
+  String leagueDeltaAhead(String name, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n trees',
+      one: '1 tree',
+    );
+    return '$name is $_temp0 behind you 🔥';
+  }
+
+  @override
+  String leagueDeltaBehind(int n, String name) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n trees',
+      one: '1 tree',
+    );
+    return '$_temp0 to pass $name';
+  }
+
+  @override
+  String get circleWhoPlanted => 'Who planted this week';
+
+  @override
+  String get circleCopyCode => 'Copy code';
+
+  @override
+  String get circleCodeCopied => 'Code copied!';
+
+  @override
+  String get planPlusOverline => 'GROVELY PLUS';
+
+  @override
+  String get planActiveBadge => 'Active';
+
+  @override
+  String get planTrialBadge => 'Trial';
+
+  @override
+  String planMemberSince(String date) {
+    return 'Member since $date';
+  }
+
+  @override
+  String planRenews(String date) {
+    return 'Renews $date';
+  }
+
+  @override
+  String planTrialDaysLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n days left in your trial',
+      one: '1 day left in your trial',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get planManage => 'Manage subscription';
+
+  @override
+  String get planBenefitCircles => 'All circles';
+
+  @override
+  String get planBenefitSpecies => 'Every species';
+
+  @override
+  String get planBenefitThemes => 'Garden themes';
+
+  @override
+  String get planBenefitStats => 'Deep-focus stats';
+
+  @override
+  String get planFreeUpsell => 'Meet Grovely Plus';
+
+  @override
+  String get pwAlreadyPlus => 'You\'re already Plus — everything\'s unlocked.';
+
+  @override
+  String get profileNameLabel => 'Your name';
+
+  @override
+  String get profileNameHint => 'How your circle sees you';
+
+  @override
+  String get profileEditName => 'Edit name';
 }

@@ -1,23 +1,28 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/theme/app_theme.dart';
+import '../../data/providers/entitlement_provider.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets/grovely_mark.dart';
 
 /// Paywall rígido e honesto (§7). RevenueCat/billing reais = Agente D.
 /// Preços ainda placeholder (pendência do Jeff) — nunca mostra preço falso.
-class PaywallScreen extends StatefulWidget {
+/// Assinante (trial/plus) não vê venda: cai na variante "já é Plus" com
+/// gestão nativa (review populado P0 — guard cobre deep links e funil).
+class PaywallScreen extends ConsumerStatefulWidget {
   const PaywallScreen({super.key});
 
   @override
-  State<PaywallScreen> createState() => _PaywallScreenState();
+  ConsumerState<PaywallScreen> createState() => _PaywallScreenState();
 }
 
-class _PaywallScreenState extends State<PaywallScreen> {
+class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   bool annual = true;
 
   void _enterApp() {
@@ -34,11 +39,55 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final paying = ref.watch(entitlementProvider).isPaying;
     // Paywall imersivo escuro (mockup v6 "premium paywall — dark"), com a
     // marca no topo — momento de brand, independente do tema do sistema.
     return Theme(
       data: AppTheme.dark(),
-      child: Builder(builder: _buildDark),
+      child: Builder(builder: paying ? _buildAlreadyPlus : _buildDark),
+    );
+  }
+
+  Widget _buildAlreadyPlus(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return Scaffold(
+      backgroundColor: const Color(0xFF0F1A15),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const GrovelyMark(size: 140, animate: false),
+              const SizedBox(height: 20),
+              Text(
+                l10n.pwAlreadyPlus,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.titleLarge,
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                height: 52,
+                child: FilledButton(
+                  onPressed: _enterApp,
+                  child: Text(l10n.commonContinue),
+                ),
+              ),
+              TextButton(
+                onPressed: () => launchUrl(
+                  Uri.parse(
+                    'https://play.google.com/store/account/subscriptions?package=com.grovely.app',
+                  ),
+                  mode: LaunchMode.externalApplication,
+                ),
+                child: Text(l10n.planManage),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

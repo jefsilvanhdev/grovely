@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
+
+import '../../core/theme/app_colors.dart';
 
 import '../../data/models/circle.dart';
 import '../../data/models/tree.dart';
@@ -224,6 +227,58 @@ class _CircleFormSheetState extends State<_CircleFormSheet> {
   }
 }
 
+/// Linha de membro: contribuição da semana como ícones (até 8; acima vira
+/// "×N") — soma visual ao bosque em vez de convidar a comparar números.
+class _MemberRow extends StatelessWidget {
+  const _MemberRow({required this.member});
+  final MemberStat member;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final healthy = theme.brightness == Brightness.dark
+        ? AppColors.treeHealthyDark
+        : AppColors.treeHealthy;
+    final (bg, fg) = avatarColor(context, member.userId);
+    final n = member.weeklyTrees;
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: CircleAvatar(
+        backgroundColor: bg,
+        child: Text(
+          member.displayName.isNotEmpty
+              ? member.displayName[0].toUpperCase()
+              : '?',
+          style: TextStyle(color: fg, fontWeight: FontWeight.w600),
+        ),
+      ),
+      title: Text(member.displayName),
+      trailing: n <= 8
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (var i = 0; i < n; i++)
+                  Icon(Icons.park, size: 14, color: healthy),
+              ],
+            )
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.park, size: 14, color: healthy),
+                const SizedBox(width: 3),
+                Text(
+                  '×$n',
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+    );
+  }
+}
+
 class _Detail extends ConsumerWidget {
   const _Detail({required this.circle});
   final Circle circle;
@@ -244,14 +299,13 @@ class _Detail extends ConsumerWidget {
               Expanded(
                 child: Text(circle.name, style: theme.textTheme.headlineSmall),
               ),
+              // person_add (não ios_share): o mesmo glifo já significa
+              // "recap" no jardim (review populado P2-4). O código do convite
+              // vive na sheet, não exposto na tela (P2-5).
               IconButton(
                 tooltip: l10n.circleInvite,
-                onPressed: () => SharePlus.instance.share(
-                  ShareParams(
-                    text: '${circle.name} · Grovely: ${circle.inviteCode}',
-                  ),
-                ),
-                icon: const Icon(Icons.ios_share),
+                onPressed: () => _inviteSheet(context, circle),
+                icon: const Icon(Icons.person_add_alt),
               ),
               PopupMenuButton<String>(
                 onSelected: (_) => _confirmLeave(context, ref),
@@ -261,13 +315,7 @@ class _Detail extends ConsumerWidget {
               ),
             ],
           ),
-          Text(
-            '${l10n.circleCodeLabel}: ${circle.inviteCode}',
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           members.when(
             loading: () => const Center(
               child: Padding(
@@ -317,65 +365,142 @@ class _Detail extends ConsumerWidget {
                           style: theme.textTheme.titleMedium,
                         ),
                         const SizedBox(height: 12),
-                        // Jardim coletivo: cada árvore plantada na semana enche
-                        // o bosque; vagas restantes ficam como brotos esmaecidos.
+                        // Bosque legível: máx 12 árvores em 30px (escala onde
+                        // a Illustration 2.0 respira) + chip do excedente; a
+                        // barra carrega o número real (review populado P1-3).
                         Wrap(
                           spacing: 6,
                           runSpacing: 4,
+                          crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
-                            for (var i = 0; i < goal.clamp(0, 36); i++)
-                              SizedBox(
-                                width: 22,
-                                height: 28,
-                                child: i < planted
-                                    ? TreeView(
-                                        type: TreeType
-                                            .values[i % TreeType.values.length],
-                                        stage: TreeStage.young,
-                                        size: 22,
-                                      )
-                                    : Icon(
-                                        Icons.eco_outlined,
-                                        size: 16,
-                                        color: theme.colorScheme.outline,
-                                      ),
+                            for (var i = 0; i < planted.clamp(0, 12); i++)
+                              TreeView(
+                                // Hash estável ≠ sequência repetida (papel de
+                                // parede); espécies reais quando o RPC trouxer.
+                                type:
+                                    TreeType.values[(i * 7 + 3) %
+                                        TreeType.values.length],
+                                stage: TreeStage.young,
+                                size: 30,
+                              ),
+                            if (planted > 12)
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 3,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: theme.colorScheme.primaryContainer,
+                                  borderRadius: BorderRadius.circular(999),
+                                ),
+                                child: Text(
+                                  '+${planted - 12}',
+                                  style: theme.textTheme.labelSmall?.copyWith(
+                                    color: theme.colorScheme.onPrimaryContainer,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
                               ),
                           ],
+                        ),
+                        const SizedBox(height: 12),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(999),
+                          child: LinearProgressIndicator(
+                            value: goal == 0
+                                ? 0
+                                : (planted / goal).clamp(0.0, 1.0),
+                            minHeight: 6,
+                            backgroundColor:
+                                theme.colorScheme.surfaceContainerHighest,
+                          ),
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Text(l10n.circleMembers, style: theme.textTheme.titleMedium),
+                  // Cooperação, não ranking: contribuição em ícones — o número
+                  // comparativo individual mora só na Liga (Fase A do review).
+                  Text(
+                    l10n.circleWhoPlanted,
+                    style: theme.textTheme.titleMedium,
+                  ),
                   const SizedBox(height: 8),
                   for (final (i, m) in list.indexed)
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: CircleAvatar(
-                        backgroundColor: theme.colorScheme.primaryContainer,
-                        child: Text(
-                          m.displayName.isNotEmpty
-                              ? m.displayName[0].toUpperCase()
-                              : '?',
-                          style: TextStyle(
-                            color: theme.colorScheme.onPrimaryContainer,
-                          ),
-                        ),
-                      ),
-                      title: Text(m.displayName),
-                      trailing: Text(
-                        l10n.memberWeekly(m.weeklyTrees),
-                        style: TextStyle(
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ).staggerIn(context, i),
+                    _MemberRow(member: m).staggerIn(context, i),
                 ],
               );
             },
           ),
         ],
       ),
+    );
+  }
+
+  /// Sheet de convite: código grande + copiar + compartilhar. O código saiu
+  /// da tela principal (baixa frequência + vazava em screenshot).
+  Future<void> _inviteSheet(BuildContext context, Circle circle) async {
+    final l10n = AppLocalizations.of(context);
+    await showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheetCtx) {
+        final theme = Theme.of(sheetCtx);
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(24, 4, 24, 28),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(l10n.circleInvite, style: theme.textTheme.titleLarge),
+              const SizedBox(height: 16),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 18),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Text(
+                  circle.inviteCode,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 6,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                height: 52,
+                child: FilledButton.icon(
+                  icon: const Icon(Icons.ios_share, size: 18),
+                  onPressed: () => SharePlus.instance.share(
+                    ShareParams(
+                      text: '${circle.name} · Grovely: ${circle.inviteCode}',
+                    ),
+                  ),
+                  label: Text(l10n.circleInvite),
+                ),
+              ),
+              TextButton.icon(
+                icon: const Icon(Icons.copy, size: 16),
+                onPressed: () async {
+                  await Clipboard.setData(
+                    ClipboardData(text: circle.inviteCode),
+                  );
+                  if (sheetCtx.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(l10n.circleCodeCopied)),
+                    );
+                  }
+                },
+                label: Text(l10n.circleCopyCode),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 

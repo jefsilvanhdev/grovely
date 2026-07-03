@@ -172,6 +172,16 @@ class _RecapCard extends StatelessWidget {
                   ),
               ],
             ),
+            const SizedBox(height: 6),
+            // Legenda: a fileira é de ESPÉCIES — sem ela, "8 árvores" com 6
+            // desenhos lia como bug (review populado P2-1).
+            Text(
+              l10n.statSpecies(species.length),
+              style: TextStyle(
+                color: Colors.white.withValues(alpha: 0.7),
+                fontSize: 13,
+              ),
+            ),
             const Spacer(),
             Row(
               children: [

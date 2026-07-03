@@ -24,6 +24,7 @@
   "commonContinue": "Continuar",
   "commonCancel": "Cancelar",
   "commonRetry": "Tentar de novo",
+  "commonSave": "Salvar",
   "commonLoading": "Carregando…",
   "commonError": "Não rolou — vamos tentar de novo.",
 
@@ -179,5 +180,33 @@
   "memberWeekly": "{count} esta semana",
   "leagueSolo": "Entre num círculo e a liga abre.",
   "leagueTitleWeek": "Esta semana",
-  "leagueYou": "Você"
+  "leagueYou": "Você",
+
+  "leagueScore": "{n, plural, =1{1 árvore} other{{n} árvores}}",
+  "leagueEndsIn": "termina em {time}",
+  "leagueYourPlace": "{rank} lugar · {n, plural, =1{1 árvore} other{{n} árvores}}",
+  "leagueDeltaAhead": "{name} está a {n, plural, =1{1 árvore} other{{n} árvores}} de você 🔥",
+  "leagueDeltaBehind": "{n, plural, =1{Falta 1 árvore} other{Faltam {n} árvores}} pra passar {name}",
+
+  "circleWhoPlanted": "Quem plantou esta semana",
+  "circleCopyCode": "Copiar código",
+  "circleCodeCopied": "Código copiado!",
+
+  "planPlusOverline": "GROVELY PLUS",
+  "planActiveBadge": "Ativo",
+  "planTrialBadge": "Teste",
+  "planMemberSince": "Membro desde {date}",
+  "planRenews": "Renova em {date}",
+  "planTrialDaysLeft": "{n, plural, =1{1 dia restante do teste} other{{n} dias restantes do teste}}",
+  "planManage": "Gerenciar assinatura",
+  "planBenefitCircles": "Todos os círculos",
+  "planBenefitSpecies": "Todas as espécies",
+  "planBenefitThemes": "Temas de jardim",
+  "planBenefitStats": "Stats avançadas",
+  "planFreeUpsell": "Conheça o Grovely Plus",
+  "pwAlreadyPlus": "Você já é Plus — tudo desbloqueado.",
+
+  "profileNameLabel": "Seu nome",
+  "profileNameHint": "Como o círculo te vê",
+  "profileEditName": "Editar nome"
 }

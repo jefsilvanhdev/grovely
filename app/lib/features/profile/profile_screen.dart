@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/theme/app_colors.dart';
 import '../../core/theme/theme_mode_provider.dart';
+import '../../data/providers/display_name_provider.dart';
+import '../../data/providers/entitlement_provider.dart';
 import '../../data/providers/garden_provider.dart';
 import '../../data/services/notification_service.dart';
 import '../../l10n/app_localizations.dart';
@@ -20,6 +25,10 @@ class ProfileScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final stats = ref.watch(gardenStatsProvider);
+    final plan = ref.watch(entitlementProvider);
+    final name = ref.watch(displayNameProvider) ?? l10n.profileGuest;
+    final isDark = theme.brightness == Brightness.dark;
+    final accent = isDark ? AppColors.accentDark : AppColors.accent;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.profileTitle)),
@@ -27,18 +36,28 @@ class ProfileScreen extends ConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
           children: [
-            // Identidade
+            // Identidade — nome local editável ("Guest" pagante era P0 do
+            // review populado); anel accent no avatar celebra o Plus.
             Row(
               children: [
-                CircleAvatar(
-                  radius: 28,
-                  backgroundColor: scheme.primaryContainer,
-                  child: Text(
-                    'G',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      color: scheme.onPrimaryContainer,
+                Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: plan.status == PlanStatus.plus
+                      ? BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: accent, width: 2),
+                        )
+                      : null,
+                  child: CircleAvatar(
+                    radius: 28,
+                    backgroundColor: scheme.primaryContainer,
+                    child: Text(
+                      name.isNotEmpty ? name[0].toUpperCase() : 'G',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                        color: scheme.onPrimaryContainer,
+                      ),
                     ),
                   ),
                 ),
@@ -47,14 +66,16 @@ class ProfileScreen extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        l10n.profileGuest,
-                        style: theme.textTheme.titleLarge,
-                      ),
+                      Text(name, style: theme.textTheme.titleLarge),
                       const SizedBox(height: 6),
                       StreakBadge(count: stats.currentStreak),
                     ],
                   ),
+                ),
+                IconButton(
+                  tooltip: l10n.profileEditName,
+                  icon: const Icon(Icons.edit_outlined, size: 20),
+                  onPressed: () => _editNameSheet(context, ref),
                 ),
                 // "Salvar progresso" volta quando o auth real existir —
                 // hoje /auth é placeholder sem saída (QA I7).
@@ -88,10 +109,13 @@ class ProfileScreen extends ConsumerWidget {
                         icon: Icons.timer_outlined,
                         label: l10n.statHoursFocused(stats.hours),
                       ),
-                      StatPill(
-                        icon: Icons.emoji_events_outlined,
-                        label: l10n.statLongest(stats.longestStreak),
-                      ),
+                      // Mesma regra do jardim: recorde só quando difere do
+                      // streak atual (review populado P2-2).
+                      if (stats.longestStreak > stats.currentStreak)
+                        StatPill(
+                          icon: Icons.emoji_events_outlined,
+                          label: l10n.statLongest(stats.longestStreak),
+                        ),
                       StatPill(
                         icon: Icons.spa_outlined,
                         label: l10n.statSpecies(stats.species),
@@ -103,13 +127,18 @@ class ProfileScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
 
-            // Ajustes
-            _Row(
-              icon: Icons.workspace_premium_outlined,
-              label: l10n.rowSubscription,
-              value: l10n.profileFreePlan,
-              onTap: () => context.go('/paywall'),
-            ),
+            // Plano — card de status para trial/plus; row de upsell no free.
+            // Assinante NUNCA navega pro paywall de venda (review populado P0).
+            if (plan.isPaying) ...[
+              _PlanCard(plan: plan),
+              const SizedBox(height: 20),
+            ] else
+              _Row(
+                icon: Icons.workspace_premium_outlined,
+                label: l10n.planFreeUpsell,
+                value: l10n.profileFreePlan,
+                onTap: () => context.go('/paywall'),
+              ),
             _Row(
               icon: Icons.notifications_outlined,
               label: l10n.rowNotifications,
@@ -140,6 +169,20 @@ class ProfileScreen extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _editNameSheet(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (sheetCtx) => _NameSheet(
+        l10n: l10n,
+        initial: ref.read(displayNameProvider) ?? '',
+        onSave: (v) => ref.read(displayNameProvider.notifier).set(v),
       ),
     );
   }
@@ -239,6 +282,206 @@ class ProfileScreen extends ConsumerWidget {
           },
         );
       },
+    );
+  }
+}
+
+/// Sheet de edição do nome local (controller com dispose).
+class _NameSheet extends StatefulWidget {
+  const _NameSheet({
+    required this.l10n,
+    required this.initial,
+    required this.onSave,
+  });
+  final AppLocalizations l10n;
+  final String initial;
+  final ValueChanged<String> onSave;
+
+  @override
+  State<_NameSheet> createState() => _NameSheetState();
+}
+
+class _NameSheetState extends State<_NameSheet> {
+  late final _ctrl = TextEditingController(text: widget.initial);
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  void _save() {
+    final v = _ctrl.text.trim();
+    if (v.isNotEmpty) widget.onSave(v);
+    Navigator.pop(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+        24,
+        4,
+        24,
+        MediaQuery.of(context).viewInsets.bottom + 28,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            widget.l10n.profileEditName,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            controller: _ctrl,
+            autofocus: true,
+            textCapitalization: TextCapitalization.words,
+            maxLength: 24,
+            onSubmitted: (_) => _save(),
+            decoration: InputDecoration(
+              labelText: widget.l10n.profileNameLabel,
+              hintText: widget.l10n.profileNameHint,
+              border: const OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            width: double.infinity,
+            height: 52,
+            child: FilledButton(
+              onPressed: _save,
+              child: Text(widget.l10n.commonSave),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Card de status do plano (trial/plus) — gradiente mint do bosque + pills de
+/// benefícios + gestão nativa da assinatura. Spec: APP_REVIEW_V6_POPULATED §1.
+class _PlanCard extends StatelessWidget {
+  const _PlanCard({required this.plan});
+  final Entitlement plan;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+    final accent = isDark ? AppColors.accentDark : AppColors.accent;
+    final healthy = isDark ? AppColors.treeHealthyDark : AppColors.treeHealthy;
+    final isPlus = plan.status == PlanStatus.plus;
+    final df = DateFormat.MMMd(l10n.localeName);
+
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: grovelyCard(context).copyWith(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            scheme.primaryContainer.withValues(alpha: 0.45),
+            scheme.surface,
+          ],
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  l10n.planPlusOverline,
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: scheme.primary,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
+              // Badge de status: dot + label (verde = ativo, âmbar = teste).
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: (isPlus ? healthy : accent).withValues(alpha: 0.16),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 6,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: isPlus ? healthy : accent,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      isPlus ? l10n.planActiveBadge : l10n.planTrialBadge,
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          if (isPlus)
+            Text(
+              [
+                if (plan.memberSince != null)
+                  l10n.planMemberSince(df.format(plan.memberSince!)),
+                if (plan.renewsAt != null)
+                  l10n.planRenews(df.format(plan.renewsAt!)),
+              ].join(' · '),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: scheme.onSurfaceVariant,
+              ),
+            )
+          else
+            Text(
+              l10n.planTrialDaysLeft(plan.trialDaysLeft ?? 0),
+              style: theme.textTheme.titleMedium,
+            ),
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              StatPill(icon: Icons.check, label: l10n.planBenefitCircles),
+              StatPill(icon: Icons.check, label: l10n.planBenefitSpecies),
+              StatPill(icon: Icons.check, label: l10n.planBenefitThemes),
+              StatPill(icon: Icons.check, label: l10n.planBenefitStats),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              // Gestão/cancelamento é do sistema (Play) — nunca o /paywall.
+              onPressed: () => launchUrl(
+                Uri.parse(
+                  'https://play.google.com/store/account/subscriptions?package=com.grovely.app',
+                ),
+                mode: LaunchMode.externalApplication,
+              ),
+              child: Text(l10n.planManage),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -68,6 +68,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get commonRetry => 'Tentar de novo';
 
   @override
+  String get commonSave => 'Salvar';
+
+  @override
   String get commonLoading => 'Carregando…';
 
   @override
@@ -579,4 +582,122 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get leagueYou => 'Você';
+
+  @override
+  String leagueScore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n árvores',
+      one: '1 árvore',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String leagueEndsIn(String time) {
+    return 'termina em $time';
+  }
+
+  @override
+  String leagueYourPlace(String rank, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n árvores',
+      one: '1 árvore',
+    );
+    return '$rank lugar · $_temp0';
+  }
+
+  @override
+  String leagueDeltaAhead(String name, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n árvores',
+      one: '1 árvore',
+    );
+    return '$name está a $_temp0 de você 🔥';
+  }
+
+  @override
+  String leagueDeltaBehind(int n, String name) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Faltam $n árvores',
+      one: 'Falta 1 árvore',
+    );
+    return '$_temp0 pra passar $name';
+  }
+
+  @override
+  String get circleWhoPlanted => 'Quem plantou esta semana';
+
+  @override
+  String get circleCopyCode => 'Copiar código';
+
+  @override
+  String get circleCodeCopied => 'Código copiado!';
+
+  @override
+  String get planPlusOverline => 'GROVELY PLUS';
+
+  @override
+  String get planActiveBadge => 'Ativo';
+
+  @override
+  String get planTrialBadge => 'Teste';
+
+  @override
+  String planMemberSince(String date) {
+    return 'Membro desde $date';
+  }
+
+  @override
+  String planRenews(String date) {
+    return 'Renova em $date';
+  }
+
+  @override
+  String planTrialDaysLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dias restantes do teste',
+      one: '1 dia restante do teste',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get planManage => 'Gerenciar assinatura';
+
+  @override
+  String get planBenefitCircles => 'Todos os círculos';
+
+  @override
+  String get planBenefitSpecies => 'Todas as espécies';
+
+  @override
+  String get planBenefitThemes => 'Temas de jardim';
+
+  @override
+  String get planBenefitStats => 'Stats avançadas';
+
+  @override
+  String get planFreeUpsell => 'Conheça o Grovely Plus';
+
+  @override
+  String get pwAlreadyPlus => 'Você já é Plus — tudo desbloqueado.';
+
+  @override
+  String get profileNameLabel => 'Seu nome';
+
+  @override
+  String get profileNameHint => 'Como o círculo te vê';
+
+  @override
+  String get profileEditName => 'Editar nome';
 }

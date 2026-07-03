@@ -4,6 +4,7 @@ import '../data/models/circle.dart';
 import '../data/models/completed_tree.dart';
 import '../data/models/tree.dart';
 import '../data/providers/circle_provider.dart';
+import '../data/providers/entitlement_provider.dart';
 import '../data/providers/garden_provider.dart';
 
 List<CompletedTree> _demoTrees() {
@@ -12,8 +13,12 @@ List<CompletedTree> _demoTrees() {
       CompletedTree(
         type: type,
         durationMinutes: min,
-        completedAt: DateTime(now.year, now.month, now.day, hour)
-            .subtract(Duration(days: daysAgo)),
+        completedAt: DateTime(
+          now.year,
+          now.month,
+          now.day,
+          hour,
+        ).subtract(Duration(days: daysAgo)),
       );
   return [
     // Semana atual (streak de 6 dias) — mistura de espécies e durações.
@@ -56,19 +61,32 @@ const _demoCircle = Circle(
   maxMembers: 12,
 );
 
-const _demoMembers = [
-  MemberStat(userId: 'u1', displayName: 'Jeff', weeklyTrees: 10),
-  MemberStat(userId: 'u2', displayName: 'Nicole', weeklyTrees: 8),
-  MemberStat(userId: 'u3', displayName: 'Marina', weeklyTrees: 7),
-  MemberStat(userId: 'u4', displayName: 'Rafael', weeklyTrees: 5),
-  MemberStat(userId: 'u5', displayName: 'Théo', weeklyTrees: 4),
-  MemberStat(userId: 'u6', displayName: 'Denise', weeklyTrees: 3),
-  MemberStat(userId: 'u7', displayName: 'Gui', weeklyTrees: 2),
-  MemberStat(userId: 'u8', displayName: 'Sônia', weeklyTrees: 1),
+/// "Jeff" = u1, e o `currentUserIdProvider` também é overridado pra u1 —
+/// assim o highlight/"Você" da liga sempre renderiza no demo (P1-5), sem
+/// depender do timing do signin anônimo.
+List<MemberStat> _demoMembers() => [
+  const MemberStat(userId: 'u1', displayName: 'Jeff', weeklyTrees: 10),
+  const MemberStat(userId: 'u2', displayName: 'Nicole', weeklyTrees: 8),
+  const MemberStat(userId: 'u3', displayName: 'Marina', weeklyTrees: 7),
+  const MemberStat(userId: 'u4', displayName: 'Rafael', weeklyTrees: 5),
+  const MemberStat(userId: 'u5', displayName: 'Théo', weeklyTrees: 4),
+  const MemberStat(userId: 'u6', displayName: 'Denise', weeklyTrees: 3),
+  const MemberStat(userId: 'u7', displayName: 'Gui', weeklyTrees: 2),
+  const MemberStat(userId: 'u8', displayName: 'Sônia', weeklyTrees: 1),
 ];
 
 final demoSeedOverrides = [
   gardenProvider.overrideWith(_DemoGarden.new),
   myCircleProvider.overrideWith((ref) async => _demoCircle),
-  circleMembersProvider.overrideWith((ref, id) async => _demoMembers),
+  circleMembersProvider.overrideWith((ref, id) async => _demoMembers()),
+  currentUserIdProvider.overrideWithValue('u1'),
+  // Estado Plus real (card de plano no Profile + guard do paywall).
+  entitlementProvider.overrideWithValue(
+    Entitlement(
+      PlanStatus.plus,
+      memberSince: DateTime(2026, 6, 12),
+      renewsAt: DateTime(2027, 6, 12),
+      isAnnual: true,
+    ),
+  ),
 ];

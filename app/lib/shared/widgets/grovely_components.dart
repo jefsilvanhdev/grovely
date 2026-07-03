@@ -191,10 +191,12 @@ class _PressableScaleState extends State<PressableScale> {
 }
 
 /// Entrada encadeada (stagger) para itens de lista — honra reduce-motion.
+/// Delay tem teto: com acervo grande (24+ tiles) a onda escalava com a lista
+/// e rodava ~1s+ a cada visita (review populado P1-1).
 extension GrovelyStagger on Widget {
   Widget staggerIn(BuildContext context, int index) {
     if (GrovelyMotion.reduced(context)) return this;
-    return animate(delay: (index * 45).ms)
+    return animate(delay: (index.clamp(0, 10) * 45).ms)
         .fadeIn(duration: 280.ms)
         .slideY(
           begin: 0.12,
@@ -203,6 +205,28 @@ extension GrovelyStagger on Widget {
           duration: 320.ms,
         );
   }
+}
+
+/// Cor determinística de avatar por pessoa — a mesma pessoa tem a mesma cor
+/// em toda tela. Sem isso, 8 membros viram 8 bolinhas idênticas (review
+/// populado P1-4). Retorna (fundo, texto).
+(Color, Color) avatarColor(BuildContext context, String userId) {
+  final scheme = Theme.of(context).colorScheme;
+  final isDark = Theme.of(context).brightness == Brightness.dark;
+  final accent = isDark ? AppColors.accentDark : AppColors.accent;
+  final healthy = isDark ? AppColors.treeHealthyDark : AppColors.treeHealthy;
+  final pairs = <(Color, Color)>[
+    (scheme.primaryContainer, scheme.onPrimaryContainer),
+    (accent.withValues(alpha: 0.28), scheme.onSurface),
+    (healthy.withValues(alpha: 0.24), scheme.onSurface),
+    (scheme.surfaceContainerHighest, scheme.onSurfaceVariant),
+    (scheme.primary.withValues(alpha: 0.18), scheme.onSurface),
+    (
+      const Color(0xFFF4C6D0).withValues(alpha: isDark ? 0.3 : 0.6),
+      scheme.onSurface,
+    ),
+  ];
+  return pairs[userId.hashCode.abs() % pairs.length];
 }
 
 /// Nome localizado da espécie (preview de foco, detalhe da árvore).

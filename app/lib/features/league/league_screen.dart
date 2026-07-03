@@ -1,15 +1,34 @@
+import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
+import '../../data/models/circle.dart';
 import '../../data/providers/circle_provider.dart';
-import '../../data/services/supabase_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets/grovely_components.dart';
 
-/// Liga semanal (§5) — circle-gated. MVP: ranking dos membros do círculo por
-/// árvores na semana. Tiers/promote-relegate = pendência de mecânica (Jeff).
+/// Liga semanal (§5) — circle-gated. Fase A do review populado: competição de
+/// verdade com os dados atuais — countdown, pódio top-3, card "Você" com
+/// delta acionável. Fase B (liga entre círculos, divisões) = backend novo.
+/// A cooperação (bosque/meta/contribuição) mora na aba Círculo.
 class LeagueScreen extends ConsumerWidget {
   const LeagueScreen({super.key});
+
+  /// Tempo até a virada da liga (segunda 00:00 local), como "2d 5h" / "5h".
+  String _endsIn() {
+    final now = clock.now();
+    final daysToMonday = (DateTime.monday - now.weekday + 7) % 7;
+    final nextMonday = DateTime(
+      now.year,
+      now.month,
+      now.day,
+    ).add(Duration(days: daysToMonday == 0 ? 7 : daysToMonday));
+    final left = nextMonday.difference(now);
+    if (left.inDays > 0) return '${left.inDays}d ${left.inHours % 24}h';
+    if (left.inHours > 0) return '${left.inHours}h';
+    return '${left.inMinutes}min';
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,38 +45,61 @@ class LeagueScreen extends ConsumerWidget {
           data: (c) {
             if (c == null) return _Solo();
             final members = ref.watch(circleMembersProvider(c.id));
-            final uid = SupabaseService.instance.currentUserId;
+            final uid = ref.watch(currentUserIdProvider);
             return members.when(
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (_, _) => const GrovelyError(),
-              data: (list) => ListView(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.emoji_events,
-                        color: theme.colorScheme.secondary,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        l10n.leagueTitleWeek,
-                        style: theme.textTheme.titleMedium,
-                      ),
+              data: (raw) {
+                final list = [...raw]
+                  ..sort((a, b) => b.weeklyTrees.compareTo(a.weeklyTrees));
+                final youIndex = list.indexWhere((m) => m.userId == uid);
+                return ListView(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.emoji_events,
+                          color: theme.colorScheme.secondary,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            l10n.leagueTitleWeek,
+                            style: theme.textTheme.titleMedium,
+                          ),
+                        ),
+                        // Urgência: nada dizia que a liga zera na segunda.
+                        Icon(
+                          Icons.hourglass_bottom,
+                          size: 14,
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          l10n.leagueEndsIn(_endsIn()),
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    if (list.isNotEmpty) _Podium(top: list.take(3).toList()),
+                    if (youIndex >= 0) ...[
+                      const SizedBox(height: 16),
+                      _YouCard(list: list, youIndex: youIndex),
                     ],
-                  ),
-                  const SizedBox(height: 12),
-                  for (var i = 0; i < list.length; i++)
-                    _RankRow(
-                      rank: i + 1,
-                      name: list[i].userId == uid
-                          ? l10n.leagueYou
-                          : list[i].displayName,
-                      score: list[i].weeklyTrees,
-                      isYou: list[i].userId == uid,
-                    ).staggerIn(context, i),
-                ],
-              ),
+                    const SizedBox(height: 16),
+                    for (var i = 3; i < list.length; i++)
+                      _RankRow(
+                        rank: i + 1,
+                        member: list[i],
+                        isYou: list[i].userId == uid,
+                      ).staggerIn(context, i - 3),
+                  ],
+                );
+              },
             );
           },
         ),
@@ -66,22 +108,169 @@ class LeagueScreen extends ConsumerWidget {
   }
 }
 
+/// Pódio top-3: 2º · 1º · 3º, alturas 64/80/56 — hero da competição.
+class _Podium extends StatelessWidget {
+  const _Podium({required this.top});
+  final List<MemberStat> top;
+
+  @override
+  Widget build(BuildContext context) {
+    MemberStat? at(int i) => i < top.length ? top[i] : null;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Expanded(child: _PodiumSpot(member: at(1), rank: 2, height: 64)),
+        const SizedBox(width: 8),
+        Expanded(child: _PodiumSpot(member: at(0), rank: 1, height: 84)),
+        const SizedBox(width: 8),
+        Expanded(child: _PodiumSpot(member: at(2), rank: 3, height: 56)),
+      ],
+    );
+  }
+}
+
+class _PodiumSpot extends StatelessWidget {
+  const _PodiumSpot({
+    required this.member,
+    required this.rank,
+    required this.height,
+  });
+  final MemberStat? member;
+  final int rank;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final m = member;
+    if (m == null) return const SizedBox.shrink();
+    final (bg, fg) = avatarColor(context, m.userId);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CircleAvatar(
+          radius: rank == 1 ? 26 : 20,
+          backgroundColor: bg,
+          child: Text(
+            m.displayName.isNotEmpty ? m.displayName[0].toUpperCase() : '?',
+            style: TextStyle(color: fg, fontWeight: FontWeight.w700),
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          m.displayName,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: theme.textTheme.labelMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        Text(
+          '${m.weeklyTrees}',
+          style: GoogleFonts.bricolageGrotesque(
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+            color: theme.colorScheme.onSurface,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Container(
+          height: height,
+          decoration: BoxDecoration(
+            color: theme.colorScheme.primaryContainer.withValues(
+              alpha: rank == 1 ? 0.9 : 0.5,
+            ),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+          ),
+          alignment: Alignment.center,
+          child: _RankMedal(rank: rank),
+        ),
+      ],
+    );
+  }
+}
+
+/// Card "Você": posição + score + delta acionável (o que falta pra subir, ou
+/// quem está colando) — transforma leitura passiva em meta.
+class _YouCard extends StatelessWidget {
+  const _YouCard({required this.list, required this.youIndex});
+  final List<MemberStat> list;
+  final int youIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final you = list[youIndex];
+    final rankLabel = '${youIndex + 1}º';
+
+    String? delta;
+    if (youIndex > 0) {
+      final above = list[youIndex - 1];
+      final gap = above.weeklyTrees - you.weeklyTrees + 1;
+      delta = l10n.leagueDeltaBehind(gap, above.displayName);
+    } else if (list.length > 1) {
+      final below = list[1];
+      final gap = you.weeklyTrees - below.weeklyTrees;
+      if (gap >= 0) delta = l10n.leagueDeltaAhead(below.displayName, gap);
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.leagueYou.toUpperCase(),
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.primary,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.2,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            l10n.leagueYourPlace(rankLabel, you.weeklyTrees),
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: theme.colorScheme.onPrimaryContainer,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          if (delta != null) ...[
+            const SizedBox(height: 2),
+            Text(
+              delta,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onPrimaryContainer,
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
 class _RankRow extends StatelessWidget {
   const _RankRow({
     required this.rank,
-    required this.name,
-    required this.score,
+    required this.member,
     required this.isYou,
   });
   final int rank;
-  final String name;
-  final int score;
+  final MemberStat member;
   final bool isYou;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
+    final (bg, fg) = avatarColor(context, member.userId);
+    final name = isYou ? l10n.leagueYou : member.displayName;
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -96,10 +285,10 @@ class _RankRow extends StatelessWidget {
           const SizedBox(width: 8),
           CircleAvatar(
             radius: 16,
-            backgroundColor: scheme.surfaceContainerHighest,
+            backgroundColor: bg,
             child: Text(
               name.isNotEmpty ? name[0].toUpperCase() : '?',
-              style: const TextStyle(fontSize: 13),
+              style: TextStyle(fontSize: 13, color: fg),
             ),
           ),
           const SizedBox(width: 12),
@@ -110,7 +299,8 @@ class _RankRow extends StatelessWidget {
             ),
           ),
           Text(
-            l10n.memberWeekly(score),
+            // Unidade explícita: "10 this week" não dizia 10 de quê (P2-3).
+            l10n.leagueScore(member.weeklyTrees),
             style: TextStyle(color: scheme.onSurfaceVariant),
           ),
         ],
