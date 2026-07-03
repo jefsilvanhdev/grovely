@@ -29,6 +29,9 @@ Future<void> main() async {
   // telas autenticadas já terminaram. Sem isso, a splash nativa travava ~8-10s.
   unawaited(_bootstrapServices());
 
+  // Demo populado: trocar por
+  //   ProviderScope(overrides: demoSeedOverrides, child: PlantioApp())
+  // (import lib/dev/demo_seed.dart) — só para screenshots, nunca commitar ligado.
   runApp(const ProviderScope(child: PlantioApp()));
 }
 
