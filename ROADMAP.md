@@ -49,6 +49,14 @@ Fonte: `plantio-coletivo-design/Plantio-V2/brand/` (brand book v6, tokens, Illus
 - Paywall escuro com a marca no topo · Garden com slot "+" · card do bosque do círculo com gradiente + overline
 - VERIFICADO no emulador ponta a ponta (splash, onboarding, foco, completed, garden, paywall)
 
+## QA + Usabilidade + Fixes ✅ (2026-07-03)
+Relatórios: `qa/QA_REPORT_02.md` (técnico) · `plantio-coletivo-design/APP_REVIEW_V6.md` (design) · `qa/USABILITY_REPORT_V6.html` (6 synth users — abrir no navegador).
+**Resolvido no commit `1b52532`** (verificado no emulador): C1 wakelock+carência 45s · C2 onboarding persiste · C3 círculo com guardas/feedback · C4 assinatura via key.properties · I1 timing por relógio · I2 sessão sobrevive a processo morto · I5/I6/I7/I9 · M2/M4/M8/M9/M10 · plurais ICU · UX P1s (regra do wither na home, paywall sem "TBD", espécie capitalizada, pills, watermark).
+**Ficou para depois (não bloqueia beta):** I3 sync offline→nuvem (merge no load) · I4/I8 decisão Firebase (configurar OU remover) · M6 ícone mono de notificação · M11 horário fixo do lembrete (zonedSchedule) · M12 RPC transacional create_circle.
+
+## Landing page ✅ (2026-07-03)
+`landing/index.html` — estática, brand v6, autocontida (falta domínio + form real de waitlist = Jeff).
+
 ## Polish UI — 2º passe ✅ (essencial concluído)
 Lista do designer em `plantio-coletivo-design/APP_REVIEW.md`. Feito: motion P0 (sweep/árvore/confete/haptics), P1 (stagger/press/elevation), copy humanizado, GrovelyEmpty unificado, árvore maior na home/timer + bg neutro, **pódio da liga (ouro/prata/bronze)**, **jardim coletivo visual (mini-árvores)**, **transição slide do onboarding**, **shimmer no skeleton** (extraído `GrovelySkeletonBox`) + **`GrovelyError` unificado**, **árvore da home corrigida** (colapsava no AnimatedSwitcher), **círculo: copy de meta batida**. Pulados (baixo ROI): Hero da árvore entre telas, count-up de stats (quebra plural i18n).
 
