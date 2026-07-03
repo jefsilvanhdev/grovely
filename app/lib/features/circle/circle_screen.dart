@@ -262,13 +262,33 @@ class _Detail extends ConsumerWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Meta coletiva
+                  // Meta coletiva — card do bosque com respiro mint (mockup v6)
                   Container(
                     padding: const EdgeInsets.all(16),
-                    decoration: grovelyCard(context),
+                    decoration: grovelyCard(context).copyWith(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          theme.colorScheme.primaryContainer.withValues(
+                            alpha: 0.45,
+                          ),
+                          theme.colorScheme.surface,
+                        ],
+                      ),
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(
+                          l10n.circleGroveOverline.toUpperCase(),
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: theme.colorScheme.primary,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
                         Text(
                           goalReached
                               ? l10n.circleGoalReached(planted)

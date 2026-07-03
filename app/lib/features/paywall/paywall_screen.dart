@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/theme/app_theme.dart';
 import '../../l10n/app_localizations.dart';
-import '../../shared/widgets/grovely_components.dart';
+import '../../shared/widgets/grovely_mark.dart';
 
 /// Paywall rígido e honesto (§7). RevenueCat/billing reais = Agente D.
 /// Preços ainda placeholder (pendência do Jeff) — nunca mostra preço falso.
@@ -20,11 +21,19 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Paywall imersivo escuro (mockup v6 "premium paywall — dark"), com a
+    // marca no topo — momento de brand, independente do tema do sistema.
+    return Theme(
+      data: AppTheme.dark(),
+      child: Builder(builder: _buildDark),
+    );
+  }
+
+  Widget _buildDark(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
 
-    // (label, free?, premium?)
     final rows = <(String, bool)>[
       (l10n.pwRowSoloFocus, true),
       (l10n.pwRowGarden, true),
@@ -37,20 +46,24 @@ class _PaywallScreenState extends State<PaywallScreen> {
     ];
 
     return Scaffold(
+      backgroundColor: const Color(0xFF0F1A15),
       body: SafeArea(
         child: Stack(
           children: [
-            const Align(
-              alignment: Alignment.topCenter,
-              child: SymbolWatermark(size: 320),
-            ),
             ListView(
-              padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
+              padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
               children: [
-                Text(l10n.pwTitle, style: theme.textTheme.headlineMedium),
+                const Center(child: GrovelyMark(size: 96, animate: false)),
+                const SizedBox(height: 12),
+                Text(
+                  l10n.pwTitle,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.headlineMedium,
+                ),
                 const SizedBox(height: 8),
                 Text(
                   l10n.pwSub,
+                  textAlign: TextAlign.center,
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: scheme.onSurfaceVariant,
                   ),

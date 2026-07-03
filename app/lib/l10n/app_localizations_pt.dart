@@ -83,6 +83,14 @@ class AppLocalizationsPt extends AppLocalizations {
   String get focusKeepGrowing => 'Fica por aqui. Ela está crescendo.';
 
   @override
+  String get focusDeepWork => 'Foco profundo';
+
+  @override
+  String focusSessionMeta(String species, int minutes) {
+    return '$species · $minutes min';
+  }
+
+  @override
   String get focusCompletedTitle => 'Árvore plantada!';
 
   @override
@@ -510,6 +518,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get circleMembers => 'Membros';
+
+  @override
+  String get circleGroveOverline => 'Bosque do círculo · esta semana';
 
   @override
   String circleGoal(int planted, int goal) {

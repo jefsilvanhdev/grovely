@@ -3,6 +3,7 @@ import 'package:flutter/services.dart' show HapticFeedback;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/theme/app_theme.dart';
 import '../../data/models/tree.dart';
 import '../../data/providers/garden_provider.dart';
 import '../../l10n/app_localizations.dart';
@@ -49,7 +50,11 @@ class _FocusSessionScreenState extends ConsumerState<FocusSessionScreen>
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(focusSessionProvider);
+    final running = state.phase == FocusPhase.running;
+    // Sessão rodando é sempre imersiva/escura (mockup v6 "focus session — dark"),
+    // independente do tema: a tela vira um ambiente de foco.
     return Scaffold(
+      backgroundColor: running ? _Running.bgTop : null,
       body: SafeArea(
         child: switch (state.phase) {
           FocusPhase.selecting => _Selecting(fmt: _fmt),
@@ -194,46 +199,67 @@ class _Running extends ConsumerWidget {
     );
   }
 
+  // Ambiente imersivo (mockup v6): sempre escuro durante a sessão.
+  static const bgTop = Color(0xFF0F1A15);
+  static const _bgWarm = Color(0xFF23301F); // fim de sessão: verde amanhecendo
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     // Fundo esquenta levemente conforme se aproxima do fim (alvorada → dia).
-    final warm = Color.lerp(
-      theme.colorScheme.surface,
-      (isDark ? const Color(0xFF3A2F1C) : const Color(0xFFF6ECD9)),
-      state.progress * 0.6,
-    )!;
+    final warm = Color.lerp(bgTop, _bgWarm, state.progress)!;
+    const mint = Color(0xFF6FD79B);
+    const dim = Color(0xFFA7B8AD);
 
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [theme.colorScheme.surface, warm],
+          colors: [bgTop, warm],
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+        padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
         child: Column(
           children: [
-            Text(
-              l10n.focusKeepGrowing,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
+            // Cabeçalho da sessão: modo à esquerda, espécie · duração à direita.
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  l10n.focusDeepWork.toUpperCase(),
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: mint,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.6,
+                  ),
+                ),
+                Text(
+                  l10n.focusSessionMeta(
+                    speciesName(l10n, state.treeType),
+                    state.durationMinutes,
+                  ),
+                  style: theme.textTheme.labelMedium?.copyWith(color: dim),
+                ),
+              ],
             ),
             Expanded(
               child: Center(
-                child: TimerRing(
-                  progress: state.progress,
-                  size: 320,
-                  child: TreeView(
-                    type: state.treeType,
-                    stage: state.stage,
-                    size: 240,
-                    scale: 0.9 + 0.1 * state.progress,
+                // Anel mint sobre trilha escura — força os tokens dark aqui
+                // dentro para o TimerRing e a árvore lerem o ambiente imersivo.
+                child: Theme(
+                  data: AppTheme.dark(),
+                  child: TimerRing(
+                    progress: state.progress,
+                    size: 320,
+                    child: TreeView(
+                      type: state.treeType,
+                      stage: state.stage,
+                      size: 240,
+                      scale: 0.9 + 0.1 * state.progress,
+                    ),
                   ),
                 ),
               ),
@@ -241,16 +267,27 @@ class _Running extends ConsumerWidget {
             Text(
               fmt(state.secondsRemaining),
               style: theme.textTheme.displayLarge?.copyWith(
+                color: Colors.white,
                 fontFeatures: const [FontFeature.tabularFigures()],
               ),
             ),
-            const SizedBox(height: 16),
-            TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: theme.colorScheme.onSurfaceVariant,
+            const SizedBox(height: 6),
+            Text(
+              l10n.focusKeepGrowing,
+              style: theme.textTheme.bodyMedium?.copyWith(color: dim),
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: dim,
+                  side: const BorderSide(color: Color(0xFF3A4D42)),
+                ),
+                onPressed: () => _confirmGiveUp(context, ref),
+                child: Text(l10n.focusGiveUp),
               ),
-              onPressed: () => _confirmGiveUp(context, ref),
-              child: Text(l10n.focusGiveUp),
             ),
           ],
         ),

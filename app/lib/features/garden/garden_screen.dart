@@ -108,9 +108,11 @@ class _GardenGrid extends ConsumerWidget {
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
           ),
-          itemCount: trees.length,
-          itemBuilder: (context, i) =>
-              _TreeTile(tree: trees[i]).staggerIn(context, i),
+          // Último slot é o convite pra plantar a próxima (mockup v6).
+          itemCount: trees.length + 1,
+          itemBuilder: (context, i) => i == trees.length
+              ? const _PlantMoreTile().staggerIn(context, i)
+              : _TreeTile(tree: trees[i]).staggerIn(context, i),
         ),
       ],
     );
@@ -138,6 +140,35 @@ class _TreeTile extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: TreeView(type: tree.type, stage: TreeStage.elder, size: 80),
+        ),
+      ),
+    );
+  }
+}
+
+/// Slot "+" no fim do grid — convite pra próxima árvore (mockup v6).
+class _PlantMoreTile extends StatelessWidget {
+  const _PlantMoreTile();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+    return PressableScale(
+      onTap: () => context.go('/focus'),
+      child: Semantics(
+        button: true,
+        label: l10n.plantAnother,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: theme.colorScheme.outline, width: 1.5),
+          ),
+          child: Icon(
+            Icons.add,
+            size: 32,
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
         ),
       ),
     );

@@ -242,6 +242,18 @@ abstract class AppLocalizations {
   /// **'Stay here. Your tree\'s growing.'**
   String get focusKeepGrowing;
 
+  /// No description provided for @focusDeepWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Deep work'**
+  String get focusDeepWork;
+
+  /// No description provided for @focusSessionMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'{species} · {minutes} min'**
+  String focusSessionMeta(String species, int minutes);
+
   /// No description provided for @focusCompletedTitle.
   ///
   /// In en, this message translates to:
@@ -985,6 +997,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Members'**
   String get circleMembers;
+
+  /// No description provided for @circleGroveOverline.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared grove · this week'**
+  String get circleGroveOverline;
 
   /// No description provided for @circleGoal.
   ///

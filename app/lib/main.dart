@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/router/app_router.dart';
@@ -13,7 +14,10 @@ import 'data/services/supabase_service.dart';
 import 'l10n/app_localizations.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  final binding = WidgetsFlutterBinding.ensureInitialized();
+  // Segura a splash nativa até a splash Flutter mandar remover — sem isso a
+  // animação da marca corre por baixo da nativa e o usuário só vê o final.
+  FlutterNativeSplash.preserve(widgetsBinding: binding);
 
   // Edge-to-edge + retrato apenas (mesmo padrão do "O Meu Salmo").
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
