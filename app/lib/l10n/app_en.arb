@@ -233,6 +233,8 @@
   "planFreeUpsell": "Meet Grovely Plus",
   "pwAlreadyPlus": "You're already Plus — everything's unlocked.",
 
+  "profileChangePhoto": "Change photo",
+  "profileRemovePhoto": "Remove photo",
   "profileNameLabel": "Your name",
   "profileNameHint": "How your circle sees you",
   "profileEditName": "Edit name"

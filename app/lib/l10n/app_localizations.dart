@@ -1214,6 +1214,18 @@ abstract class AppLocalizations {
   /// **'You\'re already Plus — everything\'s unlocked.'**
   String get pwAlreadyPlus;
 
+  /// No description provided for @profileChangePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Change photo'**
+  String get profileChangePhoto;
+
+  /// No description provided for @profileRemovePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get profileRemovePhoto;
+
   /// No description provided for @profileNameLabel.
   ///
   /// In en, this message translates to:

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -10,6 +12,7 @@ import '../../core/theme/theme_mode_provider.dart';
 import '../../data/providers/display_name_provider.dart';
 import '../../data/providers/entitlement_provider.dart';
 import '../../data/providers/garden_provider.dart';
+import '../../data/providers/profile_photo_provider.dart';
 import '../../data/services/notification_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets/grovely_components.dart';
@@ -27,6 +30,7 @@ class ProfileScreen extends ConsumerWidget {
     final stats = ref.watch(gardenStatsProvider);
     final plan = ref.watch(entitlementProvider);
     final name = ref.watch(displayNameProvider) ?? l10n.profileGuest;
+    final photo = ref.watch(profilePhotoProvider);
     final isDark = theme.brightness == Brightness.dark;
     final accent = isDark ? AppColors.accentDark : AppColors.accent;
 
@@ -38,26 +42,56 @@ class ProfileScreen extends ConsumerWidget {
           children: [
             // Identidade — nome local editável ("Guest" pagante era P0 do
             // review populado); anel accent no avatar celebra o Plus.
+            // Tocar no avatar troca a foto (photo picker do sistema).
             Row(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: plan.status == PlanStatus.plus
-                      ? BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: accent, width: 2),
-                        )
-                      : null,
-                  child: CircleAvatar(
-                    radius: 28,
-                    backgroundColor: scheme.primaryContainer,
-                    child: Text(
-                      name.isNotEmpty ? name[0].toUpperCase() : 'G',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                        color: scheme.onPrimaryContainer,
-                      ),
+                PressableScale(
+                  semanticLabel: l10n.profileChangePhoto,
+                  onTap: () => _photoSheet(context, ref),
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: plan.status == PlanStatus.plus
+                        ? BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: accent, width: 2),
+                          )
+                        : null,
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 28,
+                          backgroundColor: scheme.primaryContainer,
+                          backgroundImage: photo != null
+                              ? FileImage(File(photo))
+                              : null,
+                          child: photo == null
+                              ? Text(
+                                  name.isNotEmpty ? name[0].toUpperCase() : 'G',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w700,
+                                    color: scheme.onPrimaryContainer,
+                                  ),
+                                )
+                              : null,
+                        ),
+                        Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                              color: scheme.surface,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.photo_camera_outlined,
+                              size: 12,
+                              color: scheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -166,6 +200,44 @@ class ProfileScreen extends ConsumerWidget {
                   ),
                 ),
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Foto: com foto atual → escolher trocar/remover; sem foto → picker direto.
+  Future<void> _photoSheet(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final notifier = ref.read(profilePhotoProvider.notifier);
+    if (ref.read(profilePhotoProvider) == null) {
+      await notifier.pickFromGallery();
+      return;
+    }
+    await showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheetCtx) => Padding(
+        padding: const EdgeInsets.only(bottom: 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.photo_library_outlined),
+              title: Text(l10n.profileChangePhoto),
+              onTap: () async {
+                Navigator.pop(sheetCtx);
+                await notifier.pickFromGallery();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete_outline),
+              title: Text(l10n.profileRemovePhoto),
+              onTap: () {
+                Navigator.pop(sheetCtx);
+                notifier.remove();
+              },
             ),
           ],
         ),
@@ -455,15 +527,15 @@ class _PlanCard extends StatelessWidget {
               l10n.planTrialDaysLeft(plan.trialDaysLeft ?? 0),
               style: theme.textTheme.titleMedium,
             ),
-          const SizedBox(height: 12),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              StatPill(icon: Icons.check, label: l10n.planBenefitCircles),
-              StatPill(icon: Icons.check, label: l10n.planBenefitSpecies),
-              StatPill(icon: Icons.check, label: l10n.planBenefitThemes),
-              StatPill(icon: Icons.check, label: l10n.planBenefitStats),
+          const SizedBox(height: 14),
+          // Benefícios como lista alinhada em 2 colunas (check mint, sem
+          // fundo) — os pills liam como chips desalinhados (feedback Jeff).
+          _BenefitGrid(
+            items: [
+              l10n.planBenefitCircles,
+              l10n.planBenefitSpecies,
+              l10n.planBenefitThemes,
+              l10n.planBenefitStats,
             ],
           ),
           const SizedBox(height: 6),
@@ -471,17 +543,70 @@ class _PlanCard extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: TextButton(
               // Gestão/cancelamento é do sistema (Play) — nunca o /paywall.
-              onPressed: () => launchUrl(
-                Uri.parse(
-                  'https://play.google.com/store/account/subscriptions?package=com.grovely.app',
-                ),
-                mode: LaunchMode.externalApplication,
-              ),
+              onPressed: () async {
+                final ok = await launchUrl(
+                  Uri.parse(
+                    'https://play.google.com/store/account/subscriptions?package=com.grovely.app',
+                  ),
+                  mode: LaunchMode.externalApplication,
+                );
+                if (!ok && context.mounted) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(l10n.commonError)));
+                }
+              },
               child: Text(l10n.planManage),
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Benefícios do plano em 2 colunas: check mint + texto, sem chip — alinhado
+/// e escaneável.
+class _BenefitGrid extends StatelessWidget {
+  const _BenefitGrid({required this.items});
+  final List<String> items;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    Widget item(String label) => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(Icons.check_rounded, size: 16, color: theme.colorScheme.primary),
+        const SizedBox(width: 6),
+        Flexible(
+          child: Text(
+            label,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurface,
+            ),
+          ),
+        ),
+      ],
+    );
+    return Column(
+      children: [
+        for (var i = 0; i < items.length; i += 2)
+          Padding(
+            padding: EdgeInsets.only(bottom: i + 2 < items.length ? 8 : 0),
+            child: Row(
+              children: [
+                Expanded(child: item(items[i])),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: i + 1 < items.length
+                      ? item(items[i + 1])
+                      : const SizedBox(),
+                ),
+              ],
+            ),
+          ),
+      ],
     );
   }
 }

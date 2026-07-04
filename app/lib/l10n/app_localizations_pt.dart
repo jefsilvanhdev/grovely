@@ -693,6 +693,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pwAlreadyPlus => 'Você já é Plus — tudo desbloqueado.';
 
   @override
+  String get profileChangePhoto => 'Alterar foto';
+
+  @override
+  String get profileRemovePhoto => 'Remover foto';
+
+  @override
   String get profileNameLabel => 'Seu nome';
 
   @override

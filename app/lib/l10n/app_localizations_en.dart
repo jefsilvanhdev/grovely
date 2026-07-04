@@ -694,6 +694,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pwAlreadyPlus => 'You\'re already Plus — everything\'s unlocked.';
 
   @override
+  String get profileChangePhoto => 'Change photo';
+
+  @override
+  String get profileRemovePhoto => 'Remove photo';
+
+  @override
   String get profileNameLabel => 'Your name';
 
   @override
