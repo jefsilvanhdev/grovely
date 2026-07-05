@@ -20,9 +20,12 @@ Legenda: ✅ feito · 🟡 parcial · ❌ não começou · 🔒 bloqueado por a�
 - **QA Checkpoint 1** 🟡 (analyze limpo + roda no device; auditoria formal em andamento — `qa/QA_REPORT_01.md`)
 
 ## Fase 2 — Social (paralelo)
-- **Agente C — Social** 🟡
+- **Agente C — Social** 🟢 (migrations aplicadas 2026-07-04; social VIVO)
   - ✅ Base: auth anônimo + sync nuvem (focus_sessions, streaks)
-  - ❌ Círculos (invite) · jardim coletivo realtime/presence · liga semanal
+  - ✅ **Círculos com dados reais**: migrations 0001/0002/0003 aplicadas no Supabase. VERIFICADO no emulador ponta a ponta: criar círculo → código de convite (`_genCode`) → RPC `circle_member_stats` retorna membros+árvores da semana → sair (`leave`) → entrar por código (RPC `join_circle_by_code`) → de volta no círculo. Liga lê os mesmos dados.
+  - 🟡 Nome de membro: fallback SQL `'Member'` (0003) até o usuário setar nome no Perfil (edição já existe); não-localizado no servidor (aceitável)
+  - ❌ Jardim coletivo realtime/presence ("X focando agora") — precisa Supabase Realtime + 2 devices
+  - ❌ Liga entre CÍRCULOS (Fase B do design review) — RPC `league_standings` + divisões
 - **Agente E — Onboarding + Recap** 🟡
   - 🟡 Onboarding (1 tela placeholder — redesign pelo designer)
   - ✅ **Notificações locais**: `NotificationService` (lembrete diário de streak via `periodicallyShow`), prompt OS no onboarding, toggle no profile (persiste), manifest perms + boot receiver. VERIFICADO no emulador.
