@@ -1,5 +1,5 @@
 {
-  "@@locale": "en",
+  "@@locale": "es",
 
   "appName": "Grovely",
   "@appName": { "description": "Public name of the app." },

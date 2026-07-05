@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/i18n/locale_provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/theme_mode_provider.dart';
 import '../../data/providers/display_name_provider.dart';
@@ -184,6 +185,12 @@ class ProfileScreen extends ConsumerWidget {
               value: _themeLabel(l10n, ref.watch(themeModeProvider)),
               onTap: () => _themeSheet(context, ref),
             ),
+            _Row(
+              icon: Icons.language_outlined,
+              label: l10n.rowLanguage,
+              value: _localeLabel(l10n, ref.watch(localeProvider)),
+              onTap: () => _localeSheet(context, ref),
+            ),
             // Privacidade/Termos entram quando as URLs existirem (gate do
             // Play Console — Jeff); Sair, quando houver auth real. Rows mortas
             // no beta minam a confiança (QA I7).
@@ -290,6 +297,51 @@ class ProfileScreen extends ConsumerWidget {
               opt(ThemeMode.system, l10n.themeSystem),
               opt(ThemeMode.light, l10n.themeLight),
               opt(ThemeMode.dark, l10n.themeDark),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // Endônimos (nome do idioma nele mesmo) — reconhecíveis em qualquer locale,
+  // não se traduzem. `null` = segue o sistema.
+  String _localeLabel(AppLocalizations l10n, Locale? locale) =>
+      switch (locale?.languageCode) {
+        'en' => 'English',
+        'pt' => 'Português',
+        'es' => 'Español',
+        _ => l10n.languageSystem,
+      };
+
+  void _localeSheet(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheetCtx) {
+        final current = ref.read(localeProvider)?.languageCode;
+        Widget opt(String? code, String label) => ListTile(
+          title: Text(label),
+          trailing: current == code
+              ? Icon(Icons.check, color: Theme.of(sheetCtx).colorScheme.primary)
+              : null,
+          onTap: () {
+            ref
+                .read(localeProvider.notifier)
+                .set(code == null ? null : Locale(code));
+            Navigator.pop(sheetCtx);
+          },
+        );
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              opt(null, l10n.languageSystem),
+              opt('en', 'English'),
+              opt('pt', 'Português'),
+              opt('es', 'Español'),
             ],
           ),
         );

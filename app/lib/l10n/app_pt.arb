@@ -135,6 +135,8 @@
   "notifReminderOff": "Lembretes desligados",
   "notifPermissionDenied": "Notificações desligadas. Ative nas configurações do sistema.",
   "rowAppearance": "Aparência",
+  "rowLanguage": "Idioma",
+  "languageSystem": "Padrão do sistema",
   "rowPrivacy": "Privacidade",
   "rowTerms": "Termos",
   "rowSignOut": "Sair",

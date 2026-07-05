@@ -426,6 +426,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get rowAppearance => 'Aparência';
 
   @override
+  String get rowLanguage => 'Idioma';
+
+  @override
+  String get languageSystem => 'Padrão do sistema';
+
+  @override
   String get rowPrivacy => 'Privacidade';
 
   @override
