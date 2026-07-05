@@ -8,6 +8,7 @@ import '../../core/theme/app_colors.dart';
 import '../../data/models/circle.dart';
 import '../../data/models/tree.dart';
 import '../../data/providers/circle_provider.dart';
+import '../../data/providers/display_name_provider.dart';
 import '../../data/providers/profile_photo_provider.dart';
 import '../../data/repositories/circle_repository.dart';
 import '../../l10n/app_localizations.dart';
@@ -123,24 +124,41 @@ class _CircleFormSheet extends StatefulWidget {
 
 class _CircleFormSheetState extends State<_CircleFormSheet> {
   final _ctrl = TextEditingController();
+  final _nameCtrl = TextEditingController();
   String? _error;
+  String? _nameError;
   bool _busy = false;
+
+  // Sem nome setado, pede aqui: é o momento em que o nome vira público pros
+  // membros — evita mostrar "Member" no círculo. Solo nunca é incomodado.
+  late final bool _needsName =
+      (widget.ref.read(displayNameProvider) ?? '').isEmpty;
 
   @override
   void dispose() {
     _ctrl.dispose();
+    _nameCtrl.dispose();
     super.dispose();
   }
 
   Future<void> _submit() async {
     final l10n = AppLocalizations.of(context);
     final value = _ctrl.text.trim();
+    final name = _nameCtrl.text.trim();
     if (value.isEmpty || _busy) return;
+    if (_needsName && name.isEmpty) {
+      setState(() => _nameError = l10n.profileNameLabel);
+      return;
+    }
     setState(() {
       _busy = true;
       _error = null;
+      _nameError = null;
     });
     try {
+      if (_needsName) {
+        await widget.ref.read(displayNameProvider.notifier).set(name);
+      }
       final repo = widget.ref.read(circleRepositoryProvider);
       if (widget.isJoin) {
         await repo.joinByCode(value);
@@ -188,9 +206,25 @@ class _CircleFormSheetState extends State<_CircleFormSheet> {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
+          if (_needsName) ...[
+            TextField(
+              controller: _nameCtrl,
+              autofocus: true,
+              enabled: !_busy,
+              textCapitalization: TextCapitalization.words,
+              maxLength: 24,
+              decoration: InputDecoration(
+                labelText: l10n.profileNameLabel,
+                hintText: l10n.profileNameHint,
+                border: const OutlineInputBorder(),
+                errorText: _nameError,
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
           TextField(
             controller: _ctrl,
-            autofocus: true,
+            autofocus: !_needsName,
             enabled: !_busy,
             textCapitalization: widget.isJoin
                 ? TextCapitalization.characters
