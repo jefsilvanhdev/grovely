@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../data/models/circle.dart';
 import '../../data/providers/circle_provider.dart';
+import '../../data/providers/profile_photo_provider.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets/grovely_components.dart';
 
@@ -46,6 +47,7 @@ class LeagueScreen extends ConsumerWidget {
             if (c == null) return _Solo();
             final members = ref.watch(circleMembersProvider(c.id));
             final uid = ref.watch(currentUserIdProvider);
+            final youPhoto = ref.watch(profilePhotoProvider);
             return members.when(
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (_, _) => const GrovelyError(),
@@ -85,7 +87,12 @@ class LeagueScreen extends ConsumerWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    if (list.isNotEmpty) _Podium(top: list.take(3).toList()),
+                    if (list.isNotEmpty)
+                      _Podium(
+                        top: list.take(3).toList(),
+                        youId: uid,
+                        youPhoto: youPhoto,
+                      ),
                     if (youIndex >= 0) ...[
                       const SizedBox(height: 16),
                       _YouCard(list: list, youIndex: youIndex),
@@ -96,6 +103,7 @@ class LeagueScreen extends ConsumerWidget {
                         rank: i + 1,
                         member: list[i],
                         isYou: list[i].userId == uid,
+                        youPhoto: list[i].userId == uid ? youPhoto : null,
                       ).staggerIn(context, i - 3),
                   ],
                 );
@@ -110,20 +118,45 @@ class LeagueScreen extends ConsumerWidget {
 
 /// Pódio top-3: 2º · 1º · 3º, alturas 64/80/56 — hero da competição.
 class _Podium extends StatelessWidget {
-  const _Podium({required this.top});
+  const _Podium({required this.top, this.youId, this.youPhoto});
   final List<MemberStat> top;
+  final String? youId;
+  final String? youPhoto;
 
   @override
   Widget build(BuildContext context) {
     MemberStat? at(int i) => i < top.length ? top[i] : null;
+    String? photoFor(MemberStat? m) =>
+        m != null && m.userId == youId ? youPhoto : null;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Expanded(child: _PodiumSpot(member: at(1), rank: 2, height: 64)),
+        Expanded(
+          child: _PodiumSpot(
+            member: at(1),
+            rank: 2,
+            height: 64,
+            photoPath: photoFor(at(1)),
+          ),
+        ),
         const SizedBox(width: 8),
-        Expanded(child: _PodiumSpot(member: at(0), rank: 1, height: 84)),
+        Expanded(
+          child: _PodiumSpot(
+            member: at(0),
+            rank: 1,
+            height: 84,
+            photoPath: photoFor(at(0)),
+          ),
+        ),
         const SizedBox(width: 8),
-        Expanded(child: _PodiumSpot(member: at(2), rank: 3, height: 56)),
+        Expanded(
+          child: _PodiumSpot(
+            member: at(2),
+            rank: 3,
+            height: 56,
+            photoPath: photoFor(at(2)),
+          ),
+        ),
       ],
     );
   }
@@ -134,27 +167,26 @@ class _PodiumSpot extends StatelessWidget {
     required this.member,
     required this.rank,
     required this.height,
+    this.photoPath,
   });
   final MemberStat? member;
   final int rank;
   final double height;
+  final String? photoPath;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final m = member;
     if (m == null) return const SizedBox.shrink();
-    final (bg, fg) = avatarColor(context, m.userId);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        CircleAvatar(
+        MemberAvatar(
+          userId: m.userId,
+          displayName: m.displayName,
+          photoPath: photoPath,
           radius: rank == 1 ? 26 : 20,
-          backgroundColor: bg,
-          child: Text(
-            m.displayName.isNotEmpty ? m.displayName[0].toUpperCase() : '?',
-            style: TextStyle(color: fg, fontWeight: FontWeight.w700),
-          ),
         ),
         const SizedBox(height: 6),
         Text(
@@ -212,7 +244,8 @@ class _YouCard extends StatelessWidget {
     } else if (list.length > 1) {
       final below = list[1];
       final gap = you.weeklyTrees - below.weeklyTrees;
-      if (gap >= 0) delta = l10n.leagueDeltaAhead(below.displayName, gap);
+      // gap 0 = empate: "0 árvores atrás" soa estranho, esconde (QA P2-2).
+      if (gap > 0) delta = l10n.leagueDeltaAhead(below.displayName, gap);
     }
 
     return Container(
@@ -260,16 +293,17 @@ class _RankRow extends StatelessWidget {
     required this.rank,
     required this.member,
     required this.isYou,
+    this.youPhoto,
   });
   final int rank;
   final MemberStat member;
   final bool isYou;
+  final String? youPhoto;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
-    final (bg, fg) = avatarColor(context, member.userId);
     final name = isYou ? l10n.leagueYou : member.displayName;
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
@@ -283,13 +317,11 @@ class _RankRow extends StatelessWidget {
         children: [
           _RankMedal(rank: rank),
           const SizedBox(width: 8),
-          CircleAvatar(
+          MemberAvatar(
+            userId: member.userId,
+            displayName: name,
+            photoPath: youPhoto,
             radius: 16,
-            backgroundColor: bg,
-            child: Text(
-              name.isNotEmpty ? name[0].toUpperCase() : '?',
-              style: TextStyle(fontSize: 13, color: fg),
-            ),
           ),
           const SizedBox(width: 12),
           Expanded(

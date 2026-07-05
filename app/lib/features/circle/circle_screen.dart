@@ -8,6 +8,7 @@ import '../../core/theme/app_colors.dart';
 import '../../data/models/circle.dart';
 import '../../data/models/tree.dart';
 import '../../data/providers/circle_provider.dart';
+import '../../data/providers/profile_photo_provider.dart';
 import '../../data/repositories/circle_repository.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets/grovely_components.dart';
@@ -230,8 +231,11 @@ class _CircleFormSheetState extends State<_CircleFormSheet> {
 /// Linha de membro: contribuição da semana como ícones (até 8; acima vira
 /// "×N") — soma visual ao bosque em vez de convidar a comparar números.
 class _MemberRow extends StatelessWidget {
-  const _MemberRow({required this.member});
+  const _MemberRow({required this.member, this.youPhoto});
   final MemberStat member;
+
+  /// Foto local do usuário atual — não-nula só na linha dele (QA P1-1).
+  final String? youPhoto;
 
   @override
   Widget build(BuildContext context) {
@@ -239,18 +243,13 @@ class _MemberRow extends StatelessWidget {
     final healthy = theme.brightness == Brightness.dark
         ? AppColors.treeHealthyDark
         : AppColors.treeHealthy;
-    final (bg, fg) = avatarColor(context, member.userId);
     final n = member.weeklyTrees;
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: CircleAvatar(
-        backgroundColor: bg,
-        child: Text(
-          member.displayName.isNotEmpty
-              ? member.displayName[0].toUpperCase()
-              : '?',
-          style: TextStyle(color: fg, fontWeight: FontWeight.w600),
-        ),
+      leading: MemberAvatar(
+        userId: member.userId,
+        displayName: member.displayName,
+        photoPath: youPhoto,
       ),
       title: Text(member.displayName),
       trailing: n <= 8
@@ -288,6 +287,8 @@ class _Detail extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final members = ref.watch(circleMembersProvider(circle.id));
+    final uid = ref.watch(currentUserIdProvider);
+    final youPhoto = ref.watch(profilePhotoProvider);
 
     return RefreshIndicator(
       onRefresh: () async => ref.invalidate(circleMembersProvider(circle.id)),
@@ -427,7 +428,10 @@ class _Detail extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8),
                   for (final (i, m) in list.indexed)
-                    _MemberRow(member: m).staggerIn(context, i),
+                    _MemberRow(
+                      member: m,
+                      youPhoto: m.userId == uid ? youPhoto : null,
+                    ).staggerIn(context, i),
                 ],
               );
             },

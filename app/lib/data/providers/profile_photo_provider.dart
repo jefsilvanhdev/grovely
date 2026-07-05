@@ -14,16 +14,17 @@ class ProfilePhotoNotifier extends Notifier<String?> {
 
   @override
   String? build() {
-    unawaited(
-      SharedPreferences.getInstance().then((p) {
-        final path = p.getString(_pref);
-        // Arquivo pode ter sido limpo pelo SO — não aponta pro vazio.
-        if (path != null && File(path).existsSync() && path != state) {
-          state = path;
-        }
-      }),
-    );
+    unawaited(_restore());
     return null;
+  }
+
+  Future<void> _restore() async {
+    final prefs = await SharedPreferences.getInstance();
+    final path = prefs.getString(_pref);
+    // Arquivo pode ter sido limpo pelo SO — checagem async, fora do build.
+    if (path != null && await File(path).exists() && path != state) {
+      state = path;
+    }
   }
 
   /// Abre o photo picker do sistema (sem permissão em Android 13+) e guarda

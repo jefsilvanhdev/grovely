@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -204,6 +205,48 @@ extension GrovelyStagger on Widget {
           curve: Curves.easeOutCubic,
           duration: 320.ms,
         );
+  }
+}
+
+/// Avatar de membro: foto (se for o próprio usuário e houver foto local) ou
+/// inicial sobre cor determinística. Sem isto, a foto que você põe no Perfil
+/// não aparecia no seu card da liga/círculo (QA cenários P1-1). Fotos de
+/// outros membros só chegam com o upload do auth real.
+class MemberAvatar extends StatelessWidget {
+  const MemberAvatar({
+    super.key,
+    required this.userId,
+    required this.displayName,
+    this.photoPath,
+    this.radius = 18,
+  });
+
+  final String userId;
+  final String displayName;
+
+  /// Caminho da foto — passar só quando este avatar é o do usuário atual.
+  final String? photoPath;
+  final double radius;
+
+  @override
+  Widget build(BuildContext context) {
+    final (bg, fg) = avatarColor(context, userId);
+    final path = photoPath;
+    return CircleAvatar(
+      radius: radius,
+      backgroundColor: bg,
+      backgroundImage: path != null ? FileImage(File(path)) : null,
+      child: path == null
+          ? Text(
+              displayName.isNotEmpty ? displayName[0].toUpperCase() : '?',
+              style: TextStyle(
+                color: fg,
+                fontWeight: FontWeight.w600,
+                fontSize: radius * 0.72,
+              ),
+            )
+          : null,
+    );
   }
 }
 
