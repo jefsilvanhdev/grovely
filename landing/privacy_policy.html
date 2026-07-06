@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Política de Privacidade — Grovely</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --green:#2E7D52; --green-dark:#14361F; --bg:#F3F6F1; --ink:#18241D; --soft:#4A5A50; --mint:#C8E6CF; --amber:#E0A458; }
+    body { background:var(--bg); color:var(--ink); font-family:'Hanken Grotesk',sans-serif; font-size:16px; line-height:1.75; padding:2rem 1rem 4rem; }
+    .container { max-width:720px; margin:0 auto; }
+    header { text-align:center; padding:3rem 0 2.5rem; border-bottom:1px solid rgba(46,125,82,.25); margin-bottom:2.5rem; }
+    .app-name { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:2rem; color:var(--green); letter-spacing:-.01em; }
+    header h1 { font-family:'Hanken Grotesk',sans-serif; font-weight:500; font-size:1.05rem; color:var(--soft); margin-top:.4rem; letter-spacing:.05em; text-transform:uppercase; }
+    h2 { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:1.3rem; color:var(--green-dark); margin-top:2.5rem; margin-bottom:.75rem; padding-bottom:.4rem; border-bottom:1px solid rgba(46,125,82,.2); }
+    p { margin-bottom:1rem; }
+    ul { padding-left:1.4rem; margin-bottom:1rem; }
+    li { margin-bottom:.5rem; }
+    strong { color:var(--green-dark); font-weight:600; }
+    .highlight-box { background:rgba(200,230,207,.4); border-left:3px solid var(--green); border-radius:0 6px 6px 0; padding:1rem 1.25rem; margin:1.25rem 0; }
+    .highlight-box p { margin-bottom:0; }
+    a { color:var(--green); text-decoration:underline; text-underline-offset:3px; }
+    a:hover { color:var(--green-dark); }
+    .contact-email { display:inline-block; background:rgba(46,125,82,.1); border:1px solid rgba(46,125,82,.3); border-radius:4px; padding:.1rem .5rem; font-family:monospace; font-size:.95rem; color:var(--green); }
+    footer { margin-top:3.5rem; padding-top:1.5rem; border-top:1px solid rgba(46,125,82,.25); text-align:center; font-size:.85rem; color:var(--soft); }
+    footer strong { color:var(--soft); }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <p class="app-name">Grovely</p>
+      <h1>Política de Privacidade</h1>
+    </header>
+
+    <section>
+      <h2>1. Introdução</h2>
+      <p>
+        O <strong>Grovely</strong> é um app de foco: cada sessão concentrada planta uma
+        árvore no seu jardim, e você pode focar junto com um círculo de amigos. Levamos sua
+        privacidade a sério e coletamos o mínimo necessário para o app funcionar.
+      </p>
+      <p>
+        Esta política descreve de forma transparente quais informações são (e não são)
+        processadas quando você usa o Grovely, e como você pode entrar em contato.
+      </p>
+      <div class="highlight-box">
+        <p>
+          O Grovely <strong>não pede e-mail, telefone ou cadastro tradicional</strong>. Você
+          começa a usar na hora, com uma conta <strong>anônima</strong>. Dentro de um círculo,
+          os outros membros veem <strong>apenas o primeiro nome que você escolher e a
+          quantidade de árvores da semana</strong> — nada além disso.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Dados que o app NÃO coleta</h2>
+      <ul>
+        <li>E-mail, telefone ou documento de identificação</li>
+        <li>Localização geográfica</li>
+        <li>Contatos, câmera, microfone ou histórico de navegação de outros apps</li>
+        <li>Sua foto de perfil <strong>não é enviada a servidor nenhum</strong> — fica só no seu dispositivo</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. Conta anônima e o que fica no servidor</h2>
+      <p>
+        Para sincronizar seu progresso entre reinstalações e permitir os recursos sociais,
+        o Grovely cria uma <strong>conta anônima</strong> — um identificador aleatório, sem
+        e-mail nem senha. Associados a esse identificador, ficam armazenados em nosso provedor
+        de backend (<strong>Supabase</strong>):
+      </p>
+      <ul>
+        <li><strong>Sessões de foco:</strong> espécie da árvore, duração e horário de cada sessão concluída</li>
+        <li><strong>Sequência (streak):</strong> sua contagem de dias consecutivos</li>
+        <li><strong>Nome de exibição:</strong> o primeiro nome que você opta por definir (usado só dentro do círculo)</li>
+        <li><strong>Idioma preferido</strong> do app</li>
+        <li><strong>Círculos:</strong> nome do círculo, código de convite e quem são os membros</li>
+      </ul>
+      <p>
+        Esses dados são usados exclusivamente para operar o app (sincronizar seu jardim, montar
+        o bosque coletivo e a liga da semana). <strong>Não vendemos nem compartilhamos</strong>
+        esses dados com anunciantes.
+      </p>
+    </section>
+
+    <section>
+      <h2>4. O que é compartilhado num círculo</h2>
+      <p>
+        Ao entrar num círculo, os demais membros passam a ver <strong>somente</strong>:
+      </p>
+      <ul>
+        <li>O <strong>primeiro nome</strong> que você definiu</li>
+        <li>A <strong>quantidade de árvores</strong> que você plantou na semana</li>
+      </ul>
+      <p>
+        Não há feed, mensagens diretas nem exposição de horários, histórico ou qualquer outro
+        dado. Ao sair de um círculo, você deixa de aparecer para aquele grupo.
+      </p>
+    </section>
+
+    <section>
+      <h2>5. O que o app armazena localmente</h2>
+      <p>Algumas informações ficam <strong>apenas no seu dispositivo</strong>:</p>
+      <ul>
+        <li><strong>Foto de perfil:</strong> se você escolher uma, a imagem é copiada para a área do app e nunca enviada a servidor</li>
+        <li><strong>Preferências:</strong> tema, idioma e configuração de lembretes</li>
+        <li><strong>Jardim offline:</strong> árvores plantadas sem conexão ficam salvas localmente e sincronizam quando você reconecta</li>
+        <li><strong>Lembrete diário:</strong> a notificação de sequência é agendada direto no dispositivo — nenhum servidor é consultado para enviá-la</li>
+      </ul>
+      <p>Esses dados existem enquanto o app estiver instalado. Desinstalar remove tudo do dispositivo.</p>
+    </section>
+
+    <section>
+      <h2>6. Permissões do app</h2>
+      <ul>
+        <li><strong>INTERNET:</strong> sincronizar seu jardim e os recursos de círculo com o backend. O foco solo funciona offline.</li>
+        <li><strong>POST_NOTIFICATIONS (Android 13+):</strong> exibir o lembrete diário de sequência. Você pode revogar a qualquer momento.</li>
+        <li><strong>RECEIVE_BOOT_COMPLETED:</strong> reagendar o lembrete após reiniciar o dispositivo. Nenhum dado é enviado.</li>
+        <li><strong>Acesso a fotos (photo picker):</strong> apenas quando você escolhe uma foto de perfil; o app recebe só a imagem selecionada, sem acesso à sua galeria.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>7. Provedores e terceiros</h2>
+      <p>
+        <strong>Supabase</strong> — hospeda o backend (conta anônima, sessões, círculos). Os
+        dados trafegam por conexão criptografada (HTTPS). Ver a
+        <a href="https://supabase.com/privacy" target="_blank" rel="noopener">política do Supabase</a>.
+      </p>
+      <p>
+        <strong>Google Play</strong> — a distribuição e a futura assinatura são processadas pelo
+        Google, conforme a
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidade do Google</a>.
+      </p>
+      <!-- TODO(Jeff): quando Firebase Analytics / AdMob / RevenueCat forem ativados,
+           adicionar aqui as respectivas seções (dados agregados anônimos, anúncios,
+           gestão de assinatura) e atualizar a data de vigência. -->
+    </section>
+
+    <section>
+      <h2>8. Crianças</h2>
+      <p>
+        O Grovely não é direcionado a menores de 13 anos e não coleta intencionalmente dados
+        de crianças. Se você acredita que uma criança nos forneceu dados, entre em contato para
+        que possamos removê-los.
+      </p>
+    </section>
+
+    <section>
+      <h2>9. Seus direitos e exclusão de dados</h2>
+      <p>
+        Como não há e-mail nem cadastro, sua conta é anônima. Você pode solicitar a
+        <strong>exclusão dos dados</strong> associados à sua conta (sessões, círculos, nome de
+        exibição) pelo e-mail de contato abaixo — atenderemos em até 15 dias úteis. Desinstalar
+        o app remove todos os dados locais imediatamente.
+      </p>
+    </section>
+
+    <section>
+      <h2>10. Contato</h2>
+      <p>Dúvidas sobre esta política ou pedidos de exclusão de dados:</p>
+      <!-- TODO(Jeff): trocar por um e-mail que você monitore (grovely.app ainda sem DNS). -->
+      <p><a href="mailto:contato@grovely.app" class="contact-email">contato@grovely.app</a></p>
+    </section>
+
+    <section>
+      <h2>11. Alterações nesta política</h2>
+      <p>
+        Podemos atualizar esta política quando o app receber novas funcionalidades que alterem
+        a forma como os dados são tratados (por exemplo, ao ativar assinaturas, anúncios ou
+        analytics). A data de vigência abaixo sempre refletirá a versão mais recente.
+      </p>
+    </section>
+
+    <footer>
+      <p><strong>Data de vigência:</strong> a definir na publicação</p>
+      <p style="margin-top:.5rem;">Grovely &mdash; Foco que cresce, juntos.</p>
+    </footer>
+
+  </div>
+</body>
+</html>

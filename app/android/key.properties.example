@@ -1,13 +1,18 @@
 # Assinatura de release do Grovely.
 #
-# 1. Gerar o keystore (uma vez, guardar com backup — perder = nunca mais
-#    atualizar o app no Play):
-#      keytool -genkey -v -keystore ~/keystores/grovely-release.jks \
-#        -keyalg RSA -keysize 2048 -validity 10000 -alias grovely
+# Reusa o keystore que você já tem do "O Meu Salmo" (um .jks assina vários
+# apps), com uma CHAVE PRÓPRIA pro Grovely (isolamento: se a chave do Grovely
+# vazar, o Salmo não é afetado). O package (com.grovely.app) é o que separa
+# os apps na Play — não o keystore.
 #
-# 2. Copiar este arquivo para android/key.properties e preencher.
+# 1. Adicionar o alias grovely ao keystore existente (uma vez):
+#      keytool -genkey -v -keystore ~/keystores/omeusalmo.jks -alias grovely \
+#        -keyalg RSA -keysize 2048 -validity 10000
+#    (pede a senha do store atual + define a senha da nova chave grovely)
+#
+# 2. Copiar este arquivo para android/key.properties e preencher as senhas.
 #    key.properties está no .gitignore — NUNCA commitar senhas/keystore.
-storeFile=/Users/SEU_USUARIO/keystores/grovely-release.jks
-storePassword=TROCAR
+storeFile=/Users/jeffsilva/keystores/omeusalmo.jks
+storePassword=SENHA_DO_STORE
 keyAlias=grovely
-keyPassword=TROCAR
+keyPassword=SENHA_DA_CHAVE_GROVELY
