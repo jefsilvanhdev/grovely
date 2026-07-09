@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -25,9 +24,9 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   // Sobe a UI imediatamente: a splash animada aparece sem esperar rede. Os
-  // inits (Supabase/Firebase) rodam em background — são best-effort e ninguém
-  // no boot (splash → onboarding) depende deles; quando o usuário chega nas
-  // telas autenticadas já terminaram. Sem isso, a splash nativa travava ~8-10s.
+  // inits (Supabase) rodam em background — são best-effort e ninguém no boot
+  // (splash → onboarding) depende deles; quando o usuário chega nas telas
+  // autenticadas já terminaram. Sem isso, a splash nativa travava ~8-10s.
   unawaited(_bootstrapServices());
 
   // Demo populado: trocar por
@@ -45,10 +44,6 @@ Future<void> _bootstrapServices() async {
     await SupabaseService.instance.ensureSignedIn(
       locale: WidgetsBinding.instance.platformDispatcher.locale.languageCode,
     );
-  } catch (_) {}
-
-  try {
-    await Firebase.initializeApp();
   } catch (_) {}
 
   try {

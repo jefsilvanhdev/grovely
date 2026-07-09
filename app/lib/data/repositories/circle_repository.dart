@@ -64,17 +64,43 @@ class CircleRepository {
   Future<Circle> create(String name) async {
     _requireReady();
     try {
-      final client = SupabaseService.instance.client;
-      final row = await client
-          .from('circles')
-          .insert({'name': name, 'invite_code': _genCode(), 'created_by': _uid})
-          .select()
-          .single();
-      await client.from('circle_members').insert({
-        'circle_id': row['id'],
-        'user_id': _uid,
-      });
-      return Circle.fromJson(row);
+      // RPC atômica (migration 0004): cria o círculo + insere o criador como
+      // membro num só request. O INSERT direto em circle_members foi removido
+      // do client por segurança (audit #4/M12).
+      try {
+        final row =
+            await SupabaseService.instance.client.rpc(
+                  'create_circle',
+                  params: {'p_name': name, 'p_code': _genCode()},
+                )
+                as Map<String, dynamic>;
+        return Circle.fromJson(row);
+      } on Object catch (e) {
+        // Ponte: se a 0004 ainda não foi aplicada (função inexistente), usa o
+        // caminho legado de dois inserts. Removível quando a 0004 estiver no ar.
+        final m = e.toString();
+        final missingFn =
+            m.contains('create_circle') ||
+            m.contains('PGRST202') ||
+            m.contains('schema cache') ||
+            (m.contains('function') && m.contains('does not exist'));
+        if (!missingFn) rethrow;
+        final client = SupabaseService.instance.client;
+        final row = await client
+            .from('circles')
+            .insert({
+              'name': name,
+              'invite_code': _genCode(),
+              'created_by': _uid,
+            })
+            .select()
+            .single();
+        await client.from('circle_members').insert({
+          'circle_id': row['id'],
+          'user_id': _uid,
+        });
+        return Circle.fromJson(row);
+      }
     } on CircleException {
       rethrow;
     } on Object catch (e) {

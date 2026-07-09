@@ -60,6 +60,14 @@ android {
                 // local. GATE DE RELEASE: não subir AAB assim (QA C4).
                 signingConfigs.getByName("debug")
             }
+            // R8: encolhe + ofusca (audit). Regras em proguard-rules.pro mantêm
+            // o que os plugins acessam por reflection.
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }

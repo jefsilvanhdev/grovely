@@ -45,20 +45,15 @@ dependencies:
   # Backend — Supabase: auth, postgres, realtime, presence, storage
   supabase_flutter: ^2.14.2
 
-  # Assinatura — RevenueCat (trial 21 dias, entitlements)
-  purchases_flutter: ^10.2.3
+  # ── Removidas até serem plugadas de fato (Agente D) — audit SECURITY_AUDIT.md.
+  # Estavam com 0 usos em lib/, inflavam o AAB e traziam problemas de release:
+  #   purchases_flutter (RevenueCat) · google_mobile_ads (injetava a permissão
+  #   AD_ID + exigia AdMob App ID no manifest) · firebase_core/analytics/
+  #   messaging (nunca inicializavam) · timezone (não usado). Readicionar aqui
+  #   quando o wiring real existir.
 
-  # Anúncios — AdMob rewarded (reviver árvore murcha; nunca interrompe foco)
-  google_mobile_ads: ^9.0.0
-
-  # Firebase — Analytics + Cloud Messaging (push) + Crashlytics futuro
-  firebase_core: ^4.10.0
-  firebase_analytics: ^12.4.2
-  firebase_messaging: ^16.3.0
-
-  # Notificações locais — lembrete de streak, fim de trial
+  # Notificações locais — lembrete de streak
   flutter_local_notifications: ^22.0.1
-  timezone: ^0.11.0
 
   # Persistência local — preferências e sessão de foco offline
   shared_preferences: ^2.5.5

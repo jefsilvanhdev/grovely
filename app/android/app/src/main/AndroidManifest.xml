@@ -8,7 +8,9 @@
     <application
         android:label="Grovely"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/launcher_icon"
+        android:allowBackup="false"
+        android:fullBackupContent="false"><!-- não fazer backup do storage (sessão Supabase em shared_prefs) — audit -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -31,11 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!-- AdMob App ID — obrigatório pelo google_mobile_ads (senão crasha no boot).
-             TEST ID oficial por ora; Agente D troca pelo App ID real do AdMob. -->
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+        <!-- AdMob removido junto com google_mobile_ads (audit): o App ID de teste
+             não pode ir pra produção e a dep não era usada. Agente D readiciona
+             o meta-data com o App ID real quando plugar o rewarded. -->
         <!-- flutter_local_notifications: reagenda o lembrete diário após reboot. -->
         <receiver
             android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
