@@ -57,8 +57,10 @@ Relatórios: `qa/QA_REPORT_02.md` (técnico) · `plantio-coletivo-design/APP_REV
 **Resolvido no commit `1b52532`** (verificado no emulador): C1 wakelock+carência 45s · C2 onboarding persiste · C3 círculo com guardas/feedback · C4 assinatura via key.properties · I1 timing por relógio · I2 sessão sobrevive a processo morto · I5/I6/I7/I9 · M2/M4/M8/M9/M10 · plurais ICU · UX P1s (regra do wither na home, paywall sem "TBD", espécie capitalizada, pills, watermark).
 **Ficou para depois (não bloqueia beta):** I3 sync offline→nuvem (merge no load) · I4/I8 decisão Firebase (configurar OU remover) · M6 ícone mono de notificação · M11 horário fixo do lembrete (zonedSchedule) · M12 RPC transacional create_circle.
 
-## Landing page ✅ (2026-07-03)
-`landing/index.html` — estática, brand v6, autocontida (falta domínio + form real de waitlist = Jeff).
+## Landing page ✅ (2026-07-05) + deploy-ready (2026-07-06)
+`docs/index.html` — LP tier-awwwards (brand v6, árvores reais, canvas, tema dia/noite, SEO JSON-LD). Junto: `privacy_policy.html`, `terms.html` (política + termos do app).
+**Pronta pra GitHub Pages** em `/docs`: `CNAME` (grovely.app), `robots.txt`, `sitemap.xml`, `favicon.svg`, `.nojekyll`.
+**Falta só o Jeff:** ligar Pages (Settings → Pages → main /docs) + apontar o DNS do grovely.app pro Pages + trocar mailto por form real. Ao subir, a **política de privacidade fica viva** (fecha o bloqueador #2 da SECURITY_AUDIT).
 
 ## Polish UI — 2º passe ✅ (essencial concluído)
 Lista do designer em `plantio-coletivo-design/APP_REVIEW.md`. Feito: motion P0 (sweep/árvore/confete/haptics), P1 (stagger/press/elevation), copy humanizado, GrovelyEmpty unificado, árvore maior na home/timer + bg neutro, **pódio da liga (ouro/prata/bronze)**, **jardim coletivo visual (mini-árvores)**, **transição slide do onboarding**, **shimmer no skeleton** (extraído `GrovelySkeletonBox`) + **`GrovelyError` unificado**, **árvore da home corrigida** (colapsava no AnimatedSwitcher), **círculo: copy de meta batida**. Pulados (baixo ROI): Hero da árvore entre telas, count-up de stats (quebra plural i18n).
