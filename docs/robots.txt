@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://grovely.app/sitemap.xml
+Sitemap: https://grovely.com.br/sitemap.xml
