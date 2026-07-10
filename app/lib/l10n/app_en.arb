@@ -186,6 +186,8 @@
   "circleInvite": "Share invite",
   "circleMembers": "Members",
   "circleGroveOverline": "Shared grove · this week",
+  "circleFocusingNow": "{n, plural, =0{No one focusing right now} =1{1 focusing now} other{{n} focusing now}}",
+  "@circleFocusingNow": { "placeholders": { "n": { "type": "int" } } },
   "circleOffline": "No connection right now — check your internet and try again.",
   "notifChannelName": "Streak reminders",
   "notifChannelDesc": "Reminds you to focus and keep your streak alive.",

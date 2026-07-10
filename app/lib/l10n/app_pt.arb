@@ -170,6 +170,7 @@
   "circleInvite": "Compartilhar convite",
   "circleMembers": "Membros",
   "circleGroveOverline": "Bosque do círculo · esta semana",
+  "circleFocusingNow": "{n, plural, =0{Ninguém focando agora} =1{1 focando agora} other{{n} focando agora}}",
   "circleOffline": "Sem conexão agora — confira sua internet e tente de novo.",
   "notifChannelName": "Lembretes de streak",
   "notifChannelDesc": "Lembra de focar para manter sua sequência.",

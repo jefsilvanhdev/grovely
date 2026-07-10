@@ -544,6 +544,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get circleGroveOverline => 'Shared grove · this week';
 
   @override
+  String circleFocusingNow(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n focusing now',
+      one: '1 focusing now',
+      zero: 'No one focusing right now',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get circleOffline =>
       'No connection right now — check your internet and try again.';
 

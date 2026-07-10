@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_theme.dart';
 
 import '../../data/models/circle.dart';
 import '../../data/models/tree.dart';
@@ -312,6 +313,52 @@ class _MemberRow extends StatelessWidget {
   }
 }
 
+/// Ponto verde "ao vivo" pulsando. Honra reduce-motion (fica estático).
+class _PulseDot extends StatefulWidget {
+  const _PulseDot({required this.color});
+  final Color color;
+
+  @override
+  State<_PulseDot> createState() => _PulseDotState();
+}
+
+class _PulseDotState extends State<_PulseDot>
+    with SingleTickerProviderStateMixin {
+  AnimationController? _ctrl;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_ctrl == null && !GrovelyMotion.reduced(context)) {
+      _ctrl = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 1400),
+      )..repeat(reverse: true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _ctrl?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final dot = Container(
+      width: 9,
+      height: 9,
+      decoration: BoxDecoration(color: widget.color, shape: BoxShape.circle),
+    );
+    final ctrl = _ctrl;
+    if (ctrl == null) return dot;
+    return FadeTransition(
+      opacity: Tween(begin: 0.35, end: 1.0).animate(ctrl),
+      child: dot,
+    );
+  }
+}
+
 class _Detail extends ConsumerWidget {
   const _Detail({required this.circle});
   final Circle circle;
@@ -323,6 +370,9 @@ class _Detail extends ConsumerWidget {
     final members = ref.watch(circleMembersProvider(circle.id));
     final uid = ref.watch(currentUserIdProvider);
     final youPhoto = ref.watch(profilePhotoProvider);
+    // Presença ao vivo (best-effort): vazio até o realtime sincronizar.
+    final presence = ref.watch(circlePresenceProvider(circle.id)).value;
+    final focusingNow = presence?.focusingCount ?? 0;
 
     return RefreshIndicator(
       onRefresh: () async => ref.invalidate(circleMembersProvider(circle.id)),
@@ -350,6 +400,24 @@ class _Detail extends ConsumerWidget {
               ),
             ],
           ),
+          // "X focando agora" — dot verde pulsante + contagem ao vivo (mockup
+          // 03). Some quando ninguém está focando, pra não poluir.
+          if (focusingNow > 0) ...[
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                _PulseDot(color: theme.colorScheme.primary),
+                const SizedBox(width: 8),
+                Text(
+                  l10n.circleFocusingNow(focusingNow),
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: theme.colorScheme.primary,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ],
           const SizedBox(height: 8),
           members.when(
             loading: () => const Center(

@@ -1024,6 +1024,12 @@ abstract class AppLocalizations {
   /// **'Shared grove · this week'**
   String get circleGroveOverline;
 
+  /// No description provided for @circleFocusingNow.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{No one focusing right now} =1{1 focusing now} other{{n} focusing now}}'**
+  String circleFocusingNow(int n);
+
   /// No description provided for @circleOffline.
   ///
   /// In en, this message translates to:
