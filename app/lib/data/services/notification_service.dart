@@ -1,3 +1,4 @@
+import 'package:flutter/painting.dart' show Color;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,7 +21,9 @@ class NotificationService {
 
   Future<void> init() async {
     if (_initialized) return;
-    const android = AndroidInitializationSettings('@mipmap/launcher_icon');
+    // Ícone monocromático (drawable/ic_stat_grove) — o launcher colorido virava
+    // um quadrado branco na status bar (QA M6). O Android tinge pelo alpha.
+    const android = AndroidInitializationSettings('ic_stat_grove');
     const darwin = DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
@@ -74,6 +77,8 @@ class NotificationService {
         channelDescription: channelDescription,
         importance: Importance.defaultImportance,
         priority: Priority.defaultPriority,
+        icon: 'ic_stat_grove',
+        color: const Color(0xFF2E7D52),
       ),
     );
     await _plugin.periodicallyShow(

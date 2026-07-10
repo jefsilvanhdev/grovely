@@ -121,10 +121,12 @@ flutter_launcher_icons:
 # ─────────────────────────────────────────────────────────────────────────────
 flutter_native_splash:
   color: "#2E7D52"
-  image: assets/icon/grovely-adaptive-foreground-1024.png
+  # Asset dedicado do splash: bosque recortado (o adaptive-foreground tinha
+  # padding de safe-zone e o ícone ficava pequeno/flutuando).
+  image: assets/icon/grovely-splash-1024.png
   android: true
   ios: false
   web: false
   android_12:
     color: "#2E7D52"
-    image: assets/icon/grovely-adaptive-foreground-1024.png
+    image: assets/icon/grovely-splash-1024.png

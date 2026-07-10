@@ -1,0 +1,21 @@
+<!-- Ícone monocromático de notificação (status bar). O Android tinge pelo
+     alpha, então tudo branco sobre transparente — silhueta do bosque (3 árvores
+     + troncos). Sem sol/chão pra ficar legível a 24dp. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    <!-- árvore esquerda -->
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M27,36 Q31.5,43.5 34.8,53 Q38,62.5 39.5,70.5 Q33.5,74.8 27,74.8 Q20.5,74.8 14.5,70.5 Q16,62.5 19.2,53 Q22.5,43.5 27,36 Z" />
+    <path android:fillColor="#FFFFFFFF" android:pathData="M25.5,73.5 h3 v9.5 h-3 z" />
+    <!-- árvore direita -->
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M73,29 Q78,38 81.8,48.5 Q85.5,59 87.2,68.5 Q80.5,73.3 73,73.3 Q65.5,73.3 58.8,68.5 Q60.5,59 64.2,48.5 Q68,38 73,29 Z" />
+    <path android:fillColor="#FFFFFFFF" android:pathData="M71.3,72 h3.4 v10.5 h-3.4 z" />
+    <!-- árvore central (mais alta) -->
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M50,13 Q56,23 60.5,36 Q65,49 67,62.5 Q58.8,68 50,68 Q41.2,68 33,62.5 Q35,49 39.5,36 Q44,23 50,13 Z" />
+    <path android:fillColor="#FFFFFFFF" android:pathData="M47.8,66.5 h4.4 v13.5 h-4.4 z" />
+</vector>
