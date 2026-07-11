@@ -120,13 +120,12 @@ flutter_launcher_icons:
 # Fundo verde da marca + folhas brancas centralizadas.
 # ─────────────────────────────────────────────────────────────────────────────
 flutter_native_splash:
+  # SÓ fundo verde (sem imagem): o ícone do native A12 é mascarado num círculo
+  # e cortava o bosque/sol. A arte fica na splash Flutter (GrovelyMark), que
+  # anima o bosque crescendo sem corte. Native = tela verde lisa que emenda.
   color: "#2E7D52"
-  # Asset dedicado do splash: bosque recortado (o adaptive-foreground tinha
-  # padding de safe-zone e o ícone ficava pequeno/flutuando).
-  image: assets/icon/grovely-splash-1024.png
   android: true
   ios: false
   web: false
   android_12:
     color: "#2E7D52"
-    image: assets/icon/grovely-splash-1024.png
