@@ -8,27 +8,34 @@ Tudo que a ficha do app precisa. Espelha a estrutura do "O Meu Salmo".
 play-store/
 ├── README.md
 ├── export/                        ★ BUNDLE (subir no Console)
-│   ├── icon-512.png               ← ícone 512×512, sem alpha
-│   ├── feature-graphic.png        ← 1024×500
-│   ├── s1-foco.png                ← screenshots 1080×1920 (EN, primário)
-│   ├── s2-jardim.png
-│   ├── s3-circulo.png
-│   ├── s4-liga.png
-│   └── s5-recap.png
+│   ├── icon-512.png               ← ícone 512×512, sem alpha (compartilhado)
+│   ├── en/                        ← ficha em INGLÊS (padrão, global-first)
+│   │   ├── feature-graphic.png    ← 1024×500 (EN)
+│   │   └── s1-foco … s5-recap.png ← 5 screenshots 1080×1920 (app EN + legenda EN)
+│   └── pt/                        ← ficha em PORTUGUÊS (pt-BR)
+│       ├── feature-graphic.png    ← 1024×500 (PT)
+│       └── s1-foco … s5-recap.png ← 5 screenshots (app PT + legenda PT)
 ├── listing/
 │   ├── aso-copy.md                ★ título/descrições/keywords (pt/en/es)
 │   └── estrategia-screenshots.md  ← narrativa + copy por tela
 ├── feature-graphic/
-│   └── feature-graphic.html       ← fonte do feature graphic
+│   ├── feature-graphic-en.html    ← fonte EN
+│   └── feature-graphic-pt.html    ← fonte PT
 └── screenshots/
-    ├── raw/                       ← capturas 1080×2400 do app (demo mode, status bar limpa)
-    └── final/                     ← s1…s5.html (frames) → geram os PNG de export/
+    ├── raw/       ← capturas EN (1080×2400, demo mode)
+    ├── raw-pt/    ← capturas PT
+    ├── final/     ← s1…s5.html EN (frames)
+    └── final-pt/  ← s1…s5.html PT (frames)
 ```
 
-## Idiomas
-- **Screenshots (export/) = inglês** — estratégia en-first do brand-brief. App capturado em EN + legendas EN (consistente).
-- **aso-copy.md** tem título/descrições em **pt/en/es**.
-- Para localizar os screenshots (pt/es): trocar o idioma no app (Perfil → Idioma), recapturar `raw/`, e trocar as legendas em `screenshots/final/gen` (as strings EN/PT/ES estão na estratégia).
+## Duas fichas (bilíngue)
+A Play permite **uma ficha por idioma** — cada uma com título, descrições, screenshots e feature graphic próprios.
+- **en-US (padrão):** `export/en/` — app + legendas em inglês (estratégia en-first do brand-brief).
+- **pt-BR (tradução):** `export/pt/` — app + legendas em português.
+- **aso-copy.md** já traz título/descrição/keywords em **pt/en/es**.
+- **es** (opcional, futuro): trocar o idioma no app (Perfil → Idioma → Español), recapturar `raw-es/`, gerar `final-es/` com as legendas ES (estratégia tem as strings).
+
+Como o app captura seguem o idioma do app: trocado em **Perfil → Idioma**.
 
 ## Como regenerar
 
