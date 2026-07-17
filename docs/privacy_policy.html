@@ -125,6 +125,7 @@
         <li><strong>POST_NOTIFICATIONS (Android 13+):</strong> exibir o lembrete diário de sequência. Você pode revogar a qualquer momento.</li>
         <li><strong>RECEIVE_BOOT_COMPLETED:</strong> reagendar o lembrete após reiniciar o dispositivo. Nenhum dado é enviado.</li>
         <li><strong>Acesso a fotos (photo picker):</strong> apenas quando você escolhe uma foto de perfil; o app recebe só a imagem selecionada, sem acesso à sua galeria.</li>
+        <li><strong>AD_ID (Identificador de Publicidade):</strong> usada apenas pelo AdMob para exibir o vídeo opcional de reviver árvore (ver seção 7).</li>
       </ul>
     </section>
 
@@ -136,13 +137,26 @@
         <a href="https://supabase.com/privacy" target="_blank" rel="noopener">política do Supabase</a>.
       </p>
       <p>
-        <strong>Google Play</strong> — a distribuição e a futura assinatura são processadas pelo
-        Google, conforme a
+        <strong>Google Play</strong> — a distribuição é processada pelo Google, conforme a
         <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidade do Google</a>.
       </p>
-      <!-- TODO(Jeff): quando Firebase Analytics / AdMob / RevenueCat forem ativados,
-           adicionar aqui as respectivas seções (dados agregados anônimos, anúncios,
-           gestão de assinatura) e atualizar a data de vigência. -->
+      <p>
+        <strong>Google AdMob</strong> — o Grovely é gratuito e exibe <strong>um único
+        anúncio, opcional</strong>: um vídeo curto que você escolhe assistir <em>se</em> quiser
+        reviver uma árvore que murchou. <strong>Não há anúncio durante a sessão de foco</strong>,
+        nem banners, nem anúncios em tela cheia fora dessa escolha.
+      </p>
+      <p>
+        Para exibir esse anúncio, o AdMob (Google) pode acessar o
+        <strong>Identificador de Publicidade (Advertising ID)</strong> do seu dispositivo e dados
+        técnicos do aparelho, conforme a
+        <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">política de anúncios do Google</a>.
+        Você pode <strong>excluir ou desativar</strong> o Advertising ID a qualquer momento em
+        <em>Configurações → Google → Anúncios</em> do Android — o app continua funcionando
+        normalmente (o revive acontece mesmo sem anúncio).
+      </p>
+      <!-- TODO(Jeff): se o Grovely Plus (assinatura) ou analytics forem ativados,
+           adicionar as seções correspondentes e atualizar a data de vigência. -->
     </section>
 
     <section>

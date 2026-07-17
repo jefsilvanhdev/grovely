@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_theme.dart';
 import '../../data/models/tree.dart';
+import '../../data/services/ads_service.dart';
 import '../../data/providers/garden_provider.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets/grovely_components.dart';
@@ -477,10 +478,15 @@ class _WitheredState extends ConsumerState<_Withered> {
               width: double.infinity,
               height: 52,
               child: FilledButton(
-                onPressed: () {
+                onPressed: () async {
                   Navigator.pop(sheetCtx);
-                  // TODO(Agente D): rewarded ad real antes de reviver.
-                  ref.read(focusSessionProvider.notifier).revive();
+                  // Rewarded opt-in: o único anúncio do app. Se não houver
+                  // anúncio (falha/sem preenchimento), revive mesmo assim —
+                  // anúncio quebrado não pode punir quem quer a árvore de volta.
+                  final ok = await AdsService.instance.showRewarded();
+                  if (ok) {
+                    await ref.read(focusSessionProvider.notifier).revive();
+                  }
                 },
                 child: Text(l10n.watchAndRevive),
               ),

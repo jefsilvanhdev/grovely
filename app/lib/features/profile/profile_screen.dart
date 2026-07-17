@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -162,18 +161,13 @@ class ProfileScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
 
-            // Plano — card de status para trial/plus; row de upsell no free.
-            // Assinante NUNCA navega pro paywall de venda (review populado P0).
+            // Plano — MVP é grátis: sem upsell, sem paywall. O card só aparece
+            // se algum dia o entitlement disser trial/plus (Q3). A row de
+            // upsell ficou de fora: não vende o que não existe.
             if (plan.isPaying) ...[
               _PlanCard(plan: plan),
               const SizedBox(height: 20),
-            ] else
-              _Row(
-                icon: Icons.workspace_premium_outlined,
-                label: l10n.planFreeUpsell,
-                value: l10n.profileFreePlan,
-                onTap: () => context.go('/paywall'),
-              ),
+            ],
             _Row(
               icon: Icons.notifications_outlined,
               label: l10n.rowNotifications,

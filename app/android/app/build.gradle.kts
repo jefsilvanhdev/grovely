@@ -16,6 +16,17 @@ val keystoreProperties = Properties().apply {
 }
 val hasReleaseKeystore = keystoreProperties.containsKey("storeFile")
 
+// AdMob App ID: vem de android/admob.properties (gitignored) — ver
+// admob.properties.example. Default = App ID de TESTE oficial do Google, que
+// serve pra dev mas NÃO pode ir pra produção (política do AdMob). O guard no
+// buildType release aborta o build se ainda for o de teste.
+val ADMOB_TEST_APP_ID = "ca-app-pub-3940256099942544~3347511713"
+val admobProperties = Properties().apply {
+    val f = rootProject.file("admob.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+val admobAppId: String = (admobProperties["admobAppId"] as String?) ?: ADMOB_TEST_APP_ID
+
 android {
     namespace = "com.grovely.app"
     compileSdk = flutter.compileSdkVersion
@@ -38,6 +49,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        manifestPlaceholders["admobAppId"] = admobAppId
     }
 
     signingConfigs {
@@ -84,4 +96,21 @@ dependencies {
 
 flutter {
     source = "../.."
+}
+
+// GATE de release: nunca publicar com o App ID de TESTE do AdMob (viola a
+// política e não serve anúncio real). Checado no task graph — só dispara em
+// assembleRelease/bundleRelease, deixando o debug rodar com o ID de teste.
+gradle.taskGraph.whenReady {
+    val releasing = allTasks.any { t ->
+        t.name.contains("Release") &&
+            (t.name.startsWith("assemble") || t.name.startsWith("bundle"))
+    }
+    if (releasing && admobAppId == ADMOB_TEST_APP_ID) {
+        throw GradleException(
+            "AdMob: build de RELEASE com App ID de TESTE. " +
+            "Crie android/admob.properties com o App ID real " +
+            "(ver android/admob.properties.example)."
+        )
+    }
 }

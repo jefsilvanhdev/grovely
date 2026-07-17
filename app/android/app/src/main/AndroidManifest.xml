@@ -33,9 +33,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!-- AdMob removido junto com google_mobile_ads (audit): o App ID de teste
-             não pode ir pra produção e a dep não era usada. Agente D readiciona
-             o meta-data com o App ID real quando plugar o rewarded. -->
+        <!-- AdMob App ID — vem do manifestPlaceholder (build.gradle.kts), que lê
+             android/admob.properties (gitignored). Default = ID de TESTE do
+             Google pra dev; o build de RELEASE falha se ainda for o de teste
+             (guard no gradle) — impede o achado da auditoria de voltar. -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="${admobAppId}" />
         <!-- flutter_local_notifications: reagenda o lembrete diário após reboot. -->
         <receiver
             android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"

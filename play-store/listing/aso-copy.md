@@ -35,7 +35,7 @@ Comece na hora, sem cadastro. No círculo, os outros veem só o seu primeiro nom
 - Lembrete diário opcional pra manter a sequência
 - Recap semanal bonito pra compartilhar
 - Português, inglês e espanhol
-- Grátis pra focar sozinho, pra sempre
+- Grátis, sem assinatura — o único anúncio é opcional, pra reviver uma árvore murcha
 
 Grovely é pra quem quer foco de verdade: estudo, trabalho profundo, leitura, meditação, ou só um tempo longe do celular. Plante um hábito. Colha um bosque.
 
@@ -76,7 +76,7 @@ Start instantly, no sign-up. In a circle, others see only your first name and yo
 - Optional daily reminder to keep your streak alive
 - A beautiful weekly recap to share
 - English, Portuguese and Spanish
-- Free to focus solo, forever
+- Free, no subscription — the only ad is optional, to revive a withered tree
 
 Grovely is for anyone who wants real focus: studying, deep work, reading, meditation, or just time away from the phone. Plant a habit. Grow a grove.
 
@@ -116,7 +116,7 @@ Empieza al instante, sin registro. En un círculo, los demás solo ven tu nombre
 - Recordatorio diario opcional para mantener tu racha
 - Un bonito resumen semanal para compartir
 - Español, inglés y portugués
-- Gratis para concentrarte en solitario, para siempre
+- Gratis, sin suscripción — el único anuncio es opcional, para revivir un árbol marchito
 
 Grovely es para quien quiere concentración de verdad: estudiar, trabajo profundo, lectura, meditación o simplemente tiempo lejos del móvil. Planta un hábito. Cultiva un bosque.
 

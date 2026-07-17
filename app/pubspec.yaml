@@ -45,12 +45,13 @@ dependencies:
   # Backend — Supabase: auth, postgres, realtime, presence, storage
   supabase_flutter: ^2.14.2
 
-  # ── Removidas até serem plugadas de fato (Agente D) — audit SECURITY_AUDIT.md.
-  # Estavam com 0 usos em lib/, inflavam o AAB e traziam problemas de release:
-  #   purchases_flutter (RevenueCat) · google_mobile_ads (injetava a permissão
-  #   AD_ID + exigia AdMob App ID no manifest) · firebase_core/analytics/
-  #   messaging (nunca inicializavam) · timezone (não usado). Readicionar aqui
-  #   quando o wiring real existir.
+  # ── Fora do MVP (audit SECURITY_AUDIT.md — removidas por estarem com 0 usos):
+  #   purchases_flutter (RevenueCat) · firebase_* · timezone.
+  #   O MVP lança GRÁTIS, sem premium. Readicionar quando o Plus voltar (Q3).
+  #
+  # google_mobile_ads: readicionado e WIRED — rewarded opt-in só pra reviver
+  # árvore murcha (ver ads_service.dart). Traz a permissão AD_ID → declarada
+  # no Data Safety e na política de privacidade.
 
   # Notificações locais — lembrete de streak
   flutter_local_notifications: ^22.0.1
@@ -75,6 +76,7 @@ dependencies:
   url_launcher: ^6.3.2
   image_picker: ^1.2.3
   path_provider: ^2.1.6
+  google_mobile_ads: ^9.0.0
 
 dev_dependencies:
   flutter_test:

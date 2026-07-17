@@ -1,0 +1,14 @@
+# AdMob do Grovely — App ID real (o de teste NÃO pode ir pra produção).
+#
+# 1. Criar o app no AdMob (https://apps.admob.com) → copiar o App ID
+#    (formato: ca-app-pub-XXXXXXXXXXXXXXXX~YYYYYYYYYY  — repare no "~")
+# 2. Criar um bloco de anúncio REWARDED → copiar o Ad unit ID
+#    (formato: ca-app-pub-XXXXXXXXXXXXXXXX/ZZZZZZZZZZ — repare na "/")
+# 3. Copiar este arquivo para android/admob.properties e preencher o App ID.
+#    admob.properties está no .gitignore.
+# 4. O Ad unit ID (rewarded) vai no env.json, não aqui:
+#      "ADMOB_REWARDED_UNIT_ID": "ca-app-pub-.../..."
+#
+# Sem admob.properties: dev usa o ID de teste do Google e o build de RELEASE
+# falha de propósito (guard em build.gradle.kts).
+admobAppId=ca-app-pub-XXXXXXXXXXXXXXXX~YYYYYYYYYY

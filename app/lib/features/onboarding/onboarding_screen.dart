@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/models/tree.dart';
 import '../../data/services/notification_service.dart';
@@ -21,14 +22,27 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int _step = 0;
-  static const _steps = 5; // welcome, notif, social, guided, (paywall route)
+  static const _steps = 4; // welcome, notif, social, guided
 
   void _next() {
     if (_step >= 3) {
-      context.go('/paywall'); // passo 5 = paywall
+      // MVP é grátis: o funil termina no app, não num paywall. O único
+      // anúncio é o rewarded opt-in de reviver árvore. O paywall segue no
+      // código pro Plus do Q3 (rota /paywall continua existindo).
+      _finishOnboarding();
     } else {
       setState(() => _step++);
     }
+  }
+
+  void _finishOnboarding() {
+    // Cold starts seguintes pulam o funil (a splash lê esta flag).
+    unawaited(
+      SharedPreferences.getInstance().then(
+        (p) => p.setBool('onboarding_done', true),
+      ),
+    );
+    context.go('/focus');
   }
 
   void _back() => setState(() => _step = (_step - 1).clamp(0, _steps));

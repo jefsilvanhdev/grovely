@@ -9,6 +9,7 @@ import 'core/i18n/locale_provider.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_mode_provider.dart';
+import 'data/services/ads_service.dart';
 import 'data/services/notification_service.dart';
 import 'data/services/supabase_service.dart';
 import 'l10n/app_localizations.dart';
@@ -48,6 +49,12 @@ Future<void> _bootstrapServices() async {
 
   try {
     await NotificationService.instance.init();
+  } catch (_) {}
+
+  // AdMob: só pro rewarded de reviver árvore. Best-effort — se falhar, o
+  // revive acontece sem anúncio.
+  try {
+    await AdsService.instance.init();
   } catch (_) {}
 }
 

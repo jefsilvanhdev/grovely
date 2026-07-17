@@ -68,4 +68,7 @@ chrome --headless=new --window-size=1080,1920 \
 - [ ] **Categoria:** Produtividade · **Classificação:** Livre (13+)
 - [ ] **Política de privacidade:** `https://grovely.com.br/privacy_policy.html` (após DNS)
 - [ ] **E-mail de contato**
-- [ ] **Data Safety:** conta anônima (User ID), sessões de foco (App activity), nome de exibição/círculo (App info). **Sem Advertising ID** (AdMob removido).
+- [ ] **Contém anúncios:** **SIM** (rewarded opt-in pra reviver árvore). Marcar no Console.
+- [ ] **Data Safety:** conta anônima (User ID), sessões de foco (App activity), nome de exibição/círculo (App info) **+ Advertising ID (AD_ID)** — o AdMob usa pro vídeo opcional de revive.
+- [ ] **App ID do AdMob real** em `app/android/admob.properties` (o build de release falha com o de teste — de propósito) e o **rewarded unit id** em `env.json` (`ADMOB_REWARDED_UNIT_ID`).
+- [ ] **MVP é grátis** — sem assinatura. Nada de produtos in-app no Console.

@@ -21,6 +21,8 @@ class Env {
     defaultValue: '',
   );
 
+  // RevenueCat: fora do MVP (lançamento é grátis, sem premium). As chaves
+  // ficam aqui para quando o Plus voltar.
   static const String revenueCatAndroidKey = String.fromEnvironment(
     'REVENUECAT_ANDROID_KEY',
     defaultValue: '',
@@ -30,9 +32,15 @@ class Env {
     defaultValue: '',
   );
 
-  static const String admobAppId = String.fromEnvironment(
-    'ADMOB_APP_ID',
-    defaultValue: '',
+  /// Unidade do anúncio rewarded (reviver árvore murcha). Vazio = sem anúncio
+  /// (revive direto). O App ID do AdMob vive no manifest, não aqui — ver
+  /// `android/app/build.gradle.kts` (manifestPlaceholder + guard de release).
+  ///
+  /// ID de TESTE oficial do Google como default: em dev sempre mostra anúncio
+  /// de teste; em release o env.json traz o real.
+  static const String admobRewardedUnitId = String.fromEnvironment(
+    'ADMOB_REWARDED_UNIT_ID',
+    defaultValue: 'ca-app-pub-3940256099942544/5224354917',
   );
 
   /// True quando as credenciais do Supabase foram fornecidas.
