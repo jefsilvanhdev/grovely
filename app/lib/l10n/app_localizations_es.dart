@@ -12,79 +12,81 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appName => 'Grovely';
 
   @override
-  String get navFocus => 'Focus';
+  String get navFocus => 'Enfoque';
 
   @override
-  String get navGarden => 'Garden';
+  String get navGarden => 'Jardín';
 
   @override
-  String get navCircle => 'Circle';
+  String get navCircle => 'Círculo';
 
   @override
-  String get navLeague => 'League';
+  String get navLeague => 'Liga';
 
   @override
-  String get navProfile => 'Profile';
+  String get navProfile => 'Perfil';
 
   @override
-  String get focusTitle => 'Focus';
+  String get focusTitle => 'Enfoque';
 
   @override
-  String get focusSubtitle => 'Stay focused and watch it grow.';
+  String get focusSubtitle => 'Concéntrate y mírala crecer.';
 
   @override
-  String get gardenTitle => 'Your garden';
+  String get gardenTitle => 'Tu jardín';
 
   @override
-  String get gardenEmpty => 'No trees yet — your first focus plants one.';
+  String get gardenEmpty =>
+      'Aún no hay árboles — tu primer enfoque planta uno.';
 
   @override
-  String get circleTitle => 'Circles';
+  String get circleTitle => 'Círculos';
 
   @override
-  String get circleEmpty => 'Join a circle to grow a garden together.';
+  String get circleEmpty =>
+      'Únete a un círculo para cultivar un jardín juntos.';
 
   @override
-  String get leagueTitle => 'League';
+  String get leagueTitle => 'Liga';
 
   @override
-  String get profileTitle => 'Profile';
+  String get profileTitle => 'Perfil';
 
   @override
-  String get onboardingWelcome => 'Grow your focus. Together.';
+  String get onboardingWelcome => 'Haz crecer tu enfoque. Juntos.';
 
   @override
   String get paywallTitle => 'Grovely Premium';
 
   @override
-  String get commonContinue => 'Continue';
+  String get commonContinue => 'Continuar';
 
   @override
-  String get commonCancel => 'Cancel';
+  String get commonCancel => 'Cancelar';
 
   @override
-  String get commonRetry => 'Try again';
+  String get commonRetry => 'Intentar de nuevo';
 
   @override
-  String get commonSave => 'Save';
+  String get commonSave => 'Guardar';
 
   @override
-  String get commonLoading => 'Loading…';
+  String get commonLoading => 'Cargando…';
 
   @override
-  String get commonError => 'That didn\'t work — let\'s try again.';
+  String get commonError => 'No funcionó — probemos de nuevo.';
 
   @override
-  String get focusStart => 'Start focus';
+  String get focusStart => 'Empezar a concentrarme';
 
   @override
-  String get focusGiveUp => 'Stop';
+  String get focusGiveUp => 'Parar';
 
   @override
-  String get focusKeepGrowing => 'Stay here. Your tree\'s growing.';
+  String get focusKeepGrowing => 'Quédate aquí. Tu árbol está creciendo.';
 
   @override
-  String get focusDeepWork => 'Deep work';
+  String get focusDeepWork => 'Trabajo profundo';
 
   @override
   String focusSessionMeta(String species, int minutes) {
@@ -92,22 +94,21 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get focusCompletedTitle => 'Tree planted!';
+  String get focusCompletedTitle => '¡Árbol plantado!';
 
   @override
   String focusCompletedBody(int minutes) {
-    return '$minutes minutes of focus, well spent.';
+    return '$minutes minutos de enfoque bien invertidos.';
   }
 
   @override
-  String get focusWitheredTitle => 'Your tree didn\'t make it';
+  String get focusWitheredTitle => 'Tu árbol no lo logró';
 
   @override
-  String get focusWitheredBody =>
-      'You stepped away before it finished. It happens.';
+  String get focusWitheredBody => 'Saliste antes de que terminara. Pasa.';
 
   @override
-  String get focusNewSession => 'Start again';
+  String get focusNewSession => 'Empezar de nuevo';
 
   @override
   String minutesShort(int minutes) {
@@ -119,59 +120,59 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count trees',
-      one: '1 tree',
-      zero: 'No trees yet',
+      other: '$count árboles',
+      one: '1 árbol',
+      zero: 'Aún no hay árboles',
     );
     return '$_temp0';
   }
 
   @override
-  String get streakStart => 'Start a streak';
+  String get streakStart => 'Empezar una racha';
 
   @override
   String streakDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count-day streak',
-      one: '1-day streak',
+      other: 'racha de $count días',
+      one: 'racha de 1 día',
     );
     return '$_temp0';
   }
 
   @override
   String focusLiveNow(int count) {
-    return '$count focusing now';
+    return '$count concentrados ahora';
   }
 
   @override
   String focusPreview(String species, int minutes) {
-    return 'A $species, grown in $minutes min.';
+    return 'Un $species, crecido en $minutes min.';
   }
 
   @override
-  String get focusPlant => 'Plant & focus';
+  String get focusPlant => 'Plantar y concentrarme';
 
   @override
-  String get focusGiveUpConfirmTitle => 'Leave now? Your tree won\'t make it.';
+  String get focusGiveUpConfirmTitle => '¿Salir ahora? Tu árbol no lo logrará.';
 
   @override
-  String get focusKeepFocusing => 'Keep growing';
+  String get focusKeepFocusing => 'Seguir creciendo';
 
   @override
   String statMinFocused(int minutes) {
-    return '$minutes min focused';
+    return '$minutes min de enfoque';
   }
 
   @override
   String statTrees(int count) {
-    return '$count trees';
+    return '$count árboles';
   }
 
   @override
   String statHoursFocused(int hours) {
-    return '${hours}h focused';
+    return '${hours}h de enfoque';
   }
 
   @override
@@ -179,288 +180,290 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count days',
-      one: '1 day',
+      other: '$count días',
+      one: '1 día',
     );
-    return 'Best: $_temp0';
+    return 'Récord: $_temp0';
   }
 
   @override
   String statSpecies(int count) {
-    return '$count/6 species';
+    return '$count/6 especies';
   }
 
   @override
-  String get addedToGarden => 'Added to your garden';
+  String get addedToGarden => 'Añadido a tu jardín';
 
   @override
-  String get plantAnother => 'Plant another';
+  String get plantAnother => 'Plantar otro';
 
   @override
-  String get viewGarden => 'See my garden';
+  String get viewGarden => 'Ver mi jardín';
 
   @override
-  String get reviveWithVideo => 'Bring it back with a short video';
+  String get reviveWithVideo => 'Recupéralo con un video corto';
 
   @override
-  String get startFresh => 'Start fresh';
+  String get startFresh => 'Empezar de cero';
 
   @override
-  String get reviveSheetBody => 'A 30-second video brings this tree back.';
+  String get reviveSheetBody => 'Un video de 30 segundos recupera este árbol.';
 
   @override
-  String get watchAndRevive => 'Watch & bring it back';
+  String get watchAndRevive => 'Ver y recuperarlo';
 
   @override
-  String get noThanks => 'No thanks';
+  String get noThanks => 'No, gracias';
 
   @override
   String get reviveUnavailable =>
-      'No video right now — but you can replant it.';
+      'No hay video ahora — pero puedes replantarlo.';
 
   @override
   String get witheredBodyKind =>
-      'You stepped away before it finished — it happens. Want it back?';
+      'Saliste antes de que terminara — pasa. ¿Lo recuperamos?';
 
   @override
-  String get plantFirst => 'Plant my first tree';
+  String get plantFirst => 'Plantar mi primer árbol';
 
   @override
-  String get gardenWaiting => 'Your garden starts here.';
+  String get gardenWaiting => 'Tu jardín empieza aquí.';
 
   @override
-  String get gardenWaitingSub => 'One focused session plants your first tree.';
+  String get gardenWaitingSub =>
+      'Una sesión de enfoque planta tu primer árbol.';
 
   @override
-  String get speciesOak => 'oak';
+  String get speciesOak => 'roble';
 
   @override
-  String get speciesPine => 'pine';
+  String get speciesPine => 'pino';
 
   @override
-  String get speciesRoundBush => 'bush';
+  String get speciesRoundBush => 'arbusto';
 
   @override
-  String get speciesWillow => 'willow';
+  String get speciesWillow => 'sauce';
 
   @override
-  String get speciesBirch => 'birch';
+  String get speciesBirch => 'abedul';
 
   @override
-  String get speciesCherryBlossom => 'cherry blossom';
+  String get speciesCherryBlossom => 'cerezo';
 
   @override
-  String get commonSkip => 'Skip';
+  String get commonSkip => 'Saltar';
 
   @override
   String get onbWelcomeSub =>
-      'Every focused minute plants a tree. Watch your grove grow.';
+      'Cada minuto de enfoque planta un árbol. Mira crecer tu bosque.';
 
   @override
-  String get onbGetStarted => 'Plant my first tree';
+  String get onbGetStarted => 'Plantar mi primer árbol';
 
   @override
-  String get onbHaveAccount => 'I already have an account';
+  String get onbHaveAccount => 'Ya tengo una cuenta';
 
   @override
-  String get onbNotifTitle => 'A nudge when it helps. Never noise.';
+  String get onbNotifTitle => 'Un recordatorio cuando ayuda. Nunca ruido.';
 
   @override
-  String get onbNotifBullet1 => 'A daily nudge to plant one tree';
+  String get onbNotifBullet1 => 'Un aviso diario para plantar un árbol';
 
   @override
-  String get onbNotifBullet2 => 'A heads-up before your streak slips';
+  String get onbNotifBullet2 => 'Un aviso antes de perder tu racha';
 
   @override
-  String get onbNotifBullet3 => 'A ping when your circle starts focusing';
+  String get onbNotifBullet3 =>
+      'Una señal cuando tu círculo empieza a concentrarse';
 
   @override
-  String get onbNotifCta => 'Turn on reminders';
+  String get onbNotifCta => 'Activar recordatorios';
 
   @override
-  String get onbNotNow => 'Maybe later';
+  String get onbNotNow => 'Quizá después';
 
   @override
-  String get onbSocialTitle => 'Focus your way.';
+  String get onbSocialTitle => 'Concéntrate a tu manera.';
 
   @override
-  String get onbSocialSub => 'Change this anytime.';
+  String get onbSocialSub => 'Puedes cambiarlo cuando quieras.';
 
   @override
-  String get onbSoloTitle => 'On my own';
+  String get onbSoloTitle => 'Por mi cuenta';
 
   @override
-  String get onbSoloDesc => 'Just you and your grove.';
+  String get onbSoloDesc => 'Solo tú y tu bosque.';
 
   @override
-  String get onbCircleTitle => 'With a circle';
+  String get onbCircleTitle => 'Con un círculo';
 
   @override
-  String get onbCircleDesc => 'Grow one garden with 6–12 people.';
+  String get onbCircleDesc => 'Cultiva un jardín con 6 a 12 personas.';
 
   @override
-  String get onbRecommended => 'Recommended';
+  String get onbRecommended => 'Recomendado';
 
   @override
   String get onbPrivacy =>
-      'Only your first name and tree count are ever shared.';
+      'Solo se comparten tu nombre y tu conteo de árboles.';
 
   @override
   String get onbGuidedCoach =>
-      'Let\'s plant your first one. Just stay here 30 seconds.';
+      'Plantemos el primero. Solo quédate aquí 30 segundos.';
 
   @override
-  String get onbBegin => 'Plant it';
+  String get onbBegin => 'Plantarlo';
 
   @override
-  String get onbGuidedDone => 'Your first tree. 🌱 On us.';
+  String get onbGuidedDone => 'Tu primer árbol. 🌱 Va por nuestra cuenta.';
 
   @override
-  String get pwTitle => 'More room to grow.';
+  String get pwTitle => 'Más espacio para crecer.';
 
   @override
-  String get pwSub => 'Keep everything free, unlock a little more.';
+  String get pwSub => 'Todo sigue gratis, desbloquea un poco más.';
 
   @override
-  String get pwTrialCta => 'Try free for 21 days';
+  String get pwTrialCta => 'Probar gratis 21 días';
 
   @override
-  String get pwTrialSub => 'Free for 21 days. Cancel anytime, two taps.';
+  String get pwTrialSub =>
+      'Gratis por 21 días. Cancela cuando quieras, en dos toques.';
 
   @override
   String get focusRule =>
-      'Leaving the app before time\'s up withers the tree — quick switches get a grace period.';
+      'Salir de la app antes de tiempo marchita el árbol — los cambios rápidos tienen margen.';
 
   @override
-  String get pwAnnual => 'Annual';
+  String get pwAnnual => 'Anual';
 
   @override
-  String get pwMonthly => 'Monthly';
+  String get pwMonthly => 'Mensual';
 
   @override
-  String get pwSave => 'Save 40%';
+  String get pwSave => 'Ahorra 40%';
 
   @override
-  String get pwContinueFree => 'Stay on Free';
+  String get pwContinueFree => 'Seguir gratis';
 
   @override
-  String get pwRestore => 'Restore purchases';
+  String get pwRestore => 'Restaurar compras';
 
   @override
-  String get pwFree => 'Free';
+  String get pwFree => 'Gratis';
 
   @override
   String get pwPremium => 'Premium';
 
   @override
-  String get pwRowSoloFocus => 'Unlimited solo focus';
+  String get pwRowSoloFocus => 'Enfoque en solitario ilimitado';
 
   @override
-  String get pwRowGarden => 'Full garden & streak';
+  String get pwRowGarden => 'Jardín y racha completos';
 
   @override
-  String get pwRowOneCircle => 'Join 1 circle';
+  String get pwRowOneCircle => 'Unirte a 1 círculo';
 
   @override
-  String get pwRowCustom => 'Custom durations';
+  String get pwRowCustom => 'Duraciones personalizadas';
 
   @override
-  String get pwRowSpecies => 'All species & seasonal trees';
+  String get pwRowSpecies => 'Todas las especies y árboles de temporada';
 
   @override
-  String get pwRowStats => 'Advanced stats';
+  String get pwRowStats => 'Estadísticas avanzadas';
 
   @override
-  String get pwRowMultiCircle => 'Multiple circles';
+  String get pwRowMultiCircle => 'Múltiples círculos';
 
   @override
-  String get pwRowRecap => 'Recap themes';
+  String get pwRowRecap => 'Temas del resumen';
 
   @override
-  String get profileGuest => 'Guest';
+  String get profileGuest => 'Invitado';
 
   @override
-  String get profileSaveProgress => 'Save my progress';
+  String get profileSaveProgress => 'Guardar mi progreso';
 
   @override
-  String get profileFreePlan => 'Free';
+  String get profileFreePlan => 'Gratis';
 
   @override
-  String get profileLifetime => 'All time';
+  String get profileLifetime => 'Desde el inicio';
 
   @override
-  String get rowAccount => 'Account';
+  String get rowAccount => 'Cuenta';
 
   @override
-  String get rowSubscription => 'Subscription';
+  String get rowSubscription => 'Suscripción';
 
   @override
-  String get rowNotifications => 'Notifications';
+  String get rowNotifications => 'Notificaciones';
 
   @override
-  String get notifStreakTitle => 'Time to grow 🌱';
+  String get notifStreakTitle => 'Hora de crecer 🌱';
 
   @override
-  String get notifStreakBody =>
-      'Plant a tree today and keep your streak alive.';
+  String get notifStreakBody => 'Planta un árbol hoy y mantén viva tu racha.';
 
   @override
-  String get notifReminderSheetTitle => 'Daily reminder';
+  String get notifReminderSheetTitle => 'Recordatorio diario';
 
   @override
   String get notifReminderSheetBody =>
-      'A gentle daily nudge to focus and keep your streak.';
+      'Un aviso diario y suave para concentrarte y mantener tu racha.';
 
   @override
-  String get notifReminderOn => 'Daily reminder on';
+  String get notifReminderOn => 'Recordatorio diario activado';
 
   @override
-  String get notifReminderOff => 'Reminders off';
+  String get notifReminderOff => 'Recordatorios desactivados';
 
   @override
   String get notifPermissionDenied =>
-      'Notifications are off. Enable them in system settings.';
+      'Las notificaciones están desactivadas. Actívalas en los ajustes del sistema.';
 
   @override
-  String get rowAppearance => 'Appearance';
+  String get rowAppearance => 'Apariencia';
 
   @override
-  String get rowLanguage => 'Language';
+  String get rowLanguage => 'Idioma';
 
   @override
-  String get languageSystem => 'System default';
+  String get languageSystem => 'Predeterminado del sistema';
 
   @override
-  String get rowPrivacy => 'Privacy';
+  String get rowPrivacy => 'Privacidad';
 
   @override
-  String get rowTerms => 'Terms';
+  String get rowTerms => 'Términos';
 
   @override
-  String get rowSignOut => 'Sign out';
+  String get rowSignOut => 'Cerrar sesión';
 
   @override
-  String get rowAbout => 'About';
+  String get rowAbout => 'Acerca de';
 
   @override
-  String get themeSystem => 'System';
+  String get themeSystem => 'Sistema';
 
   @override
-  String get themeLight => 'Light';
+  String get themeLight => 'Claro';
 
   @override
-  String get themeDark => 'Dark';
+  String get themeDark => 'Oscuro';
 
   @override
-  String get recapTitle => 'Your week';
+  String get recapTitle => 'Tu semana';
 
   @override
   String recapHero(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count trees this week',
-      one: '1 tree this week',
+      other: '$count árboles esta semana',
+      one: '1 árbol esta semana',
     );
     return '$_temp0';
   }
@@ -470,152 +473,153 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'trees this week',
-      one: 'tree this week',
+      other: 'árboles esta semana',
+      one: 'árbol esta semana',
     );
     return '$_temp0';
   }
 
   @override
   String recapSub(int hours, int minutes) {
-    return '${hours}h ${minutes}m in focus';
+    return '${hours}h ${minutes}m de enfoque';
   }
 
   @override
-  String get recapFooter => 'Grown with Grovely';
+  String get recapFooter => 'Cultivado con Grovely';
 
   @override
-  String get recapShare => 'Share my week';
+  String get recapShare => 'Compartir mi semana';
 
   @override
-  String get recapEmpty => 'A fresh week to grow.';
+  String get recapEmpty => 'Una semana nueva para crecer.';
 
   @override
-  String get recapEmptySub => 'Plant your first tree to start the week.';
+  String get recapEmptySub => 'Planta tu primer árbol para empezar la semana.';
 
   @override
-  String get circleEmptyTitle => 'Grow together.';
+  String get circleEmptyTitle => 'Crezcan juntos.';
 
   @override
   String get circleEmptySub =>
-      '6–12 friends, one shared garden, a friendly weekly league.';
+      '6 a 12 amigos, un jardín compartido, una liga semanal amistosa.';
 
   @override
-  String get circleCreate => 'Start a circle';
+  String get circleCreate => 'Crear un círculo';
 
   @override
-  String get circleJoin => 'Join with a code';
+  String get circleJoin => 'Unirme con un código';
 
   @override
   String get circlePrivacy =>
-      'Members only see your first name and tree count.';
+      'Los miembros solo ven tu nombre y tu conteo de árboles.';
 
   @override
-  String get circleNameLabel => 'Circle name';
+  String get circleNameLabel => 'Nombre del círculo';
 
   @override
-  String get circleNameHint => 'e.g. Deep Work Club';
+  String get circleNameHint => 'ej. Club de Trabajo Profundo';
 
   @override
-  String get circleCreateCta => 'Create circle';
+  String get circleCreateCta => 'Crear círculo';
 
   @override
-  String get circleJoinTitle => 'Join a circle';
+  String get circleJoinTitle => 'Unirse a un círculo';
 
   @override
-  String get circleCodeLabel => 'Invite code';
+  String get circleCodeLabel => 'Código de invitación';
 
   @override
-  String get circleJoinCta => 'Join';
+  String get circleJoinCta => 'Unirme';
 
   @override
-  String get circleInvalidCode => 'We couldn\'t find a circle for that code.';
+  String get circleInvalidCode =>
+      'No encontramos ningún círculo con ese código.';
 
   @override
-  String get circleFull => 'This circle\'s full for now.';
+  String get circleFull => 'Este círculo está lleno por ahora.';
 
   @override
-  String get circleInvite => 'Share invite';
+  String get circleInvite => 'Compartir invitación';
 
   @override
-  String get circleMembers => 'Members';
+  String get circleMembers => 'Miembros';
 
   @override
-  String get circleGroveOverline => 'Shared grove · this week';
+  String get circleGroveOverline => 'Bosque compartido · esta semana';
 
   @override
   String circleFocusingNow(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n focusing now',
-      one: '1 focusing now',
-      zero: 'No one focusing right now',
+      other: '$n concentrados ahora',
+      one: '1 concentrado ahora',
+      zero: 'Nadie concentrado ahora',
     );
     return '$_temp0';
   }
 
   @override
   String get circleOffline =>
-      'No connection right now — check your internet and try again.';
+      'Sin conexión ahora — revisa tu internet e intenta de nuevo.';
 
   @override
-  String get notifChannelName => 'Streak reminders';
+  String get notifChannelName => 'Recordatorios de racha';
 
   @override
   String get notifChannelDesc =>
-      'Reminds you to focus and keep your streak alive.';
+      'Te recuerda concentrarte y mantener viva tu racha.';
 
   @override
   String circleGoal(int planted, int goal) {
-    return '$planted of $goal trees this week';
+    return '$planted de $goal árboles esta semana';
   }
 
   @override
   String circleGoalReached(int planted) {
-    return '$planted trees this week — goal reached! 🎉';
+    return '$planted árboles esta semana — ¡meta alcanzada! 🎉';
   }
 
   @override
-  String get circleLeave => 'Leave circle';
+  String get circleLeave => 'Salir del círculo';
 
   @override
-  String get circleLeaveConfirm => 'Leave circle?';
+  String get circleLeaveConfirm => '¿Salir del círculo?';
 
   @override
-  String get circleLeaveBody => 'You can come back anytime with the code.';
+  String get circleLeaveBody => 'Puedes volver cuando quieras con el código.';
 
   @override
-  String get circleStay => 'Stay';
+  String get circleStay => 'Quedarme';
 
   @override
   String memberWeekly(int count) {
-    return '$count this week';
+    return '$count esta semana';
   }
 
   @override
-  String get leagueSolo => 'Join a circle and the league opens up.';
+  String get leagueSolo => 'Únete a un círculo y se abre la liga.';
 
   @override
-  String get leagueTitleWeek => 'This week';
+  String get leagueTitleWeek => 'Esta semana';
 
   @override
-  String get leagueYou => 'You';
+  String get leagueYou => 'Tú';
 
   @override
   String leagueScore(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n trees',
-      one: '1 tree',
+      other: '$n árboles',
+      one: '1 árbol',
     );
     return '$_temp0';
   }
 
   @override
   String leagueEndsIn(String time) {
-    return 'ends in $time';
+    return 'termina en $time';
   }
 
   @override
@@ -623,10 +627,10 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n trees',
-      one: '1 tree',
+      other: '$n árboles',
+      one: '1 árbol',
     );
-    return '$rank place · $_temp0';
+    return '$rank lugar · $_temp0';
   }
 
   @override
@@ -634,10 +638,10 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n trees',
-      one: '1 tree',
+      other: '$n árboles',
+      one: '1 árbol',
     );
-    return '$name is $_temp0 behind you 🔥';
+    return '$name está a $_temp0 de ti 🔥';
   }
 
   @override
@@ -645,38 +649,38 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n trees',
-      one: '1 tree',
+      other: 'Faltan $n árboles',
+      one: 'Falta 1 árbol',
     );
-    return '$_temp0 to pass $name';
+    return '$_temp0 para pasar a $name';
   }
 
   @override
-  String get circleWhoPlanted => 'Who planted this week';
+  String get circleWhoPlanted => 'Quién plantó esta semana';
 
   @override
-  String get circleCopyCode => 'Copy code';
+  String get circleCopyCode => 'Copiar código';
 
   @override
-  String get circleCodeCopied => 'Code copied!';
+  String get circleCodeCopied => '¡Código copiado!';
 
   @override
   String get planPlusOverline => 'GROVELY PLUS';
 
   @override
-  String get planActiveBadge => 'Active';
+  String get planActiveBadge => 'Activo';
 
   @override
-  String get planTrialBadge => 'Trial';
+  String get planTrialBadge => 'Prueba';
 
   @override
   String planMemberSince(String date) {
-    return 'Member since $date';
+    return 'Miembro desde $date';
   }
 
   @override
   String planRenews(String date) {
-    return 'Renews $date';
+    return 'Se renueva el $date';
   }
 
   @override
@@ -684,45 +688,45 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n days left in your trial',
-      one: '1 day left in your trial',
+      other: 'Quedan $n días de prueba',
+      one: 'Queda 1 día de prueba',
     );
     return '$_temp0';
   }
 
   @override
-  String get planManage => 'Manage subscription';
+  String get planManage => 'Gestionar suscripción';
 
   @override
-  String get planBenefitCircles => 'All circles';
+  String get planBenefitCircles => 'Todos los círculos';
 
   @override
-  String get planBenefitSpecies => 'Every species';
+  String get planBenefitSpecies => 'Todas las especies';
 
   @override
-  String get planBenefitThemes => 'Garden themes';
+  String get planBenefitThemes => 'Temas de jardín';
 
   @override
-  String get planBenefitStats => 'Deep-focus stats';
+  String get planBenefitStats => 'Estadísticas avanzadas';
 
   @override
-  String get planFreeUpsell => 'Meet Grovely Plus';
+  String get planFreeUpsell => 'Conoce Grovely Plus';
 
   @override
-  String get pwAlreadyPlus => 'You\'re already Plus — everything\'s unlocked.';
+  String get pwAlreadyPlus => 'Ya eres Plus — todo está desbloqueado.';
 
   @override
-  String get profileChangePhoto => 'Change photo';
+  String get profileChangePhoto => 'Cambiar foto';
 
   @override
-  String get profileRemovePhoto => 'Remove photo';
+  String get profileRemovePhoto => 'Quitar foto';
 
   @override
-  String get profileNameLabel => 'Your name';
+  String get profileNameLabel => 'Tu nombre';
 
   @override
-  String get profileNameHint => 'How your circle sees you';
+  String get profileNameHint => 'Cómo te ve tu círculo';
 
   @override
-  String get profileEditName => 'Edit name';
+  String get profileEditName => 'Editar nombre';
 }
