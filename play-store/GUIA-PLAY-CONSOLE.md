@@ -2,8 +2,18 @@
 
 > **Objetivo:** publicar o Grovely no Google Play sem travar em formulário. Cada passo diz **exatamente** o que marcar. Assets prontos em `play-store/export/`.
 
+## URL da política de privacidade (não precisa comprar o domínio agora)
+A Play exige uma **URL viva** com a política. Sem o domínio, use a do GitHub Pages:
+
+```
+https://jefsilvanhdev.github.io/grovely/privacy_policy.html
+```
+
+**Pra ficar no ar** (uma vez): Repo `grovely` → **Settings → Pages** → Source **main /docs**. Se ainda tiver "custom domain" preenchido, **limpar** (o arquivo CNAME foi removido; o `docs/CNAME.later` guarda o valor `grovely.com.br` pra quando você comprar o domínio — aí é só renomear pra `CNAME` e apontar o DNS).
+
+- [ ] Pages ligado · `https://jefsilvanhdev.github.io/grovely/privacy_policy.html` abrindo.
+
 ## Antes de começar (checar)
-- [ ] **DNS grovely.com.br** apontado pro GitHub Pages → `https://grovely.com.br/privacy_policy.html` abrindo (a Play exige URL viva).
 - [ ] **AAB de release** gerado e assinado: `flutter build appbundle --release --dart-define-from-file=env.json` → `build/app/outputs/bundle/release/app-release.aab`.
 - [ ] **Conta Play** decidida (ver "Gate de testadores" no fim).
 
@@ -68,7 +78,7 @@ Questionário → categoria **Produtividade/Utilitário**. Sem violência, sexo,
 - **App de notícias:** Não
 - **App de COVID / rastreamento:** Não
 - **Acesso ao app:** todo o conteúdo disponível **sem restrição / sem login** (conta é anônima, criada automática) → marcar essa opção. *(Se pedir credenciais de teste: não há — explicar "conta anônima automática".)*
-- **Política de privacidade (URL):** `https://grovely.com.br/privacy_policy.html`
+- **Política de privacidade (URL):** `https://jefsilvanhdev.github.io/grovely/privacy_policy.html`
 
 ## Passo 5 — Enviar o AAB
 Teste interno (ou produção) → **Criar versão** → subir `app-release.aab`.

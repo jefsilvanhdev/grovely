@@ -66,7 +66,7 @@ chrome --headless=new --window-size=1080,1920 \
 - [ ] **Feature graphic:** `export/feature-graphic.png`
 - [ ] **Screenshots (telefone):** `export/s1…s5.png` (mín. 2, temos 5)
 - [ ] **Categoria:** Produtividade · **Classificação:** Livre (13+)
-- [ ] **Política de privacidade:** `https://grovely.com.br/privacy_policy.html` (após DNS)
+- [ ] **Política de privacidade:** `https://jefsilvanhdev.github.io/grovely/privacy_policy.html` (via GitHub Pages — não precisa do domínio; ver GUIA)
 - [ ] **E-mail de contato**
 - [ ] **Contém anúncios:** **SIM** (rewarded opt-in pra reviver árvore). Marcar no Console.
 - [ ] **Data Safety:** conta anônima (User ID), sessões de foco (App activity), nome de exibição/círculo (App info) **+ Advertising ID (AD_ID)** — o AdMob usa pro vídeo opcional de revive.
