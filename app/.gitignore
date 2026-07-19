@@ -52,3 +52,4 @@ env.json
 **/google-services.json
 **/GoogleService-Info.plist
 lib/core/firebase_options.dart
+devtools_options.yaml
