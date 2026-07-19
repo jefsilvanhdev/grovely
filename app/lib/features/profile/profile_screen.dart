@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -168,6 +169,15 @@ class ProfileScreen extends ConsumerWidget {
               _PlanCard(plan: plan),
               const SizedBox(height: 20),
             ],
+            // Recap semanal — o artefato compartilhável era indescobrível
+            // (só um ícone no jardim). Aqui vira uma entrada estável. Só
+            // aparece com árvores no jardim (senão o recap está vazio).
+            if (stats.trees > 0)
+              _Row(
+                icon: Icons.ios_share,
+                label: l10n.recapTitle,
+                onTap: () => context.push('/recap'),
+              ),
             _Row(
               icon: Icons.notifications_outlined,
               label: l10n.rowNotifications,
